@@ -107,6 +107,9 @@
                     Idea:   move the rgister file write back to C1 to reduce the RF requirements.
                             This way a memory with 1 RW port and 1 R port is enough (RF has 3 ports)
                     Idea:   Port a simple RTOS!
+
+    Aug 17, 2017:   Noticed a bug in the interrupts. Undomment the 2 lines that update the uie
+                    in the crt0 file.
   **********************************************************************************************  */
 
 `timescale 1ns/1ns
