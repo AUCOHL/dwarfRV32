@@ -109,8 +109,10 @@
                             This way a memory with 1 RW port and 1 R port is enough (RF has 3 ports)
                     Idea:   Port a simple RTOS!
 
-    Aug 17, 2017:   Noticed a bug in the interrupts. Undomment the 2 lines that update the uie
-                    in the crt0 file.
+    Aug 17, 2017:   Noticed a bug in the interrupts. Uncomment the 2 lines that enable the interrupts
+                    by updating the uie in the crt0 file.
+                    Debugging revieled that interrupting a memory write instruction corrupt the data
+                    written to the memory! May be other instructions suffer from interrupts
   **********************************************************************************************  */
 
 `timescale 1ns/1ns
