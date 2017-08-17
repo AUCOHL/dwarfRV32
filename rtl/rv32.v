@@ -78,7 +78,8 @@
                     Fix the timer interrupt (make it count micro seconds) and add
                     timer compare register
 
-    Aug 1, 2017:    mul.c fails when using the HW extension. Check it out
+    Aug 1, 2017:    mul.c fails when using the HW extension. Check it out (the rv32sim
+                    could be the problem as it does not support the extension opcode)
 
                     Here is the updated plan for interrupts and counters/control registers:
                     (1) Only 32-bit Cycle and Time counters
