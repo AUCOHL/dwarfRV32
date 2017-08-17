@@ -51,8 +51,8 @@ eint_vec:
 
 	.org 80
 ___App:
-	li	x1, 7
-	wruie	x1
+	#li	x1, 7
+	#wruie	x1
 	lui sp, %hi(_fstack)
 	add sp, sp, %lo(_fstack)
 	jal main

@@ -1,8 +1,8 @@
 // file: phrv32CPU.v
 // author: @shalan
 
-/*  ****************************************************************************
-    3 Stage pipelined rv32i CPU
+/*  ********************************************************************************
+    3-Stages pipelined rv32i CPU
 
     notes:
     Every stage needs 2 clock cycles to avoid the need for L1 I & D caches.
@@ -16,24 +16,31 @@
     log:
     June 25, 17:    interlocked pieline that supports R & I arithmetic and
                     logic instructions (missing slt instructions).
+
     June 26, 17:    added branch, and jal instructions. The pipeline is flushed
                     whenever a control instruction is observed. implement a simple
                     predictor (flush only when the branch is taken!)/
+
     June 27, 17:    Added support for slt/sltu/slti/sltiu, load and store,
                     and LUI instructions. Need to add more test cases for load
                     instructions as well as JALR.
+
     July 10, 17:    Code clean up, bugs fixing + some optimizations.
+
     July 11, 17:    Added support for auipc instruction
+
     July 16, 17:    More bugs fixing
                     Now passes test1, ui, loadstore, sub, shift, or, and j tests
                     sum.c test fails!
+
     July 17, 17:    Fixed PC update logic to fix sum.c bug
+
     July 20, 17:    Fixed most of the bugs. All test cases are OK now.
                     Had to update the build options in test.sh to get most of
                     them passed.
 
                     to do: revisit the code for optimizations:
-                    (1) Propagat the control signals instead of IR
+                    (1) Propagate the control signals instead of IR
                     (2) revisit PC update logic
                     (3) revisit R1 and R2 registers
 
@@ -70,7 +77,37 @@
     July 31, 17:    Implemented Interrupts, counters and system instructions
                     Fix the timer interrupt (make it count micro seconds) and add
                     timer compare register
-  ******************************************************************************  */
+
+    Aug 1, 2017:    mul.c fails when using the HW extension. Check it out
+
+                    Here is the updated plan for interrupts and counters/control registers:
+                    (1) Only 32-bit Cycle and Time counters
+                    (2) Only rdcycle/rdtime (csrrs using x0) and wrcycle/wrtime/wruie (csrrw)
+                        instructions. The first 2 instructions are already supported pseudo
+                        instructions. The other 2 instructions will be implemented as macros
+                        using csrrw
+                    (3) Timer is a down counter and generates an interrupt when it reaches 0.
+                        Writing 0 to Timer disables it.
+                    (4) WFI instruction is supported and must be followed by 2 nop instructions!
+                    (5) URET instruction is implemented to return from an ISR
+                    (6) There are 4 interrupt vectors starting from address 16. 4 words are left
+                        for every ISR entry instructions.
+                    (7) uie register is used for enabling and disabling interrupts
+
+    Aug 3, 2017:    Fixed several bugs and now Timer is functional and generates interrupts
+                    uret is functional as well
+
+    Aug 5, 2017:    Needs major code review to refactor the code and discover possible hidden bugs.
+
+    Aug 6, 2017:    Did major re-structuring and code re-factoring
+
+    Aug 7, 2017:    Created a small interrupts controller.
+
+    Aug 8, 2017:    Need more testing for Interrupts
+                    Idea:   move the rgister file write back to C1 to reduce the RF requirements.
+                            This way a memory with 1 RW port and 1 R port is enough (RF has 3 ports)
+                    Idea:   Port a simple RTOS!
+  **********************************************************************************************  */
 
 `timescale 1ns/1ns
 
@@ -117,17 +154,18 @@
 `define     SYS_CSRRW       3'b001
 
 `define     INST_NOP        32'h13
-
+/*
 `define     INST_CLRC       32'hc0101073
 `define     INST_CLRCH      32'hc8101073
 `define     INST_CLRT       32'hc0001073
 `define     INST_CLRTH      32'hc8001073
-
+*/
 `define     INST_WFI        32'h10500073
 `define     INST_EBREAK     32'h00100073
 `define     INST_ECALL      32'h00000073
+`define     INST_URET       32'h00200073
 
-`define     TICK            64'd100_000   // 1 msec @ 100MHz
+//`define     TICK            64'd30   // 0.01 msec @ 100MHz
 
 `define     RESET_VEC       32'd0
 `define     ECALL_VEC       32'd16
@@ -135,7 +173,60 @@
 `define     TIMER_VEC       32'd48
 `define     EINT_VEC        32'd64
 
+/*
+module IntCtrl(
+  input[7:0] I,
+  input[7:0] ie,
+  output IRQ,
+  output[2:0] IntNum
+  );
 
+reg[2:0] IntNum;
+reg IRQ;
+
+wire[7:0] Int = I & ie;
+
+integer i;
+always @ * begin
+  IRQ = 0;
+  IntNum = 2'd0;
+  for(i=0; i<8; i=i+1)
+    if(Int[i]) begin
+      IRQ = 1;
+      IntNum = i;
+    end
+end
+*/
+module rv32Counters(
+    input clk, rst,
+    output[31:0] Cycle, Timer,
+    input[31:0] wdata,
+    input ld_cycle, ld_timer, ld_uie,
+    output gie, tie, eie,
+    output tif
+);
+
+    reg[31:0] Cycle, Timer;
+    reg[2:0] UIE;
+
+    always @ (posedge clk or posedge rst)
+        if(rst) Timer <= 32'd0;
+        else if(ld_timer) Timer <= wdata;
+        else if(Timer!=32'b0) Timer <= Timer - 32'b1;
+
+    always @ (posedge clk or posedge rst)
+        if(rst) Cycle <= 32'd0;
+        else if(ld_cycle) Cycle <= wdata;
+        else Cycle <= Cycle + 32'b1;
+
+    always @ (posedge clk or posedge rst)
+        if(rst) UIE <= 3'd0;
+        else if(ld_uie) UIE <= wdata[2:0];
+
+    assign {eie, tie, gie} = UIE;
+    assign tif = (Timer == 32'b1);
+
+endmodule
 
 module rv32dec(
     input[31:0] IR,
@@ -167,9 +258,9 @@ endmodule
 module rv32i_pcunit(
     input clk, rst,
     input ext_hold,cyc,
-    input s0, s1, s2, s3,
-    output[31:0] PC,
-    input[31:0] PC1, I1, alu_r, int_vec);
+    input s0, s1, s2, s3, s4,
+    output[31:0] PC, nPC,
+    input[31:0] PC1, I1, alu_r, int_vec, epc);
 
     reg[31:0] PC;
 
@@ -177,14 +268,49 @@ module rv32i_pcunit(
 
     assign pc_adder = (s2 ? I1 : 32'd4) + ((s2|s3) ? PC1 : PC);
 
+    assign nPC = s1 ? alu_r : pc_adder;
+
     always@(posedge clk or posedge rst)
         if(rst) PC <= 32'b0;
         else
             if(cyc)
                 if(~ext_hold)
-                    PC <= s0 ?  int_vec : s1 ? alu_r : pc_adder;
+                    PC <= s4 ? epc: s0 ?  int_vec : nPC;
 
 endmodule
+
+module rv32PCUnit(
+    input clk, rst,
+    input ext_hold,cyc,
+    input s0, s1, s2, s3, s4, ld_epc,
+    output[31:0] PC,
+    input[31:0] PC1, I1, alu_r,
+    input[2:0] vec);
+
+    reg[31:0] PC, ePC;
+
+    wire[31:0] pc_adder, nPC;
+
+    wire[31:0] int_vec = {25'b0,vec,4'b0000};
+    assign pc_adder = (s2 ? I1 : 32'd4) + ((s2|s3) ? PC1 : PC);
+
+    assign nPC = s1 ? alu_r : pc_adder;
+
+    always@(posedge clk or posedge rst)
+        if(rst) PC <= 32'b0;
+        else
+            if(cyc)
+                if(~ext_hold)
+                    PC <= s4 ? ePC: s0 ?  int_vec : nPC;
+
+    always@(posedge clk or posedge rst)
+        if(rst) ePC <= 32'b0;
+        else if(ld_epc)
+            ePC <= nPC;
+
+
+endmodule
+
 /*
   RV32i ALU
   Performs aritmetic, Logic and Shift operations needed by the RV32i CPU.
@@ -377,11 +503,13 @@ module rv32i_extender (
 endmodule
 
 
-module rv32_ctrl(
+module rv32CU(
                   input clk, rst,
                   input[31:0] IR,
                   input ext_done,
                   input cf, zf, sf, vf,
+                  input tov,
+                  input gie, tie, eie, eint,
                   output[31:0] IR2, IR1,
                   output cu_ext_hold,
                   output cu_ext_start,
@@ -392,18 +520,27 @@ module rv32_ctrl(
                   output cu_r1_src,
                   output cu_r2_src,
                   output[4:0] cu_rf_rs1, cu_rf_rs2, cu_rf_rd_1, cu_rf_rd_2,
-                  output cu_pc_s1, cu_pc_s2, cu_pc_s3,
+                  output cu_pc_s0, cu_pc_s1, cu_pc_s2, cu_pc_s3, cu_pc_s4,
                   output cu_alu_a_src, cu_alu_b_src,
                   output cu_resmux_s0, cu_resmux_s1, cu_resmux_s2,
-                  //output cu_csr_clrc, cu_csr_clrch, cu_csr_clrt, cu_csr_clrth,
                   output cu_csr_rd_s0, cu_csr_rd_s1, cu_csr_rd_s2,
                   output cu_int_ecall, cu_int_ebreak,
-                  output cu_ld_cycle, cu_ld_time
+                  output cu_ld_cycle, cu_ld_time, cu_ld_uie,
+                  output cu_ld_epc,
+                  output TMRIF,
+                  output intf,
+                  output cu_mwr,
+                  output cu_r_s
   );
 
     reg cyc;
     reg VF, ZF, SF, CF;
     reg[31:0] IR1, IR2;
+
+    reg TMRIF;//, BIF, CIF, EIF;
+    reg ISRMode;
+
+
 
     wire  cu_br_inst,
           cu_jal_inst,
@@ -414,7 +551,8 @@ module rv32_ctrl(
           cu_store_inst,
           cu_lui_inst,
           cu_auipc_inst,
-          cu_custom;
+          cu_custom,
+          cu_system_inst;
 
     wire  cu_br_inst_1,
           cu_jal_inst_1,
@@ -440,9 +578,28 @@ module rv32_ctrl(
           cu_custom_2,
           cu_system_inst_2;
 
+
+    assign cu_mwr =  (cyc & (cu_store_inst_1));
+    assign cu_r_s = cu_custom_1;
+    //cu_store_inst_1 = (IR1[`IR_opcode]==`OPCODE_Store);
+      //wire cu_custom_1 = (IR1[`IR_opcode]==`OPCODE_Custom);
+
+
     wire cu_br_taken;
 
     wire[2:0] func3_1 = IR1[`IR_funct3];
+
+    assign intf = ~ISRMode & (cu_int_ecall | cu_int_ebreak | (eint & eie) | (TMRIF & tie)) & gie;
+
+    always @ (posedge clk)
+        if(rst) TMRIF <= 1'b0;
+        else if(tov) TMRIF <= 1'b1;
+        else if(cu_ld_time & cyc) TMRIF <= 1'b0;
+
+    always @(posedge clk)
+        if(rst) ISRMode <= 0;
+        else if(intf & cyc) ISRMode <= 1;
+        else if(cu_pc_s4) ISRMode <= 0;
 
     always @ (posedge clk or posedge rst)
       if(rst) cyc <= 1'b0;
@@ -459,7 +616,8 @@ module rv32_ctrl(
         .cu_store_inst(cu_store_inst),
         .cu_lui_inst(cu_lui_inst),
         .cu_auipc_inst(cu_auipc_inst),
-        .cu_custom_inst(cu_custom)
+        .cu_custom_inst(cu_custom),
+        .cu_system_inst(cu_system_inst)
     );
 
     rv32dec IDEC1(
@@ -510,7 +668,7 @@ module rv32_ctrl(
           IR1 <= `INST_NOP;
       else
           if(cyc)
-              if(cu_ctrl_inst_1) IR1 <= `INST_NOP;
+              if(cu_ctrl_inst_1 | intf) IR1 <= `INST_NOP;   // interrupts!
               else if(~cu_ext_hold) IR1 <= IR;
 
     always @ (posedge clk or posedge rst)
@@ -542,10 +700,11 @@ module rv32_ctrl(
     assign cu_rf_rs1 = IR[19:15];
     assign cu_rf_rs2 = IR[24:20];
 
+    assign cu_pc_s0 = intf;
     assign cu_pc_s1 = cu_jalr_inst_1;
     assign cu_pc_s2 = (cu_br_inst_1 & cu_br_taken) | (cu_jal_inst_1) ;
     assign cu_pc_s3 = (cu_br_inst_1 & ~cu_br_taken) ;
-
+    assign cu_pc_s4 = (IR==`INST_URET);
 
 
     assign cu_ext_hold = (~ext_done) & (cu_custom_1);
@@ -554,7 +713,7 @@ module rv32_ctrl(
                   (cu_rf_rd_2 != 5'b0) &
                   (cu_alu_inst_2 | cu_jal_inst_2 | cu_jalr_inst_2 | cu_lui_inst_2 | cu_load_inst_2 | cu_auipc_inst_2 | (cu_custom_2 & ext_done) | cu_system_inst_2);
 
-    assign cu_r1_ld = cyc & (cu_alu_inst | cu_br_inst | cu_load_inst | cu_store_inst | cu_jalr_inst | cu_custom);
+    assign cu_r1_ld = cyc & (cu_alu_inst | cu_br_inst | cu_load_inst | cu_store_inst | cu_jalr_inst | cu_custom | cu_system_inst);
     assign cu_r1_src = (cu_rf_rd_1==cu_rf_rs1) & (cu_alu_inst_1 | cu_load_inst_1 | cu_lui_inst_1 | cu_auipc_inst_1 | cu_custom_1) & (cu_rf_rs1 != 0); // 1: RESMux, 0: RS1
 
     assign cu_r2_ld = cyc & (cu_alu_inst | cu_br_inst | cu_store_inst | cu_custom);
@@ -568,12 +727,6 @@ module rv32_ctrl(
     assign cu_resmux_s1 = cu_lui_inst_1;
     assign cu_resmux_s2 = cu_j_inst_1;
 
-/*
-    assign cu_csr_clrc = (IR2 == `INST_CLRC);
-    assign cu_csr_clrch = (IR2 == `INST_CLRCH);
-    assign cu_csr_clrt = (IR2 == `INST_CLRT);
-    assign cu_csr_clrth = (IR2 == `INST_CLRTH);
-*/
     assign cu_csr_rd_s0 = cu_system_inst_2;
     assign cu_csr_rd_s1 = IR2[20];
     assign cu_csr_rd_s2 = IR2[27];
@@ -581,15 +734,21 @@ module rv32_ctrl(
     assign cu_int_ecall = (IR==`INST_ECALL);
     assign cu_int_ebreak = (IR==`INST_EBREAK);
 
-    assign cu_ld_cycle = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (~IR1[20]);
-    assign cu_ld_time = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[20]);
+    assign cu_ld_cycle = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[31:20]==12'hC00);
+    assign cu_ld_time = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[31:20]==12'hC01);
+    assign cu_ld_uie = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[31:20]==12'h004);
+
+    assign cu_ld_epc = (intf & cyc & ~cu_ext_hold);
+
 endmodule
 
 
 /*
   The CPU
 */
-module rv32_CPU_v2 ( clk, rst, do, di, addr, msz, mwr,
+module rv32_CPU_v2 (
+                  clk, rst,
+                  do, di, addr, msz, mwr,
                   rfwr, rfrd, rfrs1, rfrs2, rfD, rfRS1, rfRS2,
                   extA, extB, extR, extStart, extDone, extFunc3,
                   eint, eint_num,
@@ -615,70 +774,63 @@ module rv32_CPU_v2 ( clk, rst, do, di, addr, msz, mwr,
     input eint;
     input[3:0] eint_num;
 
+    // only for simulation
     output simdone;
     reg simdone = 0;
 
+    wire cyc;
+
     wire[31:0] ext_di;
 
-    //wire cu_csr_clrc, cu_csr_clrch, cu_csr_clrt, cu_csr_clrth;
     wire cu_csr_rd_s0, cu_csr_rd_s1, cu_csr_rd_s2;
     wire cu_int_ecall, cu_int_ebreak;
+    wire cu_ld_cycle, cu_ld_time, cu_ld_uie;
 
+    //Registers
+    reg[31:0] IR, R1, R2, PC1, I1;
+    reg[31:0] R, RES;
+    wire[31:0] IR1, IR2;
 
     // RF
     wire[31:0] RS1, RS2;
     wire rf_wr;
-
     assign RS1 = (rf_rs1==5'b0) ? 32'b0 : rfRS1;
     assign RS2 = (rf_rs2==5'b0) ? 32'b0 : rfRS2;
     assign rfwr = rf_wr;
     assign rfrs1 = rf_rs1;
     assign rfrs2 = rf_rs2;
     assign rfrd = rf_rd_2;
-    //assign rfD = RES;
     assign rfD = cu_csr_rd_s0 ? cntr : RES;
 
     // PC
-  wire cu_pc_s1, cu_pc_s2, cu_pc_s3;
-  wire[31:0] PC;
-
+    wire cu_pc_s0, cu_pc_s1, cu_pc_s2, cu_pc_s3, cu_pc_s4;
+    wire cu_ld_epc;
+    wire[31:0] PC;
 
   // counters/Int Logic
-  reg[31:0] Cycle;
-  reg[31:0] Time;
-  //reg[31:0] TimeCmp;
-  reg[31:0] epc;
-  reg TIF, BIF, CIF, EIF;
-  wire intf = cu_int_ecall | cu_int_ebreak | eint | TIF;
-  wire[31:0] int_vec = eint ? `EINT_VEC : TIF ? `TIMER_VEC : cu_int_ebreak ? `EBREAK_VEC : `ECALL_VEC;
+    wire[31:0] Cycle, Timer;
+    wire tov;
+    wire gie, tie, eie;
+    wire intf, TMRIF;
+    wire[2:0] vec = eint ? 4'd4 : TMRIF ? 4'd3 : cu_int_ebreak ? 4'd2 : 4'd1;
+    wire[31:0] cntr = (cu_csr_rd_s1) ? Cycle : Timer;
 
-  wire[31:0] cntrC = Cycle[31:0];//(cu_csr_rd_s2) ? Cycle[63:32] : Cycle[31:0];
-  wire[31:0] cntrT = Time[31:0]; //(cu_csr_rd_s2) ? Time[63:32] : Time[31:0];
-  wire[31:0] cntr = (cu_csr_rd_s1) ? cntrC : cntrT;
-
-  always @ (posedge clk)
-    if(rst) Cycle <= 0;
-    //else if(cu_csr_clrc) Cycle[31:0] <= 0;
-    //else if(cu_csr_clrch) Cycle[63:32] <= 0;
-    else Cycle <= Cycle + 1;
-
-  always @ (posedge clk)
-    if(rst) Time <= 0;
-    //else if(cu_csr_clrt) Time[31:0] <= 0;
-    //else if(cu_csr_clrth) Time[63:32] <= 0;
-    else Time = Time + 1;
-
-  always @ (posedge clk)
-    if(rst) TIF <= 0;
-    else if(Time==`TICK) TIF <= 1;
-
+    rv32Counters CNTR (
+        .clk(clk),
+        .rst(rst),
+        .Cycle(Cycle),
+        .Timer(Timer),
+        .wdata(R1),
+        .ld_cycle(cu_ld_cycle), .ld_timer(cu_ld_time), .ld_uie(cu_ld_uie),
+        .gie(gie), .tie(tie), .eie(eie),
+        .tif(tov)
+    );
 
 
     // +---------+
     // | Stage 0 |
     // +---------+
-    reg[31:0] IR, R1, R2, PC1, I1;
-    wire[31:0] IR1;
+
     wire[4:0] rf_rs1 = IR[19:15], rf_rs2 = IR[24:20];
     wire[4:0] rf_rd = IR[11:7];
     wire[31:0] IMM;
@@ -691,46 +843,42 @@ module rv32_CPU_v2 ( clk, rst, do, di, addr, msz, mwr,
     if(rst)
       IR <= `INST_NOP;
     else
-      if(~cyc) IR <= di;//memDo;
+      if(~cyc) IR <= di;
 
-    always @ (posedge clk)//or posedge rst)
+    always @ (posedge clk)
       if(cyc) I1 <= IMM;
 
     always @ (posedge clk or posedge rst)
-        if(rst) PC1 <= 32'b0;
-        else
-            if(cyc) PC1 <= PC;
+      if(rst) PC1 <= 32'b0;
+      else if(cyc) PC1 <= PC;
 
     wire cu_r1_ld, cu_r2_ld;
     wire cu_r1_src, cu_r2_src;
 
-    always @ (posedge clk)// or posedge rst)
-        if(cu_r1_ld)
-             if(cu_r1_src)
-                 R1 <= RESMux;
-             else
-                 R1 <= RS1;
+    always @ (posedge clk)
+      if(cu_r1_ld)
+         if(cu_r1_src)
+             R1 <= RESMux;
+         else
+             R1 <= RS1;
 
-   always @ (posedge clk)// or posedge rst)
-       if(cu_r2_ld)
-           if(cu_r2_src)
-               R2 <= RESMux;
-           else
-               R2 <= RS2;
+   always @ (posedge clk)
+     if(cu_r2_ld)
+         if(cu_r2_src)
+             R2 <= RESMux;
+         else
+             R2 <= RS2;
 
     // +---------+
     // | Stage 1 |
     // +---------+
-    reg[31:0] R/*, MDRi , MDRo*/, RES;
-    wire[31:0] IR2;
-    //reg CF, ZF, VF, SF;
     wire[31:0] alu_r, alu_a, alu_b;
     wire alu_cf, alu_zf, alu_vf, alu_sf;
     wire[4:0] rf_rd_1=IR1[11:7];
 
     wire cu_alu_a_src, cu_alu_b_src;
 
-    assign alu_a = (cu_alu_a_src) ? PC1:  R1 ; // to support auipc
+    assign alu_a = (cu_alu_a_src) ? PC1 : R1 ; // to support auipc
     assign alu_b = (cu_alu_b_src) ? I1 : R2;
 
     //ALU
@@ -745,10 +893,14 @@ module rv32_CPU_v2 ( clk, rst, do, di, addr, msz, mwr,
         );
 
     // extensions
+`define _EN_EXT_ 0
+`ifdef _EN_EXT_
     wire[31:0] ext_out;
     wire ext_hold;
     wire ext_start;
     wire ext_done;
+
+    wire cu_r_s;
 
     assign extA = R1;
     assign extB = R2;
@@ -759,16 +911,26 @@ module rv32_CPU_v2 ( clk, rst, do, di, addr, msz, mwr,
 
     always @ (posedge clk)
         if(~cyc)
-            if(cu_custom_1)
+            if(cu_r_s)
                 R <= ext_out;
             else
                 R <= alu_r;   // Is it really needed?
                               // The ALU inputs are stable
                               // till the end of the cycle
+`else
+    always @ (posedge clk)
+        if(~cyc)
+                R <= alu_r;
+`endif
 
     wire cu_resmux_s0, cu_resmux_s1, cu_resmux_s2;
 
-    wire [31:0] RESMux =  (cu_resmux_s0) ? ext_di :
+    //wire[1:0] res_sel = cu_resmux_s0 ? 2'd0 : cu_resmux_s1 ? 2'd1 : cu_resmux_s2 ? 2'd2 : 2'd3;
+    wire [31:0] RESMux =  /*(res_sel == 2'd0) ? ext_di :
+                          (res_sel == 2'd1) ? I1 :
+                          (res_sel == 2'd2) ? PC : R;
+*/
+                          (cu_resmux_s0) ? ext_di :
                           (cu_resmux_s1) ? I1 :
                           (cu_resmux_s2) ? PC : R;
 
@@ -780,7 +942,10 @@ module rv32_CPU_v2 ( clk, rst, do, di, addr, msz, mwr,
 
     wire[2:0] func3_1 = IR1[`IR_funct3];
 
-    assign mwr = (cyc & (cu_store_inst_1));
+
+    // memory
+    wire cu_mwr;
+    assign mwr = cu_mwr;
     assign addr = cyc ? R : PC;
     assign do = R2;
     assign msz = (cyc) ? func3_1[1:0] : 2'b10;
@@ -794,12 +959,25 @@ module rv32_CPU_v2 ( clk, rst, do, di, addr, msz, mwr,
 
     // Control Unit
 
-    wire cyc;
-    rv32_ctrl CTRL(
+    rv32PCUnit PCU(
+          .clk(clk), .rst(rst),
+          .ext_hold(ext_hold),.cyc(cyc),
+          .s0(cu_pc_s0), .s1(cu_pc_s1), .s2(cu_pc_s2), .s3(cu_pc_s3), .s4(cu_pc_s4),
+          .PC(PC),
+          .PC1(PC1), .I1(I1), .alu_r(alu_r),
+          .vec(vec),
+          .ld_epc(cu_ld_epc)
+    );
+
+
+    rv32CU CTRL(
                       .clk(clk), .rst(rst),
                       .IR(IR),
                       .ext_done(ext_done),
                       .cf(alu_cf), .zf(alu_zf), .sf(alu_sf), .vf(alu_vf),
+                      .tov(tov),
+                      .gie(gie), .tie(tie), .eie(eie),
+                      .eint(eint),
                       .cu_ext_hold(ext_hold),
                       .cu_ext_start(ext_start),
                       .cyc(cyc),
@@ -808,33 +986,24 @@ module rv32_CPU_v2 ( clk, rst, do, di, addr, msz, mwr,
                       .cu_r2_ld(cu_r2_ld),
                       .cu_r1_src(cu_r1_src),
                       .cu_r2_src(cu_r2_src),
-                      //output[4:0] cu_rf_rs1, cu_rf_rs2, cu_rf_rd_1, cu_rf_rd_2,
-                      .cu_pc_s1(cu_pc_s1), .cu_pc_s2(cu_pc_s2), .cu_pc_s3(cu_pc_s3),
+                      .cu_pc_s0(cu_pc_s0),.cu_pc_s1(cu_pc_s1), .cu_pc_s2(cu_pc_s2), .cu_pc_s3(cu_pc_s3),.cu_pc_s4(cu_pc_s4),
                       .cu_alu_a_src(cu_alu_a_src), .cu_alu_b_src(cu_alu_b_src),
                       .cu_resmux_s0(cu_resmux_s0), .cu_resmux_s1(cu_resmux_s1), .cu_resmux_s2(cu_resmux_s2),
                       .IR1(IR1), .IR2(IR2),
-                      //.cu_csr_clrc(cu_csr_clrc), .cu_csr_clrch(cu_csr_clrch), .cu_csr_clrt(cu_csr_clrt), .cu_csr_clrth(cu_csr_clrth),
                       .cu_csr_rd_s0(cu_csr_rd_s0), .cu_csr_rd_s1(cu_csr_rd_s1), .cu_csr_rd_s2(cu_csr_rd_s2),
-                      .cu_int_ecall(cu_int_ecall), .cu_int_ebreak(cu_int_ebreak)
-
+                      .cu_int_ecall(cu_int_ecall), .cu_int_ebreak(cu_int_ebreak),
+                      .cu_ld_cycle(cu_ld_cycle), .cu_ld_time(cu_ld_time), .cu_ld_uie(cu_ld_uie),
+                      .cu_ld_epc(cu_ld_epc),
+                      .TMRIF(TMRIF),
+                      .intf(intf),
+                      .cu_mwr(cu_mwr),
+                      .cu_r_s(cu_r_s)
       );
 
 
-      wire cu_store_inst_1 = (IR1[`IR_opcode]==`OPCODE_Store);
-      wire cu_custom_1 = (IR1[`IR_opcode]==`OPCODE_Custom);
-
-      // PC
-
-      rv32i_pcunit PCU(
-          .clk(clk), .rst(rst),
-          .ext_hold(ext_hold),.cyc(cyc),
-          .s0(intf), .s1(cu_pc_s1), .s2(cu_pc_s2), .s3(cu_pc_s3),
-          .PC(PC),
-          .PC1(PC1), .I1(I1), .alu_r(alu_r),
-          .int_vec(int_vec));
-
     // just for simulation!
-      integer i;
+
+integer i;
       always @ (IR2) begin
         if(IR2 == 32'h0000_0073) begin
           $display("Number of cycles: %0d", $time/10);
