@@ -25,34 +25,35 @@ r_type_insn(0b0000000, _rs2, _rs1, 0b000, _rd, 0b1000111)
 	.org 0
 _start:
 	wruie		x0
-	li			x1, 30
-	wrtime	x1
+	li			x4, 30
+	wrtime	x4
 	j		___App
 
 	.org	16
 ecall_vec:
-	j		ecall_vec
+	nop
+	uret
 
 	.org  32
 ebreak_vec:
-	j		ebreak_vec
+	nop
+	uret
 
 	.org	48
 timer_vec:
-	li x1, 30
-	wrtime	x1
+	li x4, 30
+	wrtime	x4
 	uret
-	j		timer_vec
 
 	.org	64
 eint_vec:
-	j		eint_vec
-
+	nop
+	uret
 
 	.org 80
 ___App:
-	#li	x1, 7
-	#wruie	x1
+	li	x4, 7
+	wruie	x4
 	lui sp, %hi(_fstack)
 	add sp, sp, %lo(_fstack)
 	jal main

@@ -47,13 +47,15 @@ wire extStart;
 wire extDone;
 wire[2:0] extFunc3;
 
+reg eint;
+
  rv32_CPU_v2 CPU(
               .clk(clk),
               .rst(rst),
               .do(cpu_do), .di(cpu_di), .addr(addr), .msz(sz), .mwr(wr),
               .rfwr(rfwr), .rfrd(rfrd), .rfrs1(rfrs1), .rfrs2(rfrs2), .rfD(rfD), .rfRS1(rfRS1), .rfRS2(rfRS2),
               .extA(extA), .extB(extB), .extR(extR), .extStart(extStart), .extDone(extDone), .extFunc3(),
-              .eint(1'b0), .eint_num(4'b0000),
+              .eint(eint), .eint_num(4'b0000),
               .simdone(simdone)
               );
 
@@ -100,7 +102,6 @@ initial begin clk = 0; end
 
 always # 5 clk = ~ clk;
 
-
  initial begin
     rst = 0;
     #50;
@@ -109,6 +110,13 @@ always # 5 clk = ~ clk;
     #50;
     @(negedge clk);
     rst = 0;
+end
+
+// This to test external interruppts !
+initial begin
+    eint = 0;
+    #300    eint = 1;
+    #20     eint = 0;
 end
 
 endmodule
