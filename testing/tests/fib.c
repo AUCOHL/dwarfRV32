@@ -1,6 +1,6 @@
 int Fibonacci(int);
  
-main()
+int main()
 {
    int sum = 0; 
  
