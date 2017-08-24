@@ -365,8 +365,9 @@
       // shifter
       wire[31:0] shift;
       wire[4:0] sha = (opcode==`OPCODE_Arith_I) ? shamt : b[4:0];
-      assign shift =  (func3 == `F3_SLL) ? (a << sha) :
-                      (func3 == `F3_SRL) ? (a >> sha) : ($signed(a) >>> sha);
+      //somehow type casting a two times is the only thing that works as expected with iverilog : CHECK AT SYNTHESIS
+      assign shift = func3[2]? (func7[5]? $signed($signed(a) >>> sha) : (a >> sha) ):
+                       (a << sha);
 
       // SLT/SLTU
       wire[31:0] slt;
@@ -728,7 +729,8 @@
       assign cu_r2_src = (cu_rf_rd_1 == cu_rf_rs2) & (cu_alu_inst_1 | cu_load_inst_1 | cu_lui_inst_1 | cu_auipc_inst_1 | cu_custom_1) & (cu_rf_rs2 != 0);
 
       assign cu_alu_a_src = cu_auipc_inst_1;
-      assign cu_alu_b_src = (cu_alu_i_inst | cu_load_inst | cu_store_inst | cu_jalr_inst | cu_auipc_inst | cu_lui_inst);
+      assign cu_alu_b_src = (cu_alu_i_inst_1 | cu_load_inst_1 | cu_store_inst_1 | cu_jalr_inst_1 | cu_auipc_inst_1 | cu_lui_inst_1);
+
 
 
       assign cu_resmux_s0 = cu_load_inst_1;
@@ -1013,8 +1015,10 @@
       // just for simulation!
 
   integer i;
-        always @ (IR) begin
-          if(IR == 32'h0000_0073) begin
+        //always @ (IR) begin // doesn't execute the insturction before the ecall (soln: nop?)
+          //if(IR == 32'h0000_0073) begin
+        always @ (IR2) begin  //doesn't work well with interrupts for now
+          if(IR2 == `INST_ECALL) begin
             $display("Number of cycles: %0d", $time/10);
             simdone = 1;
             #2;
