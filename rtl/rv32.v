@@ -758,17 +758,17 @@
   */
   module rv32_CPU_v2 (
                     clk, rst,
-                    do, di, addr, msz, mwr,
+                    bdo, bdi, baddr, bsz, bwr,
                     rfwr, rfrd, rfrs1, rfrs2, rfD, rfRS1, rfRS2,
                     extA, extB, extR, extStart, extDone, extFunc3,
                     eint, eint_num,
                     simdone
                   );
       input clk, rst;
-      output[31:0] do, addr;
-      output mwr;
-      output[1:0] msz;
-      input[31:0] di;
+      output[31:0] bdo, baddr;
+      output bwr;
+      output[1:0] bsz;
+      input[31:0] bdi;
 
       output[4:0] rfrd, rfrs1, rfrs2;
       output rfwr;
@@ -790,7 +790,7 @@
 
       wire cyc;
 
-      wire[31:0] ext_di;
+      wire[31:0] ext_bdi;
 
       wire cu_csr_rd_s0, cu_csr_rd_s1, cu_csr_rd_s2;
       wire cu_int_ecall, cu_int_ebreak;
@@ -853,7 +853,7 @@
       if(rst)
         IR <= `INST_NOP;
       else
-        if(~cyc) IR <= di;
+        if(~cyc) IR <= bdi;
 
       always @ (posedge clk)
         if(cyc) I1 <= IMM;
@@ -936,11 +936,11 @@
       wire cu_resmux_s0, cu_resmux_s1, cu_resmux_s2;
 
       //wire[1:0] res_sel = cu_resmux_s0 ? 2'd0 : cu_resmux_s1 ? 2'd1 : cu_resmux_s2 ? 2'd2 : 2'd3;
-      wire [31:0] RESMux =  /*(res_sel == 2'd0) ? ext_di :
+      wire [31:0] RESMux =  /*(res_sel == 2'd0) ? ext_bdi :
                             (res_sel == 2'd1) ? I1 :
                             (res_sel == 2'd2) ? PC : R;
   */
-                            (cu_resmux_s0) ? ext_di :
+                            (cu_resmux_s0) ? ext_bdi :
                             (cu_resmux_s1) ? I1 :
                             (cu_resmux_s2) ? PC : R;
 
@@ -955,12 +955,12 @@
 
       // memory
       wire cu_mwr;
-      assign mwr = cu_mwr;
-      assign addr = cyc ? R : PC;
-      assign do = R2;
-      assign msz = (cyc) ? func3_1[1:0] : 2'b10;
+      assign bwr = cu_mwr;
+      assign baddr = cyc ? R : PC;
+      assign bdo = R2;
+      assign bsz = (cyc) ? func3_1[1:0] : 2'b10;
 
-      rv32i_extender EXT (.di(di), .do(ext_di), .sz(func3_1[1:0]), .type(func3_1[2]) );
+      rv32i_extender EXT (.di(bdi), .do(ext_bdi), .sz(func3_1[1:0]), .type(func3_1[2]) );
 
       // +---------+
       // | Stage 2 |
