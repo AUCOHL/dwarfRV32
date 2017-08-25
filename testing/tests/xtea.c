@@ -25,9 +25,10 @@ void decipher(unsigned int num_rounds, uint32_t v[2], uint32_t const key[4]) {
     v[0]=v0; v[1]=v1;
 }
 
-void main(){
+int main(){
     unsigned int data[] = {0x12345678, 0xabcdef11};
     unsigned key[] = {0xDEAD1234, 0xDEAF1111, 0xFEED0000, 0xBADBED22};
     encipher(32, data, key);
     decipher(32, data, key);
+    return 0;
 }

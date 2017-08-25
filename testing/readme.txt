@@ -14,7 +14,14 @@ changelog:
 + interrupts disabled for now; all tests (except int.s) pass without interrupts. (to be handled next)
 + env_setup.sh and test.sh script tests all 4 optimization levels
 + rtl: shifter - alu control signals - "simulation terminator IR -> IR2"
++++
++ port names refactored to match the techreport (IRQen left!)
 
+====================================================================================
++ quicksort.c and mergesort.c overflows the ram section with -O3/-Ofast only!
++ random+dijkstra fail; memory gets overwritten?
++ gcc sometimes references memcpy and -mno-memcpy doesn't work (so, cannot initialize arrays larger than 7(?) inside main!) -> arrinmain.c:
+    solution: maybe like ext_mul?
 
 ====================================================================================
 notes:

@@ -31,9 +31,9 @@ module cpu_tb;
 reg clk, rst;
 
 
-wire[31:0] addr_, cpu_do, cpu_di;
-wire wr_;
-wire[1:0] sz_;
+wire[31:0] baddr, bdi, bdo;
+wire bwr;
+wire[1:0] bsz;
 
 wire[4:0] rfrd, rfrs1, rfrs2;
 wire rfwr;
@@ -47,20 +47,20 @@ wire extStart;
 wire extDone;
 wire[2:0] extFunc3;
 
-reg eint;
+reg IRQ;
 
 //port names updated, but signal/wire names are given arbitrary names
  rv32_CPU_v2 CPU(
               .clk(clk),
               .rst(rst),
-              .bdo(cpu_do), .bdi(cpu_di), .baddr(addr_), .bsz(sz_), .bwr(wr_),
+              .bdi(bdi), .bdo(bdo), .baddr(baddr), .bsz(bsz), .bwr(bwr),
               .rfwr(rfwr), .rfrd(rfrd), .rfrs1(rfrs1), .rfrs2(rfrs2), .rfD(rfD), .rfRS1(rfRS1), .rfRS2(rfRS2),
               .extA(extA), .extB(extB), .extR(extR), .extStart(extStart), .extDone(extDone), .extFunc3(),
-              .eint(eint), .eint_num(4'b0000),
+              .IRQ(IRQ), .IRQnum(4'b0000),
               .simdone(simdone)
               );
 
-memory M (.clk(clk), .bdi(cpu_do), .baddr(addr_), .bdo(cpu_di), .bwr(wr_), .bsz(sz_) );
+memory M (.clk(clk), .bdi(bdi), .baddr(baddr), .bdo(bdo), .bwr(bwr), .bsz(bsz) );
 
  mul MULEXT (
       .clk(clk),
@@ -115,9 +115,9 @@ end
 
 // This to test external interruppts !
 initial begin
-    eint = 0;
-    #300    eint = 1;
-    #20     eint = 0;
+    IRQ = 0;
+    #300    IRQ = 1;
+    #20     IRQ = 0;
 end
 
 endmodule

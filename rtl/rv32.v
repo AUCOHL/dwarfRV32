@@ -516,7 +516,7 @@
                     input ext_done,
                     input cf, zf, sf, vf,
                     input tov,
-                    input gie, tie, eie, eint,
+                    input gie, tie, eie, IRQ,
                     output[31:0] IR2, IR1,
                     output cu_ext_hold,
                     output cu_ext_start,
@@ -596,7 +596,7 @@
 
       wire[2:0] func3_1 = IR1[`IR_funct3];
 
-      assign intf = ~ISRMode & (cu_int_ecall | cu_int_ebreak | (eint & eie) | (TMRIF & tie)) & gie;
+      assign intf = ~ISRMode & (cu_int_ecall | cu_int_ebreak | (IRQ & eie) | (TMRIF & tie)) & gie;
 
       assign cu_sel_epc = cu_int_ecall | cu_int_ebreak;
 
@@ -758,17 +758,20 @@
   */
   module rv32_CPU_v2 (
                     clk, rst,
-                    bdo, bdi, baddr, bsz, bwr,
+                    bdi, bdo, baddr, bsz, bwr,
                     rfwr, rfrd, rfrs1, rfrs2, rfD, rfRS1, rfRS2,
+
                     extA, extB, extR, extStart, extDone, extFunc3,
-                    eint, eint_num,
+
+                    IRQ, IRQnum,
+
                     simdone
                   );
       input clk, rst;
-      output[31:0] bdo, baddr;
+      output[31:0] bdi, baddr;
       output bwr;
       output[1:0] bsz;
-      input[31:0] bdi;
+      input[31:0] bdo;
 
       output[4:0] rfrd, rfrs1, rfrs2;
       output rfwr;
@@ -781,8 +784,8 @@
       input extDone;
       output[2:0] extFunc3;
 
-      input eint;
-      input[3:0] eint_num;
+      input IRQ;
+      input[3:0] IRQnum;
 
       // only for simulation
       output simdone;
@@ -790,7 +793,7 @@
 
       wire cyc;
 
-      wire[31:0] ext_bdi;
+      wire[31:0] ext_bdo;
 
       wire cu_csr_rd_s0, cu_csr_rd_s1, cu_csr_rd_s2;
       wire cu_int_ecall, cu_int_ebreak;
@@ -822,7 +825,7 @@
       wire tov;
       wire gie, tie, eie;
       wire intf, TMRIF;
-      wire[2:0] vec = eint ? 4'd4 : TMRIF ? 4'd3 : cu_int_ebreak ? 4'd2 : 4'd1;
+      wire[2:0] vec = IRQ ? 4'd4 : TMRIF ? 4'd3 : cu_int_ebreak ? 4'd2 : 4'd1;
       wire[31:0] cntr = (cu_csr_rd_s1) ? Cycle : Timer;
 
       rv32Counters CNTR (
@@ -853,7 +856,7 @@
       if(rst)
         IR <= `INST_NOP;
       else
-        if(~cyc) IR <= bdi;
+        if(~cyc) IR <= bdo;
 
       always @ (posedge clk)
         if(cyc) I1 <= IMM;
@@ -936,11 +939,11 @@
       wire cu_resmux_s0, cu_resmux_s1, cu_resmux_s2;
 
       //wire[1:0] res_sel = cu_resmux_s0 ? 2'd0 : cu_resmux_s1 ? 2'd1 : cu_resmux_s2 ? 2'd2 : 2'd3;
-      wire [31:0] RESMux =  /*(res_sel == 2'd0) ? ext_bdi :
+      wire [31:0] RESMux =  /*(res_sel == 2'd0) ? ext_bdo :
                             (res_sel == 2'd1) ? I1 :
                             (res_sel == 2'd2) ? PC : R;
   */
-                            (cu_resmux_s0) ? ext_bdi :
+                            (cu_resmux_s0) ? ext_bdo :
                             (cu_resmux_s1) ? I1 :
                             (cu_resmux_s2) ? PC : R;
 
@@ -957,10 +960,10 @@
       wire cu_mwr;
       assign bwr = cu_mwr;
       assign baddr = cyc ? R : PC;
-      assign bdo = R2;
+      assign bdi = R2;
       assign bsz = (cyc) ? func3_1[1:0] : 2'b10;
 
-      rv32i_extender EXT (.di(bdi), .do(ext_bdi), .sz(func3_1[1:0]), .type(func3_1[2]) );
+      rv32i_extender EXT (.di(bdo), .do(ext_bdo), .sz(func3_1[1:0]), .type(func3_1[2]) );
 
       // +---------+
       // | Stage 2 |
@@ -988,7 +991,7 @@
                         .cf(alu_cf), .zf(alu_zf), .sf(alu_sf), .vf(alu_vf),
                         .tov(tov),
                         .gie(gie), .tie(tie), .eie(eie),
-                        .eint(eint),
+                        .IRQ(IRQ),
                         .cu_ext_hold(ext_hold),
                         .cu_ext_start(ext_start),
                         .cyc(cyc),
