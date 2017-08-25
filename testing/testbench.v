@@ -31,9 +31,9 @@ module cpu_tb;
 reg clk, rst;
 
 
-wire[31:0] addr, cpu_do, cpu_di;
-wire wr;
-wire[1:0] sz;
+wire[31:0] addr_, cpu_do, cpu_di;
+wire wr_;
+wire[1:0] sz_;
 
 wire[4:0] rfrd, rfrs1, rfrs2;
 wire rfwr;
@@ -49,17 +49,18 @@ wire[2:0] extFunc3;
 
 reg eint;
 
+//port names updated, but signal/wire names are given arbitrary names
  rv32_CPU_v2 CPU(
               .clk(clk),
               .rst(rst),
-              .do(cpu_do), .di(cpu_di), .addr(addr), .msz(sz), .mwr(wr),
+              .bdo(cpu_do), .bdi(cpu_di), .baddr(addr_), .bsz(sz_), .bwr(wr_),
               .rfwr(rfwr), .rfrd(rfrd), .rfrs1(rfrs1), .rfrs2(rfrs2), .rfD(rfD), .rfRS1(rfRS1), .rfRS2(rfRS2),
               .extA(extA), .extB(extB), .extR(extR), .extStart(extStart), .extDone(extDone), .extFunc3(),
               .eint(eint), .eint_num(4'b0000),
               .simdone(simdone)
               );
 
- memory M (.clk(clk), .di(cpu_do), .addr(addr), .do(cpu_di), .wr(wr), .sz(sz) );
+memory M (.clk(clk), .bdi(cpu_do), .baddr(addr_), .bdo(cpu_di), .bwr(wr_), .bsz(sz_) );
 
  mul MULEXT (
       .clk(clk),

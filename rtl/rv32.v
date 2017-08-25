@@ -365,8 +365,9 @@
       // shifter
       wire[31:0] shift;
       wire[4:0] sha = (opcode==`OPCODE_Arith_I) ? shamt : b[4:0];
-      assign shift =  (func3 == `F3_SLL) ? (a << sha) :
-                      (func3 == `F3_SRL) ? (a >> sha) : ($signed(a) >>> sha);
+      //somehow type casting a two times is the only thing that works as expected with iverilog : CHECK AT SYNTHESIS
+      assign shift = func3[2]? (func7[5]? $signed($signed(a) >>> sha) : (a >> sha) ):
+                       (a << sha);
 
       // SLT/SLTU
       wire[31:0] slt;
@@ -728,7 +729,8 @@
       assign cu_r2_src = (cu_rf_rd_1 == cu_rf_rs2) & (cu_alu_inst_1 | cu_load_inst_1 | cu_lui_inst_1 | cu_auipc_inst_1 | cu_custom_1) & (cu_rf_rs2 != 0);
 
       assign cu_alu_a_src = cu_auipc_inst_1;
-      assign cu_alu_b_src = (cu_alu_i_inst | cu_load_inst | cu_store_inst | cu_jalr_inst | cu_auipc_inst | cu_lui_inst);
+      assign cu_alu_b_src = (cu_alu_i_inst_1 | cu_load_inst_1 | cu_store_inst_1 | cu_jalr_inst_1 | cu_auipc_inst_1 | cu_lui_inst_1);
+
 
 
       assign cu_resmux_s0 = cu_load_inst_1;
@@ -756,17 +758,17 @@
   */
   module rv32_CPU_v2 (
                     clk, rst,
-                    do, di, addr, msz, mwr,
+                    bdo, bdi, baddr, bsz, bwr,
                     rfwr, rfrd, rfrs1, rfrs2, rfD, rfRS1, rfRS2,
                     extA, extB, extR, extStart, extDone, extFunc3,
                     eint, eint_num,
                     simdone
                   );
       input clk, rst;
-      output[31:0] do, addr;
-      output mwr;
-      output[1:0] msz;
-      input[31:0] di;
+      output[31:0] bdo, baddr;
+      output bwr;
+      output[1:0] bsz;
+      input[31:0] bdi;
 
       output[4:0] rfrd, rfrs1, rfrs2;
       output rfwr;
@@ -788,7 +790,7 @@
 
       wire cyc;
 
-      wire[31:0] ext_di;
+      wire[31:0] ext_bdi;
 
       wire cu_csr_rd_s0, cu_csr_rd_s1, cu_csr_rd_s2;
       wire cu_int_ecall, cu_int_ebreak;
@@ -851,7 +853,7 @@
       if(rst)
         IR <= `INST_NOP;
       else
-        if(~cyc) IR <= di;
+        if(~cyc) IR <= bdi;
 
       always @ (posedge clk)
         if(cyc) I1 <= IMM;
@@ -934,11 +936,11 @@
       wire cu_resmux_s0, cu_resmux_s1, cu_resmux_s2;
 
       //wire[1:0] res_sel = cu_resmux_s0 ? 2'd0 : cu_resmux_s1 ? 2'd1 : cu_resmux_s2 ? 2'd2 : 2'd3;
-      wire [31:0] RESMux =  /*(res_sel == 2'd0) ? ext_di :
+      wire [31:0] RESMux =  /*(res_sel == 2'd0) ? ext_bdi :
                             (res_sel == 2'd1) ? I1 :
                             (res_sel == 2'd2) ? PC : R;
   */
-                            (cu_resmux_s0) ? ext_di :
+                            (cu_resmux_s0) ? ext_bdi :
                             (cu_resmux_s1) ? I1 :
                             (cu_resmux_s2) ? PC : R;
 
@@ -953,12 +955,12 @@
 
       // memory
       wire cu_mwr;
-      assign mwr = cu_mwr;
-      assign addr = cyc ? R : PC;
-      assign do = R2;
-      assign msz = (cyc) ? func3_1[1:0] : 2'b10;
+      assign bwr = cu_mwr;
+      assign baddr = cyc ? R : PC;
+      assign bdo = R2;
+      assign bsz = (cyc) ? func3_1[1:0] : 2'b10;
 
-      rv32i_extender EXT (.di(di), .do(ext_di), .sz(func3_1[1:0]), .type(func3_1[2]) );
+      rv32i_extender EXT (.di(bdi), .do(ext_bdi), .sz(func3_1[1:0]), .type(func3_1[2]) );
 
       // +---------+
       // | Stage 2 |
@@ -1013,8 +1015,10 @@
       // just for simulation!
 
   integer i;
-        always @ (IR) begin
-          if(IR == 32'h0000_0073) begin
+        //always @ (IR) begin // doesn't execute the insturction before the ecall (soln: nop?)
+          //if(IR == 32'h0000_0073) begin
+        always @ (IR2) begin  //doesn't work well with interrupts for now
+          if(IR2 == `INST_ECALL) begin
             $display("Number of cycles: %0d", $time/10);
             simdone = 1;
             #2;
