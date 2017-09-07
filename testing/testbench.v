@@ -97,7 +97,7 @@ end
 always @ (posedge simdone)
   //$display ("DONE!!!!");
     for(i=0; i<32; i=i+1)
-        $display("x%0d:\t0x%h\t%0d",i,RF[i], $signed(RF[i]));
+        $display("x%0d: \t0x%h\t%0d",i,RF[i], $signed(RF[i]));
 
 initial begin clk = 0; end
 

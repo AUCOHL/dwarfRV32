@@ -1,12 +1,12 @@
 #! /bin/sh
 # change -o0 to -o2 for better compiler optimization
-tests_path="../tests/"
-toolchain_path=""
+. ./env_setup.sh
+
 name=$(echo $1 | cut -f 1 -d '.')
 ext=$(echo $1 | cut -f 2 -d '.')
 run=${2:-0}                 #arg2 : optimization level
 
-cd "tmp"
+cd $tmp_path
 
 if [ "$ext" = "s" ]
 then

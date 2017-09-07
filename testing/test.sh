@@ -8,7 +8,7 @@ name=$(echo $1 | cut -f 1 -d '.')
 ext=$(echo $1 | cut -f 2 -d '.')
 
 runSim (){
-    ${toolchain_path}riscv32-unknown-elf-objdump -d "$1.elf" > "$1.lst"
+    ${toolchain_path}riscv32-unknown-elf-objdump -d -M no-aliases "$1.elf" > "$1.lst"
     ${toolchain_path}riscv32-unknown-elf-objcopy -O binary "$1.elf" "$1.bin"
 
     ../b2h.py "$1.bin" 1024 > "$1.hex" ## 

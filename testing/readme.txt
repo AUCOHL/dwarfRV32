@@ -16,12 +16,16 @@ changelog:
 + rtl: shifter - alu control signals - "simulation terminator IR -> IR2"
 +++
 + port names refactored to match the techreport (IRQen left!)
++++
++ rdtime/rdcycle mixed (data dependency left!)
++ time interrupts in an instruction following a taken branch/jump
 
 ====================================================================================
 + quicksort.c and mergesort.c overflows the ram section with -O3/-Ofast only!
 + random+dijkstra fail; memory gets overwritten?
 + gcc sometimes references memcpy and -mno-memcpy doesn't work (so, cannot initialize arrays larger than 7(?) inside main!) -> arrinmain.c:
     solution: maybe like ext_mul?
++ data dependency of rdtime/rdcycle
 
 ====================================================================================
 notes:

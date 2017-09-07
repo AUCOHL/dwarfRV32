@@ -124,6 +124,7 @@
   `define     IR_funct3       14:12
   `define     IR_funct7       31:25
   `define     IR_shamt        24:20
+  `define     IR_csr          31:20
 
   `define     OPCODE_Branch   5'b11_000
   `define     OPCODE_Load     5'b00_000
@@ -134,8 +135,7 @@
   `define     OPCODE_Arith_R  5'b01_100
   `define     OPCODE_AUIPC    5'b00_101
   `define     OPCODE_LUI      5'b01_101
-  `define     OPCODE_SYSTEM   5'b11_100
-
+  `define     OPCODE_SYSTEM   5'b11_100 
   `define     OPCODE_Custom   5'b10_001
 
   `define     F3_ADD          3'b000
@@ -158,6 +158,10 @@
 
   `define     SYS_CSRRS       3'b010
   `define     SYS_CSRRW       3'b001
+  `define     SYS_CSRRC       3'b011
+  `define     CSR_cycle       12'hc00
+  `define     CSR_time        12'hc01
+  `define     CSR_uie         12'h004
 
   `define     INST_NOP        32'h13
   /*
@@ -179,9 +183,16 @@
   `define     TIMER_VEC       32'd48
   `define     EINT_VEC        32'd64
 
+  //enablers
+
+  `define _EN_EXT_            0  //for simulation only
+  `define _SIM_               0
+  //`define _MONTR_          0
+
   /*
   module IntCtrl(
     input[7:0] I,
+
     input[7:0] ie,
     output IRQ,
     output[2:0] IntNum
@@ -215,6 +226,7 @@
       reg[31:0] Cycle, Timer;
       reg[2:0] UIE;
 
+
       always @ (posedge clk or posedge rst)
           if(rst) Timer <= 32'd0;
           else if(ld_timer) Timer <= wdata;
@@ -231,6 +243,11 @@
 
       assign {eie, tie, gie} = UIE;
       assign tif = (Timer == 32'b1);
+
+`ifdef _MONTR_
+   initial
+     $monitor("Timer = %d, Cycle = %d", Timer, Cycle);
+`endif
 
   endmodule
 
@@ -302,6 +319,7 @@
 
       assign nPC = s1 ? alu_r : pc_adder;
 
+
       always@(posedge clk or posedge rst)
           if(rst) PC <= 32'b0;
           else
@@ -312,7 +330,12 @@
       always@(posedge clk or posedge rst)
           if(rst) ePC <= 32'b0;
           else if(ld_epc)
-              ePC <= sel_epc ? nPC : PC;
+            ePC <= (sel_epc | s1 | s2) ? nPC : PC; //if ctrl instruction, fetch nPC; if branch not taken (s3), then no problem, keep going (more efficient)
+             //ePC <= sel_epc ? nPC : PC;
+`ifdef _MONTR_ 
+      initial
+        $monitor("ePC = %h, ld_epc = %d, PC = %h, nPc = %h, sel_npc = %d", ePC, ld_epc, PC, nPC, sel_epc);
+`endif
 
 
   endmodule
@@ -677,7 +700,13 @@
             IR1 <= `INST_NOP;
         else
             if(cyc)
-                if(cu_ctrl_inst_1 | intf) IR1 <= `INST_NOP;   // interrupts!
+                //interrupts!
+            `ifdef _SIM_
+                if(cu_ctrl_inst_1 | (intf & ~cu_int_ecall)) IR1 <= `INST_NOP;   //REMOVE LATER
+            `else
+                if(cu_ctrl_inst_1 | intf) IR1 <= `INST_NOP;
+            `endif
+
                 else if(~cu_ext_hold) IR1 <= IR;
 
       always @ (posedge clk or posedge rst)
@@ -704,10 +733,10 @@
           else
               cu_ext_start <= 0;
 
-      assign cu_rf_rd_1 = IR1[11:7];
-      assign cu_rf_rd_2 = IR2[11:7];
-      assign cu_rf_rs1 = IR[19:15];
-      assign cu_rf_rs2 = IR[24:20];
+      assign cu_rf_rd_1 = IR1[`IR_rd];
+      assign cu_rf_rd_2 = IR2[`IR_rd];
+      assign cu_rf_rs1 = IR[`IR_rs1];
+      assign cu_rf_rs2 = IR[`IR_rs2];
 
       assign cu_pc_s0 = intf;
       assign cu_pc_s1 = cu_jalr_inst_1;
@@ -744,9 +773,9 @@
       assign cu_int_ecall = (IR==`INST_ECALL);
       assign cu_int_ebreak = (IR==`INST_EBREAK);
 
-      assign cu_ld_cycle = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[31:20]==12'hC00);
-      assign cu_ld_time = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[31:20]==12'hC01);
-      assign cu_ld_uie = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[31:20]==12'h004);
+      assign cu_ld_cycle = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[`IR_csr]==`CSR_cycle);
+      assign cu_ld_time = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[`IR_csr]==`CSR_time);
+      assign cu_ld_uie = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[`IR_csr]==`CSR_uie);
 
       assign cu_ld_epc = (intf & cyc & ~cu_ext_hold);
 
@@ -763,9 +792,10 @@
 
                     extA, extB, extR, extStart, extDone, extFunc3,
 
-                    IRQ, IRQnum,
-
-                    simdone
+                    IRQ, IRQnum
+`ifdef _SIM_
+                    , simdone
+`endif
                   );
       input clk, rst;
       output[31:0] bdi, baddr;
@@ -788,8 +818,10 @@
       input[3:0] IRQnum;
 
       // only for simulation
+   `ifdef _SIM_
       output simdone;
       reg simdone = 0;
+   `endif
 
       wire cyc;
 
@@ -815,6 +847,8 @@
       assign rfrd = rf_rd_2;
       assign rfD = cu_csr_rd_s0 ? cntr : RES;
 
+
+
       // PC
       wire cu_pc_s0, cu_pc_s1, cu_pc_s2, cu_pc_s3, cu_pc_s4;
       wire cu_ld_epc, cu_sel_epc;
@@ -826,7 +860,8 @@
       wire gie, tie, eie;
       wire intf, TMRIF;
       wire[2:0] vec = IRQ ? 4'd4 : TMRIF ? 4'd3 : cu_int_ebreak ? 4'd2 : 4'd1;
-      wire[31:0] cntr = (cu_csr_rd_s1) ? Cycle : Timer;
+      wire [31:0]  cntr = (cu_csr_rd_s1) ?  Timer : Cycle; 
+      //wire[31:0] cntr = (cu_csr_rd_s1) ? Cycle : Timer;
 
       rv32Counters CNTR (
           .clk(clk),
@@ -844,8 +879,8 @@
       // | Stage 0 |
       // +---------+
 
-      wire[4:0] rf_rs1 = IR[19:15], rf_rs2 = IR[24:20];
-      wire[4:0] rf_rd = IR[11:7];
+      wire[4:0] rf_rs1 = IR[`IR_rs1], rf_rs2 = IR[`IR_rs2];
+      wire[4:0] rf_rd = IR[`IR_rd];
       wire[31:0] IMM;
 
       rv32i_imm_gen IMMGen(   .inst(IR),
@@ -887,7 +922,7 @@
       // +---------+
       wire[31:0] alu_r, alu_a, alu_b;
       wire alu_cf, alu_zf, alu_vf, alu_sf;
-      wire[4:0] rf_rd_1=IR1[11:7];
+      wire[4:0] rf_rd_1=IR1[`IR_rd];
 
       wire cu_alu_a_src, cu_alu_b_src;
 
@@ -906,7 +941,6 @@
           );
 
       // extensions
-  `define _EN_EXT_ 0
   `ifdef _EN_EXT_
       wire[31:0] ext_out;
       wire ext_hold;
@@ -945,7 +979,7 @@
   */
                             (cu_resmux_s0) ? ext_bdo :
                             (cu_resmux_s1) ? I1 :
-                            (cu_resmux_s2) ? PC : R;
+                            (cu_resmux_s2) ? PC : R; //need to account for rdtime and rdcycle
 
       always @ (posedge clk or posedge rst)
           if(rst)
@@ -968,7 +1002,7 @@
       // +---------+
       // | Stage 2 |
       // +---------+
-      wire[4:0] rf_rd_2 = IR2[11:7];
+      wire[4:0] rf_rd_2 = IR2[`IR_rd];
 
       // Control Unit
 
@@ -1016,11 +1050,9 @@
 
 
       // just for simulation!
-
-  integer i;
-        //always @ (IR) begin // doesn't execute the insturction before the ecall (soln: nop?)
-          //if(IR == 32'h0000_0073) begin
-        always @ (IR2) begin  //doesn't work well with interrupts for now
+   `ifdef _SIM_
+        integer      i;
+        always @ (IR2) begin  //doesn't work well with interrupts for now (normal testing)
           if(IR2 == `INST_ECALL) begin
             $display("Number of cycles: %0d", $time/10);
             simdone = 1;
@@ -1028,6 +1060,5 @@
             $finish;
           end
         end
-
-
-  endmodule
+   `endif
+endmodule

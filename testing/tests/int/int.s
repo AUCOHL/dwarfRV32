@@ -31,7 +31,7 @@ ecall_vec:
 
 .org  32
 ebreak_vec:
-  nop
+  li x6, 111
   uret
 
 

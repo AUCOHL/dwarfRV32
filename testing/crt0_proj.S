@@ -52,7 +52,7 @@ eint_vec:
 
 	.org 80
 ___App:
-	li	x4, 0
+	li	x4, 0x5 #{eie, tie, gie}
 	wruie	x4
 	lui sp, %hi(_fstack)
 	add sp, sp, %lo(_fstack)
