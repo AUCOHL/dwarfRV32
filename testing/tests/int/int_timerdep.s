@@ -19,7 +19,7 @@
 .org 0
 _start:
   wruie		x0
-  li			x4, 30
+  li			x4, 50
   wrtime	x4
   j       ___App
 
@@ -53,9 +53,10 @@ ___App:
   li	    x4, 7
   wruie	  x4
   li x10, 0
+  li x9, 100
 infloop:
-  addi x10, x10, 1
-  rdtime x5
-  bne x5, x0, infloop
+  rdcycle x5
+  add x10, x10, x5
+  ble x10, x9, infloop
   li a7, 10
   ecall

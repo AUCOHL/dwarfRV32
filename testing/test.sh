@@ -6,6 +6,16 @@
 
 name=$(echo $1 | cut -f 1 -d '.')
 ext=$(echo $1 | cut -f 2 -d '.')
+mode=${2:-0}                 #arg2 : 0: normal, 1: interrupts 2: special
+
+if [ $mode = 1 ]; then
+    tests_path="$tests_path/int/"
+else
+    if [ $mode = 2 ]; then
+        tests_path="$tests_path/special/"
+    fi
+fi
+
 
 runSim (){
     ${toolchain_path}riscv32-unknown-elf-objdump -d -M no-aliases "$1.elf" > "$1.lst"
@@ -17,8 +27,6 @@ runSim (){
     cp "$1.hex" "test.hex"
 
     ../rv32sim "$1.bin" | tail -32 > "$1.sim.txt"
-
-
     vvp "$name.out" | tail -32 > "$1.vvp.txt"
 
 

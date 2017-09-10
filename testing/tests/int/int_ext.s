@@ -45,15 +45,18 @@ timer_vec:
 .org	64
 eint_vec:
   li x6, 111
-  j exit
+  uret
 
 
 .org 80
 ___App:
   li	    x4, 5
   wruie	  x4
+  li x9, 111
 infloop:
-  j infloop
+  li x7, 123
+  beq x9, x6, exit
+  jal x5, infloop
  
 exit:
   li x7, 10

@@ -38,8 +38,8 @@ ebreak_vec:
 .org	48
 timer_vec:
   li x4, 0
-  wrtime	x4
-  j exit
+  wrtime x4
+  uret
 
 
 .org	64
@@ -50,14 +50,10 @@ eint_vec:
 
 .org 80
 ___App:
-  li	    x4, 3
+  li	    x4, 7
   wruie	  x4
-  li x10, 0
-infloop:
-  addi x10, x10, 1
-  j infloop
 
-exit:
+infloop:
   rdtime x5
   bne x5, x0, infloop
   li a7, 10

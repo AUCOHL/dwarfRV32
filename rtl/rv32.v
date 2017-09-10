@@ -185,9 +185,10 @@
 
   //enablers
 
-  `define _EN_EXT_            0  //for simulation only
-  `define _SIM_               0
-  //`define _MONTR_          0
+  `define     _EN_EXT_        0  //for simulation only
+  `define     _SIM_           0
+//`define     _MONTR_         0
+//`define     _MONTRT_        0
 
   /*
   module IntCtrl(
@@ -244,9 +245,10 @@
       assign {eie, tie, gie} = UIE;
       assign tif = (Timer == 32'b1);
 
-`ifdef _MONTR_
-   initial
-     $monitor("Timer = %d, Cycle = %d", Timer, Cycle);
+
+`ifdef _MONTRT_
+     always @ (posedge clk)
+       $display( "Timer = %d, Cycle = %d", Timer, Cycle);
 `endif
 
   endmodule
@@ -308,7 +310,8 @@
       input s0, s1, s2, s3, s4, ld_epc,sel_epc,
       output[31:0] PC,
       input[31:0] PC1, I1, alu_r,
-      input[2:0] vec);
+      input[2:0] vec
+	  );
 
       reg[31:0] PC, ePC;
 
@@ -332,12 +335,6 @@
           else if(ld_epc)
             ePC <= (sel_epc | s1 | s2) ? nPC : PC; //if ctrl instruction, fetch nPC; if branch not taken (s3), then no problem, keep going (more efficient)
              //ePC <= sel_epc ? nPC : PC;
-`ifdef _MONTR_ 
-      initial
-        $monitor("ePC = %h, ld_epc = %d, PC = %h, nPc = %h, sel_npc = %d", ePC, ld_epc, PC, nPC, sel_epc);
-`endif
-
-
   endmodule
 
   /*
@@ -752,11 +749,11 @@
                     (cu_alu_inst_2 | cu_jal_inst_2 | cu_jalr_inst_2 | cu_lui_inst_2 | cu_load_inst_2 | cu_auipc_inst_2 | (cu_custom_2 & ext_done) | cu_system_inst_2);
 
       assign cu_r1_ld = cyc & (cu_alu_inst | cu_br_inst | cu_load_inst | cu_store_inst | cu_jalr_inst | cu_custom | cu_system_inst);
-      assign cu_r1_src = (cu_rf_rd_1==cu_rf_rs1) & (cu_alu_inst_1 | cu_load_inst_1 | cu_lui_inst_1 | cu_auipc_inst_1 | cu_custom_1) & (cu_rf_rs1 != 0); // 1: RESMux, 0: RS1
 
+      assign cu_r1_src = (cu_rf_rd_1==cu_rf_rs1) & (cu_alu_inst_1 | cu_load_inst_1 | cu_lui_inst_1 | cu_auipc_inst_1 | cu_custom_1 | cu_system_inst_1) & (cu_rf_rs1 != 5'b0); // 1: RESMux, 0: RS1
       assign cu_r2_ld = cyc & (cu_alu_inst | cu_br_inst | cu_store_inst | cu_custom);
-      assign cu_r2_src = (cu_rf_rd_1 == cu_rf_rs2) & (cu_alu_inst_1 | cu_load_inst_1 | cu_lui_inst_1 | cu_auipc_inst_1 | cu_custom_1) & (cu_rf_rs2 != 0);
 
+      assign cu_r2_src = (cu_rf_rd_1 == cu_rf_rs2) & (cu_alu_inst_1 | cu_load_inst_1 | cu_lui_inst_1 | cu_auipc_inst_1 | cu_custom_1 | cu_system_inst_1) & (cu_rf_rs2 != 5'b0);
       assign cu_alu_a_src = cu_auipc_inst_1;
       assign cu_alu_b_src = (cu_alu_i_inst_1 | cu_load_inst_1 | cu_store_inst_1 | cu_jalr_inst_1 | cu_auipc_inst_1 | cu_lui_inst_1);
 
@@ -766,10 +763,10 @@
       assign cu_resmux_s1 = cu_lui_inst_1;
       assign cu_resmux_s2 = cu_j_inst_1;
 
-      assign cu_csr_rd_s0 = cu_system_inst_2;
-      assign cu_csr_rd_s1 = IR2[20];
-      assign cu_csr_rd_s2 = IR2[27];
 
+      assign cu_csr_rd_s0 = cu_system_inst_1;
+      assign cu_csr_rd_s1 = IR1[20];
+      assign cu_csr_rd_s2 = IR1[27];
       assign cu_int_ecall = (IR==`INST_ECALL);
       assign cu_int_ebreak = (IR==`INST_EBREAK);
 
@@ -845,8 +842,7 @@
       assign rfrs1 = rf_rs1;
       assign rfrs2 = rf_rs2;
       assign rfrd = rf_rd_2;
-      assign rfD = cu_csr_rd_s0 ? cntr : RES;
-
+     assign rfD = RES;
 
 
       // PC
@@ -861,7 +857,6 @@
       wire intf, TMRIF;
       wire[2:0] vec = IRQ ? 4'd4 : TMRIF ? 4'd3 : cu_int_ebreak ? 4'd2 : 4'd1;
       wire [31:0]  cntr = (cu_csr_rd_s1) ?  Timer : Cycle; 
-      //wire[31:0] cntr = (cu_csr_rd_s1) ? Cycle : Timer;
 
       rv32Counters CNTR (
           .clk(clk),
@@ -979,13 +974,18 @@
   */
                             (cu_resmux_s0) ? ext_bdo :
                             (cu_resmux_s1) ? I1 :
-                            (cu_resmux_s2) ? PC : R; //need to account for rdtime and rdcycle
+                   (cu_resmux_s2) ? PC :
+                   (cu_csr_rd_s0) ? cntr : R; 
 
       always @ (posedge clk or posedge rst)
           if(rst)
               RES <= 32'b0;
-          else
-              if(cyc) RES <= RESMux;
+	  else begin
+	      if(cyc) RES <= RESMux;
+  `ifdef _MONTR_
+	  $display("csr_rd_s0 = %d, cu_r1_src = %d, RES = %d", cu_csr_rd_s0, cu_r1_src, RES);
+  `endif
+	  end
 
       wire[2:0] func3_1 = IR1[`IR_funct3];
 

@@ -6,6 +6,16 @@ name=$(echo $1 | cut -f 1 -d '.')
 ext=$(echo $1 | cut -f 2 -d '.')
 run=${2:-0}                 #arg2 : optimization level
 
+mode=${3:-0}                 #arg3 : 0: normal, 1: interrupts 2: special
+
+if [ $mode = 1 ]; then
+    tests_path="$tests_path/int/"
+else
+    if [ $mode = 2 ]; then
+        tests_path="$tests_path/special/"
+    fi
+fi
+
 cd $tmp_path
 
 if [ "$ext" = "s" ]
@@ -22,10 +32,10 @@ ${toolchain_path}riscv32-unknown-elf-objcopy -O binary "$name.elf" "$name.bin"
 
 cp "$name.hex" "test.hex"
 
-#produce sim first
-../rv32sim "$name.bin" | tail -32 > "$name.sim.txt"
 
 iverilog   -Wall -Wno-timescale -o "$name.out" ../testbench.v ../../rtl/rv32.v ../../rtl/memory.v
+
+../rv32sim "$name.bin" | tail -32 > "$name.sim.txt"
 vvp "$name.out" | tail -32 > "$name.vvp.txt"
 
 
