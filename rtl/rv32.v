@@ -333,8 +333,7 @@
       always@(posedge clk or posedge rst)
           if(rst) ePC <= 32'b0;
           else if(ld_epc)
-            ePC <= (sel_epc | s1 | s2) ? nPC : PC; //if ctrl instruction, fetch nPC; if branch not taken (s3), then no problem, keep going (more efficient)
-             //ePC <= sel_epc ? nPC : PC;
+            ePC <= (sel_epc | s1 | s2) ? nPC : PC; //if ctrl instruction, fetch nPC; if branch not taken (s3), then keep going
   endmodule
 
   /*
@@ -703,7 +702,6 @@
             `else
                 if(cu_ctrl_inst_1 | intf) IR1 <= `INST_NOP;
             `endif
-
                 else if(~cu_ext_hold) IR1 <= IR;
 
       always @ (posedge clk or posedge rst)
