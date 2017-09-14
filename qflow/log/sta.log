@@ -1,0 +1,115 @@
+Qflow static timing analysis logfile created on Thu Sep 14 16:23:57 PDT 2017
+Running vesta static timing analysis
+vesta  rv32_CPU_v2.rtlnopwr.v /ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib
+----------------------------------------------
+Vesta static timing analysis tool
+(c) 2013-2017 Tim Edwards, Open Circuit Design
+----------------------------------------------
+
+Parsing library "D_CELLS_MOS_typ_3_30V_25C"
+End of library at line 297952
+Parsing module "rv32_CPU_v2"
+Lib Read:  Processed 297953 lines.
+Verilog netlist read:  Processed 5101 lines.
+Number of paths analyzed:  581
+
+Top 20 maximum delay paths:
+Path DFRRQX1_167/C to DFRQX1_6/D delay 7363.78 ps
+Path DFRRQX1_167/C to DFRQX1_2/D delay 7317.31 ps
+Path DFRRQX1_167/C to DFRQX1_3/D delay 7268.05 ps
+Path DFRRQX1_167/C to DFRQX1_4/D delay 7242.55 ps
+Path DFRRQX1_167/C to DFRQX1_5/D delay 7045.3 ps
+Path DFRRQX1_167/C to DFRQX1_31/D delay 5205.55 ps
+Path DFRRQX1_167/C to DFRQX1_32/D delay 5156.48 ps
+Path DFRRQX1_167/C to DFRQX1_130/D delay 5145.38 ps
+Path DFRRQX1_167/C to DFRQX1_1/D delay 5109.1 ps
+Path DFRRQX1_167/C to DFRQX1_28/D delay 5054.96 ps
+Path DFRRQX1_167/C to DFRRQX1_125/D delay 5023.58 ps
+Path DFRRQX1_167/C to DFRRQX1_129/D delay 5023.58 ps
+Path DFRRQX1_167/C to DFRRQX1_132/D delay 5023.58 ps
+Path DFRRQX1_167/C to DFRRQX1_141/D delay 5023.58 ps
+Path DFRRQX1_167/C to DFRRQX1_135/D delay 5009.27 ps
+Path DFRRQX1_167/C to DFRRQX1_149/D delay 5009.27 ps
+Path DFRRQX1_167/C to DFRRQX1_136/D delay 5009.27 ps
+Path DFRRQX1_167/C to DFRRQX1_134/D delay 4994.56 ps
+Path DFRRQX1_167/C to DFRRQX1_151/D delay 4994.56 ps
+Path DFRRQX1_167/C to DFRRQX1_110/D delay 4987.62 ps
+Computed maximum clock frequency (zero slack) = 135.8 MHz
+-----------------------------------------
+
+Number of paths analyzed:  581
+
+Top 20 minimum delay paths:
+Path DFRRQX1_157/C to output pin extStart delay 550.824 ps
+Path DFRRQX1_5/C to output pin rfD[4] delay 596.097 ps
+Path DFRRQX1_18/C to output pin rfD[17] delay 596.097 ps
+Path DFRRQX1_25/C to output pin rfD[24] delay 596.097 ps
+Path DFRRQX1_11/C to output pin rfD[10] delay 596.097 ps
+Path DFRRQX1_12/C to output pin rfD[11] delay 596.097 ps
+Path DFRRQX1_19/C to output pin rfD[18] delay 596.097 ps
+Path DFRRQX1_20/C to output pin rfD[19] delay 596.097 ps
+Path DFRRQX1_23/C to output pin rfD[22] delay 596.097 ps
+Path DFRRQX1_24/C to output pin rfD[23] delay 596.097 ps
+Path DFRRQX1_13/C to output pin rfD[12] delay 596.097 ps
+Path DFRRQX1_15/C to output pin rfD[14] delay 596.097 ps
+Path DFRRQX1_32/C to output pin rfD[31] delay 596.097 ps
+Path DFRRQX1_1/C to output pin rfD[0] delay 596.097 ps
+Path DFRRQX1_3/C to output pin rfD[2] delay 596.097 ps
+Path DFRRQX1_10/C to output pin rfD[9] delay 596.097 ps
+Path DFRRQX1_16/C to output pin rfD[15] delay 596.097 ps
+Path DFRRQX1_26/C to output pin rfD[25] delay 596.097 ps
+Path DFRRQX1_27/C to output pin rfD[26] delay 596.097 ps
+Path DFRRQX1_31/C to output pin rfD[30] delay 596.097 ps
+Design meets minimum hold timing.
+-----------------------------------------
+
+Number of paths analyzed:  914
+
+Top 20 maximum delay paths:
+Path input pin IRQ to DFRRQX1_219/D delay 1906.85 ps
+Path input pin IRQ to DFRRQX1_240/D delay 1906.85 ps
+Path input pin IRQ to DFRRQX1_246/D delay 1906.85 ps
+Path input pin IRQ to DFRRQX1_218/D delay 1906.85 ps
+Path input pin IRQ to DFRRQX1_241/D delay 1906.85 ps
+Path input pin IRQ to DFRRQX1_242/D delay 1906.85 ps
+Path input pin IRQ to DFRRQX1_214/D delay 1896.34 ps
+Path input pin IRQ to DFRRQX1_227/D delay 1875.13 ps
+Path input pin IRQ to DFRRQX1_228/D delay 1875.13 ps
+Path input pin IRQ to DFRRQX1_229/D delay 1875.13 ps
+Path input pin IRQ to DFRRQX1_224/D delay 1875.13 ps
+Path input pin IRQ to DFRRQX1_225/D delay 1875.13 ps
+Path input pin IRQ to DFRRQX1_233/D delay 1875.13 ps
+Path input pin IRQ to DFRRQX1_217/D delay 1868.75 ps
+Path input pin IRQ to DFRRQX1_223/D delay 1868.75 ps
+Path input pin IRQ to DFRRQX1_238/D delay 1868.75 ps
+Path input pin IRQ to DFRRQX1_244/D delay 1868.75 ps
+Path input pin IRQ to DFRRQX1_202/D delay 1743.27 ps
+Path input pin IRQ to DFRRQX1_204/D delay 1725.48 ps
+Path input pin IRQ to DFRRQX1_206/D delay 1725.48 ps
+-----------------------------------------
+
+Number of paths analyzed:  914
+
+Top 20 minimum delay paths:
+Path input pin rst to DFRQX1_134/D delay 84.9351 ps
+Path input pin rst to DFRQX1_133/D delay 84.9351 ps
+Path input pin bdo[31] to DFRRQX1_89/D delay 227.986 ps
+Path input pin bdo[30] to DFRRQX1_88/D delay 227.986 ps
+Path input pin bdo[29] to DFRRQX1_87/D delay 227.986 ps
+Path input pin bdo[28] to DFRRQX1_86/D delay 227.986 ps
+Path input pin bdo[27] to DFRRQX1_85/D delay 227.986 ps
+Path input pin bdo[26] to DFRRQX1_84/D delay 227.986 ps
+Path input pin bdo[25] to DFRRQX1_83/D delay 227.986 ps
+Path input pin bdo[24] to DFRRQX1_82/D delay 227.986 ps
+Path input pin bdo[23] to DFRRQX1_81/D delay 227.986 ps
+Path input pin bdo[22] to DFRRQX1_80/D delay 227.986 ps
+Path input pin bdo[21] to DFRRQX1_79/D delay 227.986 ps
+Path input pin bdo[20] to DFRRQX2_4/D delay 227.986 ps
+Path input pin bdo[19] to DFRRQX1_78/D delay 227.986 ps
+Path input pin bdo[18] to DFRRQX1_77/D delay 227.986 ps
+Path input pin bdo[17] to DFRRQX1_76/D delay 227.986 ps
+Path input pin bdo[16] to DFRRQX1_75/D delay 227.986 ps
+Path input pin bdo[15] to DFRRQX1_74/D delay 227.986 ps
+Path input pin bdo[14] to DFRRQX1_73/D delay 227.986 ps
+-----------------------------------------
+
