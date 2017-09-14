@@ -1,0 +1,38 @@
+# read design
+read_verilog cpu.v
+
+#write_file osu035.constr <<EOT
+#set_driving_cell DFFPOSX1
+#set_load 0.1
+#EOT
+
+
+hierarchy -check -top rv32_CPU_v2
+alumacc
+synth  -top rv32_CPU_v2
+opt_clean
+share -aggressive
+opt_reduce
+opt_clean
+share -aggressive
+opt_reduce
+share -aggressive
+opt_reduce
+share -aggressive
+opt_reduce
+opt_clean -purge
+dfflibmap -liberty osu035.lib
+opt
+opt_clean -purge
+opt
+share -aggressive
+opt_reduce
+opt_clean -purge
+abc -P 4 -D 6000  -liberty osu035.lib
+opt_clean -purge
+clean
+
+# write synthesized design
+write_verilog -noattr -noexpr synth.v
+stat
+

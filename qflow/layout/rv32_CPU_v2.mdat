@@ -1,0 +1,1921 @@
+
+stdcell 1 name core
+corners 6
+0 0 0 105238 105238 105238 105238 52619 157857 52619 157857 0 
+asplb 0.500000 aspub 2.000000
+class 0 orientations 0 1 2 3 4 5 6 7 
+orient 0
+
+pad 2 name twpin_clk
+corners 4
+-340 0 -340 160 -140 160 -140 0 
+orient 7
+pin name clk signal clk layer 1 -240 80
+
+pad 3 name twpin_rst
+corners 4
+-340 30240 -340 30400 -140 30400 -140 30240 
+orient 7
+pin name rst signal rst layer 1 -240 30320
+
+pad 4 name twpin_bdo<0>
+corners 4
+-340 45760 -340 45920 -140 45920 -140 45760 
+orient 7
+pin name bdo<0> signal bdo<0> layer 1 -240 45840
+
+pad 5 name twpin_bdo<1>
+corners 4
+-340 45440 -340 45600 -140 45600 -140 45440 
+orient 7
+pin name bdo<1> signal bdo<1> layer 1 -240 45520
+
+pad 6 name twpin_bdo<2>
+corners 4
+-340 45120 -340 45280 -140 45280 -140 45120 
+orient 7
+pin name bdo<2> signal bdo<2> layer 1 -240 45200
+
+pad 7 name twpin_bdo<3>
+corners 4
+-340 44800 -340 44960 -140 44960 -140 44800 
+orient 7
+pin name bdo<3> signal bdo<3> layer 1 -240 44880
+
+pad 8 name twpin_bdo<4>
+corners 4
+-340 44480 -340 44640 -140 44640 -140 44480 
+orient 7
+pin name bdo<4> signal bdo<4> layer 1 -240 44560
+
+pad 9 name twpin_bdo<5>
+corners 4
+-340 44160 -340 44320 -140 44320 -140 44160 
+orient 7
+pin name bdo<5> signal bdo<5> layer 1 -240 44240
+
+pad 10 name twpin_bdo<6>
+corners 4
+-340 43840 -340 44000 -140 44000 -140 43840 
+orient 7
+pin name bdo<6> signal bdo<6> layer 1 -240 43920
+
+pad 11 name twpin_bdo<7>
+corners 4
+-340 43520 -340 43680 -140 43680 -140 43520 
+orient 7
+pin name bdo<7> signal bdo<7> layer 1 -240 43600
+
+pad 12 name twpin_bdo<8>
+corners 4
+-340 34080 -340 34240 -140 34240 -140 34080 
+orient 7
+pin name bdo<8> signal bdo<8> layer 1 -240 34160
+
+pad 13 name twpin_bdo<9>
+corners 4
+-340 33920 -340 34080 -140 34080 -140 33920 
+orient 7
+pin name bdo<9> signal bdo<9> layer 1 -240 34000
+
+pad 14 name twpin_bdo<10>
+corners 4
+-340 33760 -340 33920 -140 33920 -140 33760 
+orient 7
+pin name bdo<10> signal bdo<10> layer 1 -240 33840
+
+pad 15 name twpin_bdo<11>
+corners 4
+-340 33600 -340 33760 -140 33760 -140 33600 
+orient 7
+pin name bdo<11> signal bdo<11> layer 1 -240 33680
+
+pad 16 name twpin_bdo<12>
+corners 4
+-340 33440 -340 33600 -140 33600 -140 33440 
+orient 7
+pin name bdo<12> signal bdo<12> layer 1 -240 33520
+
+pad 17 name twpin_bdo<13>
+corners 4
+-340 33280 -340 33440 -140 33440 -140 33280 
+orient 7
+pin name bdo<13> signal bdo<13> layer 1 -240 33360
+
+pad 18 name twpin_bdo<14>
+corners 4
+-340 33120 -340 33280 -140 33280 -140 33120 
+orient 7
+pin name bdo<14> signal bdo<14> layer 1 -240 33200
+
+pad 19 name twpin_bdo<15>
+corners 4
+-340 32960 -340 33120 -140 33120 -140 32960 
+orient 7
+pin name bdo<15> signal bdo<15> layer 1 -240 33040
+
+pad 20 name twpin_bdo<16>
+corners 4
+-340 32800 -340 32960 -140 32960 -140 32800 
+orient 7
+pin name bdo<16> signal bdo<16> layer 1 -240 32880
+
+pad 21 name twpin_bdo<17>
+corners 4
+-340 32640 -340 32800 -140 32800 -140 32640 
+orient 7
+pin name bdo<17> signal bdo<17> layer 1 -240 32720
+
+pad 22 name twpin_bdo<18>
+corners 4
+-340 32480 -340 32640 -140 32640 -140 32480 
+orient 7
+pin name bdo<18> signal bdo<18> layer 1 -240 32560
+
+pad 23 name twpin_bdo<19>
+corners 4
+-340 32320 -340 32480 -140 32480 -140 32320 
+orient 7
+pin name bdo<19> signal bdo<19> layer 1 -240 32400
+
+pad 24 name twpin_bdo<20>
+corners 4
+-340 32160 -340 32320 -140 32320 -140 32160 
+orient 7
+pin name bdo<20> signal bdo<20> layer 1 -240 32240
+
+pad 25 name twpin_bdo<21>
+corners 4
+-340 32000 -340 32160 -140 32160 -140 32000 
+orient 7
+pin name bdo<21> signal bdo<21> layer 1 -240 32080
+
+pad 26 name twpin_bdo<22>
+corners 4
+-340 31840 -340 32000 -140 32000 -140 31840 
+orient 7
+pin name bdo<22> signal bdo<22> layer 1 -240 31920
+
+pad 27 name twpin_bdo<23>
+corners 4
+-340 31680 -340 31840 -140 31840 -140 31680 
+orient 7
+pin name bdo<23> signal bdo<23> layer 1 -240 31760
+
+pad 28 name twpin_bdo<24>
+corners 4
+-340 31520 -340 31680 -140 31680 -140 31520 
+orient 7
+pin name bdo<24> signal bdo<24> layer 1 -240 31600
+
+pad 29 name twpin_bdo<25>
+corners 4
+-340 31360 -340 31520 -140 31520 -140 31360 
+orient 7
+pin name bdo<25> signal bdo<25> layer 1 -240 31440
+
+pad 30 name twpin_bdo<26>
+corners 4
+-340 31200 -340 31360 -140 31360 -140 31200 
+orient 7
+pin name bdo<26> signal bdo<26> layer 1 -240 31280
+
+pad 31 name twpin_bdo<27>
+corners 4
+-340 31040 -340 31200 -140 31200 -140 31040 
+orient 7
+pin name bdo<27> signal bdo<27> layer 1 -240 31120
+
+pad 32 name twpin_bdo<28>
+corners 4
+-340 30880 -340 31040 -140 31040 -140 30880 
+orient 7
+pin name bdo<28> signal bdo<28> layer 1 -240 30960
+
+pad 33 name twpin_bdo<29>
+corners 4
+-340 30720 -340 30880 -140 30880 -140 30720 
+orient 7
+pin name bdo<29> signal bdo<29> layer 1 -240 30800
+
+pad 34 name twpin_bdo<30>
+corners 4
+-340 30560 -340 30720 -140 30720 -140 30560 
+orient 7
+pin name bdo<30> signal bdo<30> layer 1 -240 30640
+
+pad 35 name twpin_bdo<31>
+corners 4
+-340 30400 -340 30560 -140 30560 -140 30400 
+orient 7
+pin name bdo<31> signal bdo<31> layer 1 -240 30480
+
+pad 36 name twpin_rfRS1<0>
+corners 4
+-340 39200 -340 39360 -140 39360 -140 39200 
+orient 7
+pin name rfRS1<0> signal rfRS1<0> layer 1 -240 39280
+
+pad 37 name twpin_rfRS1<1>
+corners 4
+-340 39040 -340 39200 -140 39200 -140 39040 
+orient 7
+pin name rfRS1<1> signal rfRS1<1> layer 1 -240 39120
+
+pad 38 name twpin_rfRS1<2>
+corners 4
+-340 38880 -340 39040 -140 39040 -140 38880 
+orient 7
+pin name rfRS1<2> signal rfRS1<2> layer 1 -240 38960
+
+pad 39 name twpin_rfRS1<3>
+corners 4
+-340 38720 -340 38880 -140 38880 -140 38720 
+orient 7
+pin name rfRS1<3> signal rfRS1<3> layer 1 -240 38800
+
+pad 40 name twpin_rfRS1<4>
+corners 4
+-340 38560 -340 38720 -140 38720 -140 38560 
+orient 7
+pin name rfRS1<4> signal rfRS1<4> layer 1 -240 38640
+
+pad 41 name twpin_rfRS1<5>
+corners 4
+-340 38400 -340 38560 -140 38560 -140 38400 
+orient 7
+pin name rfRS1<5> signal rfRS1<5> layer 1 -240 38480
+
+pad 42 name twpin_rfRS1<6>
+corners 4
+-340 38240 -340 38400 -140 38400 -140 38240 
+orient 7
+pin name rfRS1<6> signal rfRS1<6> layer 1 -240 38320
+
+pad 43 name twpin_rfRS1<7>
+corners 4
+-340 38080 -340 38240 -140 38240 -140 38080 
+orient 7
+pin name rfRS1<7> signal rfRS1<7> layer 1 -240 38160
+
+pad 44 name twpin_rfRS1<8>
+corners 4
+-340 37920 -340 38080 -140 38080 -140 37920 
+orient 7
+pin name rfRS1<8> signal rfRS1<8> layer 1 -240 38000
+
+pad 45 name twpin_rfRS1<9>
+corners 4
+-340 37760 -340 37920 -140 37920 -140 37760 
+orient 7
+pin name rfRS1<9> signal rfRS1<9> layer 1 -240 37840
+
+pad 46 name twpin_rfRS1<10>
+corners 4
+-340 37600 -340 37760 -140 37760 -140 37600 
+orient 7
+pin name rfRS1<10> signal rfRS1<10> layer 1 -240 37680
+
+pad 47 name twpin_rfRS1<11>
+corners 4
+-340 37440 -340 37600 -140 37600 -140 37440 
+orient 7
+pin name rfRS1<11> signal rfRS1<11> layer 1 -240 37520
+
+pad 48 name twpin_rfRS1<12>
+corners 4
+-340 37280 -340 37440 -140 37440 -140 37280 
+orient 7
+pin name rfRS1<12> signal rfRS1<12> layer 1 -240 37360
+
+pad 49 name twpin_rfRS1<13>
+corners 4
+-340 37120 -340 37280 -140 37280 -140 37120 
+orient 7
+pin name rfRS1<13> signal rfRS1<13> layer 1 -240 37200
+
+pad 50 name twpin_rfRS1<14>
+corners 4
+-340 36960 -340 37120 -140 37120 -140 36960 
+orient 7
+pin name rfRS1<14> signal rfRS1<14> layer 1 -240 37040
+
+pad 51 name twpin_rfRS1<15>
+corners 4
+-340 36800 -340 36960 -140 36960 -140 36800 
+orient 7
+pin name rfRS1<15> signal rfRS1<15> layer 1 -240 36880
+
+pad 52 name twpin_rfRS1<16>
+corners 4
+-340 36640 -340 36800 -140 36800 -140 36640 
+orient 7
+pin name rfRS1<16> signal rfRS1<16> layer 1 -240 36720
+
+pad 53 name twpin_rfRS1<17>
+corners 4
+-340 36480 -340 36640 -140 36640 -140 36480 
+orient 7
+pin name rfRS1<17> signal rfRS1<17> layer 1 -240 36560
+
+pad 54 name twpin_rfRS1<18>
+corners 4
+-340 36320 -340 36480 -140 36480 -140 36320 
+orient 7
+pin name rfRS1<18> signal rfRS1<18> layer 1 -240 36400
+
+pad 55 name twpin_rfRS1<19>
+corners 4
+-340 36160 -340 36320 -140 36320 -140 36160 
+orient 7
+pin name rfRS1<19> signal rfRS1<19> layer 1 -240 36240
+
+pad 56 name twpin_rfRS1<20>
+corners 4
+-340 36000 -340 36160 -140 36160 -140 36000 
+orient 7
+pin name rfRS1<20> signal rfRS1<20> layer 1 -240 36080
+
+pad 57 name twpin_rfRS1<21>
+corners 4
+-340 35840 -340 36000 -140 36000 -140 35840 
+orient 7
+pin name rfRS1<21> signal rfRS1<21> layer 1 -240 35920
+
+pad 58 name twpin_rfRS1<22>
+corners 4
+-340 35680 -340 35840 -140 35840 -140 35680 
+orient 7
+pin name rfRS1<22> signal rfRS1<22> layer 1 -240 35760
+
+pad 59 name twpin_rfRS1<23>
+corners 4
+-340 35520 -340 35680 -140 35680 -140 35520 
+orient 7
+pin name rfRS1<23> signal rfRS1<23> layer 1 -240 35600
+
+pad 60 name twpin_rfRS1<24>
+corners 4
+-340 35360 -340 35520 -140 35520 -140 35360 
+orient 7
+pin name rfRS1<24> signal rfRS1<24> layer 1 -240 35440
+
+pad 61 name twpin_rfRS1<25>
+corners 4
+-340 35200 -340 35360 -140 35360 -140 35200 
+orient 7
+pin name rfRS1<25> signal rfRS1<25> layer 1 -240 35280
+
+pad 62 name twpin_rfRS1<26>
+corners 4
+-340 35040 -340 35200 -140 35200 -140 35040 
+orient 7
+pin name rfRS1<26> signal rfRS1<26> layer 1 -240 35120
+
+pad 63 name twpin_rfRS1<27>
+corners 4
+-340 34880 -340 35040 -140 35040 -140 34880 
+orient 7
+pin name rfRS1<27> signal rfRS1<27> layer 1 -240 34960
+
+pad 64 name twpin_rfRS1<28>
+corners 4
+-340 34720 -340 34880 -140 34880 -140 34720 
+orient 7
+pin name rfRS1<28> signal rfRS1<28> layer 1 -240 34800
+
+pad 65 name twpin_rfRS1<29>
+corners 4
+-340 34560 -340 34720 -140 34720 -140 34560 
+orient 7
+pin name rfRS1<29> signal rfRS1<29> layer 1 -240 34640
+
+pad 66 name twpin_rfRS1<30>
+corners 4
+-340 34400 -340 34560 -140 34560 -140 34400 
+orient 7
+pin name rfRS1<30> signal rfRS1<30> layer 1 -240 34480
+
+pad 67 name twpin_rfRS1<31>
+corners 4
+-340 34240 -340 34400 -140 34400 -140 34240 
+orient 7
+pin name rfRS1<31> signal rfRS1<31> layer 1 -240 34320
+
+pad 68 name twpin_rfRS2<0>
+corners 4
+-340 45600 -340 45760 -140 45760 -140 45600 
+orient 7
+pin name rfRS2<0> signal rfRS2<0> layer 1 -240 45680
+
+pad 69 name twpin_rfRS2<1>
+corners 4
+-340 45280 -340 45440 -140 45440 -140 45280 
+orient 7
+pin name rfRS2<1> signal rfRS2<1> layer 1 -240 45360
+
+pad 70 name twpin_rfRS2<2>
+corners 4
+-340 44960 -340 45120 -140 45120 -140 44960 
+orient 7
+pin name rfRS2<2> signal rfRS2<2> layer 1 -240 45040
+
+pad 71 name twpin_rfRS2<3>
+corners 4
+-340 44640 -340 44800 -140 44800 -140 44640 
+orient 7
+pin name rfRS2<3> signal rfRS2<3> layer 1 -240 44720
+
+pad 72 name twpin_rfRS2<4>
+corners 4
+-340 44320 -340 44480 -140 44480 -140 44320 
+orient 7
+pin name rfRS2<4> signal rfRS2<4> layer 1 -240 44400
+
+pad 73 name twpin_rfRS2<5>
+corners 4
+-340 44000 -340 44160 -140 44160 -140 44000 
+orient 7
+pin name rfRS2<5> signal rfRS2<5> layer 1 -240 44080
+
+pad 74 name twpin_rfRS2<6>
+corners 4
+-340 43680 -340 43840 -140 43840 -140 43680 
+orient 7
+pin name rfRS2<6> signal rfRS2<6> layer 1 -240 43760
+
+pad 75 name twpin_rfRS2<7>
+corners 4
+-340 43360 -340 43520 -140 43520 -140 43360 
+orient 7
+pin name rfRS2<7> signal rfRS2<7> layer 1 -240 43440
+
+pad 76 name twpin_rfRS2<8>
+corners 4
+-340 43200 -340 43360 -140 43360 -140 43200 
+orient 7
+pin name rfRS2<8> signal rfRS2<8> layer 1 -240 43280
+
+pad 77 name twpin_rfRS2<9>
+corners 4
+-340 43040 -340 43200 -140 43200 -140 43040 
+orient 7
+pin name rfRS2<9> signal rfRS2<9> layer 1 -240 43120
+
+pad 78 name twpin_rfRS2<10>
+corners 4
+-340 42880 -340 43040 -140 43040 -140 42880 
+orient 7
+pin name rfRS2<10> signal rfRS2<10> layer 1 -240 42960
+
+pad 79 name twpin_rfRS2<11>
+corners 4
+-340 42720 -340 42880 -140 42880 -140 42720 
+orient 7
+pin name rfRS2<11> signal rfRS2<11> layer 1 -240 42800
+
+pad 80 name twpin_rfRS2<12>
+corners 4
+-340 42560 -340 42720 -140 42720 -140 42560 
+orient 7
+pin name rfRS2<12> signal rfRS2<12> layer 1 -240 42640
+
+pad 81 name twpin_rfRS2<13>
+corners 4
+-340 42400 -340 42560 -140 42560 -140 42400 
+orient 7
+pin name rfRS2<13> signal rfRS2<13> layer 1 -240 42480
+
+pad 82 name twpin_rfRS2<14>
+corners 4
+-340 42240 -340 42400 -140 42400 -140 42240 
+orient 7
+pin name rfRS2<14> signal rfRS2<14> layer 1 -240 42320
+
+pad 83 name twpin_rfRS2<15>
+corners 4
+-340 42080 -340 42240 -140 42240 -140 42080 
+orient 7
+pin name rfRS2<15> signal rfRS2<15> layer 1 -240 42160
+
+pad 84 name twpin_rfRS2<16>
+corners 4
+-340 41920 -340 42080 -140 42080 -140 41920 
+orient 7
+pin name rfRS2<16> signal rfRS2<16> layer 1 -240 42000
+
+pad 85 name twpin_rfRS2<17>
+corners 4
+-340 41760 -340 41920 -140 41920 -140 41760 
+orient 7
+pin name rfRS2<17> signal rfRS2<17> layer 1 -240 41840
+
+pad 86 name twpin_rfRS2<18>
+corners 4
+-340 41600 -340 41760 -140 41760 -140 41600 
+orient 7
+pin name rfRS2<18> signal rfRS2<18> layer 1 -240 41680
+
+pad 87 name twpin_rfRS2<19>
+corners 4
+-340 41440 -340 41600 -140 41600 -140 41440 
+orient 7
+pin name rfRS2<19> signal rfRS2<19> layer 1 -240 41520
+
+pad 88 name twpin_rfRS2<20>
+corners 4
+-340 41280 -340 41440 -140 41440 -140 41280 
+orient 7
+pin name rfRS2<20> signal rfRS2<20> layer 1 -240 41360
+
+pad 89 name twpin_rfRS2<21>
+corners 4
+-340 41120 -340 41280 -140 41280 -140 41120 
+orient 7
+pin name rfRS2<21> signal rfRS2<21> layer 1 -240 41200
+
+pad 90 name twpin_rfRS2<22>
+corners 4
+-340 40960 -340 41120 -140 41120 -140 40960 
+orient 7
+pin name rfRS2<22> signal rfRS2<22> layer 1 -240 41040
+
+pad 91 name twpin_rfRS2<23>
+corners 4
+-340 40800 -340 40960 -140 40960 -140 40800 
+orient 7
+pin name rfRS2<23> signal rfRS2<23> layer 1 -240 40880
+
+pad 92 name twpin_rfRS2<24>
+corners 4
+-340 40640 -340 40800 -140 40800 -140 40640 
+orient 7
+pin name rfRS2<24> signal rfRS2<24> layer 1 -240 40720
+
+pad 93 name twpin_rfRS2<25>
+corners 4
+-340 40480 -340 40640 -140 40640 -140 40480 
+orient 7
+pin name rfRS2<25> signal rfRS2<25> layer 1 -240 40560
+
+pad 94 name twpin_rfRS2<26>
+corners 4
+-340 40320 -340 40480 -140 40480 -140 40320 
+orient 7
+pin name rfRS2<26> signal rfRS2<26> layer 1 -240 40400
+
+pad 95 name twpin_rfRS2<27>
+corners 4
+-340 40160 -340 40320 -140 40320 -140 40160 
+orient 7
+pin name rfRS2<27> signal rfRS2<27> layer 1 -240 40240
+
+pad 96 name twpin_rfRS2<28>
+corners 4
+-340 40000 -340 40160 -140 40160 -140 40000 
+orient 7
+pin name rfRS2<28> signal rfRS2<28> layer 1 -240 40080
+
+pad 97 name twpin_rfRS2<29>
+corners 4
+-340 39840 -340 40000 -140 40000 -140 39840 
+orient 7
+pin name rfRS2<29> signal rfRS2<29> layer 1 -240 39920
+
+pad 98 name twpin_rfRS2<30>
+corners 4
+-340 39680 -340 39840 -140 39840 -140 39680 
+orient 7
+pin name rfRS2<30> signal rfRS2<30> layer 1 -240 39760
+
+pad 99 name twpin_rfRS2<31>
+corners 4
+-340 39520 -340 39680 -140 39680 -140 39520 
+orient 7
+pin name rfRS2<31> signal rfRS2<31> layer 1 -240 39600
+
+pad 100 name twpin_extR<0>
+corners 4
+-340 50880 -340 51040 -140 51040 -140 50880 
+orient 7
+pin name extR<0> signal extR<0> layer 1 -240 50960
+
+pad 101 name twpin_extR<1>
+corners 4
+-340 50720 -340 50880 -140 50880 -140 50720 
+orient 7
+pin name extR<1> signal extR<1> layer 1 -240 50800
+
+pad 102 name twpin_extR<2>
+corners 4
+-340 50560 -340 50720 -140 50720 -140 50560 
+orient 7
+pin name extR<2> signal extR<2> layer 1 -240 50640
+
+pad 103 name twpin_extR<3>
+corners 4
+-340 50400 -340 50560 -140 50560 -140 50400 
+orient 7
+pin name extR<3> signal extR<3> layer 1 -240 50480
+
+pad 104 name twpin_extR<4>
+corners 4
+-340 50240 -340 50400 -140 50400 -140 50240 
+orient 7
+pin name extR<4> signal extR<4> layer 1 -240 50320
+
+pad 105 name twpin_extR<5>
+corners 4
+-340 50080 -340 50240 -140 50240 -140 50080 
+orient 7
+pin name extR<5> signal extR<5> layer 1 -240 50160
+
+pad 106 name twpin_extR<6>
+corners 4
+-340 49920 -340 50080 -140 50080 -140 49920 
+orient 7
+pin name extR<6> signal extR<6> layer 1 -240 50000
+
+pad 107 name twpin_extR<7>
+corners 4
+-340 49760 -340 49920 -140 49920 -140 49760 
+orient 7
+pin name extR<7> signal extR<7> layer 1 -240 49840
+
+pad 108 name twpin_extR<8>
+corners 4
+-340 49600 -340 49760 -140 49760 -140 49600 
+orient 7
+pin name extR<8> signal extR<8> layer 1 -240 49680
+
+pad 109 name twpin_extR<9>
+corners 4
+-340 49440 -340 49600 -140 49600 -140 49440 
+orient 7
+pin name extR<9> signal extR<9> layer 1 -240 49520
+
+pad 110 name twpin_extR<10>
+corners 4
+-340 49280 -340 49440 -140 49440 -140 49280 
+orient 7
+pin name extR<10> signal extR<10> layer 1 -240 49360
+
+pad 111 name twpin_extR<11>
+corners 4
+-340 49120 -340 49280 -140 49280 -140 49120 
+orient 7
+pin name extR<11> signal extR<11> layer 1 -240 49200
+
+pad 112 name twpin_extR<12>
+corners 4
+-340 48960 -340 49120 -140 49120 -140 48960 
+orient 7
+pin name extR<12> signal extR<12> layer 1 -240 49040
+
+pad 113 name twpin_extR<13>
+corners 4
+-340 48800 -340 48960 -140 48960 -140 48800 
+orient 7
+pin name extR<13> signal extR<13> layer 1 -240 48880
+
+pad 114 name twpin_extR<14>
+corners 4
+-340 48640 -340 48800 -140 48800 -140 48640 
+orient 7
+pin name extR<14> signal extR<14> layer 1 -240 48720
+
+pad 115 name twpin_extR<15>
+corners 4
+-340 48480 -340 48640 -140 48640 -140 48480 
+orient 7
+pin name extR<15> signal extR<15> layer 1 -240 48560
+
+pad 116 name twpin_extR<16>
+corners 4
+-340 48320 -340 48480 -140 48480 -140 48320 
+orient 7
+pin name extR<16> signal extR<16> layer 1 -240 48400
+
+pad 117 name twpin_extR<17>
+corners 4
+-340 48160 -340 48320 -140 48320 -140 48160 
+orient 7
+pin name extR<17> signal extR<17> layer 1 -240 48240
+
+pad 118 name twpin_extR<18>
+corners 4
+-340 48000 -340 48160 -140 48160 -140 48000 
+orient 7
+pin name extR<18> signal extR<18> layer 1 -240 48080
+
+pad 119 name twpin_extR<19>
+corners 4
+-340 47840 -340 48000 -140 48000 -140 47840 
+orient 7
+pin name extR<19> signal extR<19> layer 1 -240 47920
+
+pad 120 name twpin_extR<20>
+corners 4
+-340 47680 -340 47840 -140 47840 -140 47680 
+orient 7
+pin name extR<20> signal extR<20> layer 1 -240 47760
+
+pad 121 name twpin_extR<21>
+corners 4
+-340 47520 -340 47680 -140 47680 -140 47520 
+orient 7
+pin name extR<21> signal extR<21> layer 1 -240 47600
+
+pad 122 name twpin_extR<22>
+corners 4
+-340 47360 -340 47520 -140 47520 -140 47360 
+orient 7
+pin name extR<22> signal extR<22> layer 1 -240 47440
+
+pad 123 name twpin_extR<23>
+corners 4
+-340 47200 -340 47360 -140 47360 -140 47200 
+orient 7
+pin name extR<23> signal extR<23> layer 1 -240 47280
+
+pad 124 name twpin_extR<24>
+corners 4
+-340 47040 -340 47200 -140 47200 -140 47040 
+orient 7
+pin name extR<24> signal extR<24> layer 1 -240 47120
+
+pad 125 name twpin_extR<25>
+corners 4
+-340 46880 -340 47040 -140 47040 -140 46880 
+orient 7
+pin name extR<25> signal extR<25> layer 1 -240 46960
+
+pad 126 name twpin_extR<26>
+corners 4
+-340 46720 -340 46880 -140 46880 -140 46720 
+orient 7
+pin name extR<26> signal extR<26> layer 1 -240 46800
+
+pad 127 name twpin_extR<27>
+corners 4
+-340 46560 -340 46720 -140 46720 -140 46560 
+orient 7
+pin name extR<27> signal extR<27> layer 1 -240 46640
+
+pad 128 name twpin_extR<28>
+corners 4
+-340 46400 -340 46560 -140 46560 -140 46400 
+orient 7
+pin name extR<28> signal extR<28> layer 1 -240 46480
+
+pad 129 name twpin_extR<29>
+corners 4
+-340 46240 -340 46400 -140 46400 -140 46240 
+orient 7
+pin name extR<29> signal extR<29> layer 1 -240 46320
+
+pad 130 name twpin_extR<30>
+corners 4
+-340 46080 -340 46240 -140 46240 -140 46080 
+orient 7
+pin name extR<30> signal extR<30> layer 1 -240 46160
+
+pad 131 name twpin_extR<31>
+corners 4
+-340 45920 -340 46080 -140 46080 -140 45920 
+orient 7
+pin name extR<31> signal extR<31> layer 1 -240 46000
+
+pad 132 name twpin_extDone
+corners 4
+-340 800 -340 960 -140 960 -140 800 
+orient 7
+pin name extDone signal extDone layer 1 -240 880
+
+pad 133 name twpin_IRQ
+corners 4
+-340 39360 -340 39520 -140 39520 -140 39360 
+orient 7
+pin name IRQ signal IRQ layer 1 -240 39440
+
+pad 134 name twpin_IRQnum<0>
+corners 4
+-340 640 -340 800 -140 800 -140 640 
+orient 7
+pin name IRQnum<0> signal IRQnum<0> layer 1 -240 720
+
+pad 135 name twpin_IRQnum<1>
+corners 4
+-340 480 -340 640 -140 640 -140 480 
+orient 7
+pin name IRQnum<1> signal IRQnum<1> layer 1 -240 560
+
+pad 136 name twpin_IRQnum<2>
+corners 4
+-340 320 -340 480 -140 480 -140 320 
+orient 7
+pin name IRQnum<2> signal IRQnum<2> layer 1 -240 400
+
+pad 137 name twpin_IRQnum<3>
+corners 4
+-340 160 -340 320 -140 320 -140 160 
+orient 7
+pin name IRQnum<3> signal IRQnum<3> layer 1 -240 240
+
+pad 138 name twpin_bdi<0>
+corners 4
+-340 24960 -340 25120 -140 25120 -140 24960 
+orient 7
+pin name bdi<0> signal bdi<0> layer 1 -240 25040
+
+pad 139 name twpin_bdi<1>
+corners 4
+-340 24800 -340 24960 -140 24960 -140 24800 
+orient 7
+pin name bdi<1> signal bdi<1> layer 1 -240 24880
+
+pad 140 name twpin_bdi<2>
+corners 4
+-340 24640 -340 24800 -140 24800 -140 24640 
+orient 7
+pin name bdi<2> signal bdi<2> layer 1 -240 24720
+
+pad 141 name twpin_bdi<3>
+corners 4
+-340 24480 -340 24640 -140 24640 -140 24480 
+orient 7
+pin name bdi<3> signal bdi<3> layer 1 -240 24560
+
+pad 142 name twpin_bdi<4>
+corners 4
+-340 24320 -340 24480 -140 24480 -140 24320 
+orient 7
+pin name bdi<4> signal bdi<4> layer 1 -240 24400
+
+pad 143 name twpin_bdi<5>
+corners 4
+-340 24160 -340 24320 -140 24320 -140 24160 
+orient 7
+pin name bdi<5> signal bdi<5> layer 1 -240 24240
+
+pad 144 name twpin_bdi<6>
+corners 4
+-340 24000 -340 24160 -140 24160 -140 24000 
+orient 7
+pin name bdi<6> signal bdi<6> layer 1 -240 24080
+
+pad 145 name twpin_bdi<7>
+corners 4
+-340 23840 -340 24000 -140 24000 -140 23840 
+orient 7
+pin name bdi<7> signal bdi<7> layer 1 -240 23920
+
+pad 146 name twpin_bdi<8>
+corners 4
+-340 23680 -340 23840 -140 23840 -140 23680 
+orient 7
+pin name bdi<8> signal bdi<8> layer 1 -240 23760
+
+pad 147 name twpin_bdi<9>
+corners 4
+-340 23520 -340 23680 -140 23680 -140 23520 
+orient 7
+pin name bdi<9> signal bdi<9> layer 1 -240 23600
+
+pad 148 name twpin_bdi<10>
+corners 4
+-340 23360 -340 23520 -140 23520 -140 23360 
+orient 7
+pin name bdi<10> signal bdi<10> layer 1 -240 23440
+
+pad 149 name twpin_bdi<11>
+corners 4
+-340 23200 -340 23360 -140 23360 -140 23200 
+orient 7
+pin name bdi<11> signal bdi<11> layer 1 -240 23280
+
+pad 150 name twpin_bdi<12>
+corners 4
+-340 23040 -340 23200 -140 23200 -140 23040 
+orient 7
+pin name bdi<12> signal bdi<12> layer 1 -240 23120
+
+pad 151 name twpin_bdi<13>
+corners 4
+-340 22880 -340 23040 -140 23040 -140 22880 
+orient 7
+pin name bdi<13> signal bdi<13> layer 1 -240 22960
+
+pad 152 name twpin_bdi<14>
+corners 4
+-340 22720 -340 22880 -140 22880 -140 22720 
+orient 7
+pin name bdi<14> signal bdi<14> layer 1 -240 22800
+
+pad 153 name twpin_bdi<15>
+corners 4
+-340 22560 -340 22720 -140 22720 -140 22560 
+orient 7
+pin name bdi<15> signal bdi<15> layer 1 -240 22640
+
+pad 154 name twpin_bdi<16>
+corners 4
+-340 22400 -340 22560 -140 22560 -140 22400 
+orient 7
+pin name bdi<16> signal bdi<16> layer 1 -240 22480
+
+pad 155 name twpin_bdi<17>
+corners 4
+-340 22240 -340 22400 -140 22400 -140 22240 
+orient 7
+pin name bdi<17> signal bdi<17> layer 1 -240 22320
+
+pad 156 name twpin_bdi<18>
+corners 4
+-340 22080 -340 22240 -140 22240 -140 22080 
+orient 7
+pin name bdi<18> signal bdi<18> layer 1 -240 22160
+
+pad 157 name twpin_bdi<19>
+corners 4
+-340 21920 -340 22080 -140 22080 -140 21920 
+orient 7
+pin name bdi<19> signal bdi<19> layer 1 -240 22000
+
+pad 158 name twpin_bdi<20>
+corners 4
+-340 21760 -340 21920 -140 21920 -140 21760 
+orient 7
+pin name bdi<20> signal bdi<20> layer 1 -240 21840
+
+pad 159 name twpin_bdi<21>
+corners 4
+-340 21600 -340 21760 -140 21760 -140 21600 
+orient 7
+pin name bdi<21> signal bdi<21> layer 1 -240 21680
+
+pad 160 name twpin_bdi<22>
+corners 4
+-340 21440 -340 21600 -140 21600 -140 21440 
+orient 7
+pin name bdi<22> signal bdi<22> layer 1 -240 21520
+
+pad 161 name twpin_bdi<23>
+corners 4
+-340 21280 -340 21440 -140 21440 -140 21280 
+orient 7
+pin name bdi<23> signal bdi<23> layer 1 -240 21360
+
+pad 162 name twpin_bdi<24>
+corners 4
+-340 21120 -340 21280 -140 21280 -140 21120 
+orient 7
+pin name bdi<24> signal bdi<24> layer 1 -240 21200
+
+pad 163 name twpin_bdi<25>
+corners 4
+-340 20960 -340 21120 -140 21120 -140 20960 
+orient 7
+pin name bdi<25> signal bdi<25> layer 1 -240 21040
+
+pad 164 name twpin_bdi<26>
+corners 4
+-340 20800 -340 20960 -140 20960 -140 20800 
+orient 7
+pin name bdi<26> signal bdi<26> layer 1 -240 20880
+
+pad 165 name twpin_bdi<27>
+corners 4
+-340 20640 -340 20800 -140 20800 -140 20640 
+orient 7
+pin name bdi<27> signal bdi<27> layer 1 -240 20720
+
+pad 166 name twpin_bdi<28>
+corners 4
+-340 20480 -340 20640 -140 20640 -140 20480 
+orient 7
+pin name bdi<28> signal bdi<28> layer 1 -240 20560
+
+pad 167 name twpin_bdi<29>
+corners 4
+-340 20320 -340 20480 -140 20480 -140 20320 
+orient 7
+pin name bdi<29> signal bdi<29> layer 1 -240 20400
+
+pad 168 name twpin_bdi<30>
+corners 4
+-340 20160 -340 20320 -140 20320 -140 20160 
+orient 7
+pin name bdi<30> signal bdi<30> layer 1 -240 20240
+
+pad 169 name twpin_bdi<31>
+corners 4
+-340 20000 -340 20160 -140 20160 -140 20000 
+orient 7
+pin name bdi<31> signal bdi<31> layer 1 -240 20080
+
+pad 170 name twpin_baddr<0>
+corners 4
+-340 30080 -340 30240 -140 30240 -140 30080 
+orient 7
+pin name baddr<0> signal baddr<0> layer 1 -240 30160
+
+pad 171 name twpin_baddr<1>
+corners 4
+-340 29920 -340 30080 -140 30080 -140 29920 
+orient 7
+pin name baddr<1> signal baddr<1> layer 1 -240 30000
+
+pad 172 name twpin_baddr<2>
+corners 4
+-340 29760 -340 29920 -140 29920 -140 29760 
+orient 7
+pin name baddr<2> signal baddr<2> layer 1 -240 29840
+
+pad 173 name twpin_baddr<3>
+corners 4
+-340 29600 -340 29760 -140 29760 -140 29600 
+orient 7
+pin name baddr<3> signal baddr<3> layer 1 -240 29680
+
+pad 174 name twpin_baddr<4>
+corners 4
+-340 29440 -340 29600 -140 29600 -140 29440 
+orient 7
+pin name baddr<4> signal baddr<4> layer 1 -240 29520
+
+pad 175 name twpin_baddr<5>
+corners 4
+-340 29280 -340 29440 -140 29440 -140 29280 
+orient 7
+pin name baddr<5> signal baddr<5> layer 1 -240 29360
+
+pad 176 name twpin_baddr<6>
+corners 4
+-340 29120 -340 29280 -140 29280 -140 29120 
+orient 7
+pin name baddr<6> signal baddr<6> layer 1 -240 29200
+
+pad 177 name twpin_baddr<7>
+corners 4
+-340 28960 -340 29120 -140 29120 -140 28960 
+orient 7
+pin name baddr<7> signal baddr<7> layer 1 -240 29040
+
+pad 178 name twpin_baddr<8>
+corners 4
+-340 28800 -340 28960 -140 28960 -140 28800 
+orient 7
+pin name baddr<8> signal baddr<8> layer 1 -240 28880
+
+pad 179 name twpin_baddr<9>
+corners 4
+-340 28640 -340 28800 -140 28800 -140 28640 
+orient 7
+pin name baddr<9> signal baddr<9> layer 1 -240 28720
+
+pad 180 name twpin_baddr<10>
+corners 4
+-340 28480 -340 28640 -140 28640 -140 28480 
+orient 7
+pin name baddr<10> signal baddr<10> layer 1 -240 28560
+
+pad 181 name twpin_baddr<11>
+corners 4
+-340 28320 -340 28480 -140 28480 -140 28320 
+orient 7
+pin name baddr<11> signal baddr<11> layer 1 -240 28400
+
+pad 182 name twpin_baddr<12>
+corners 4
+-340 28160 -340 28320 -140 28320 -140 28160 
+orient 7
+pin name baddr<12> signal baddr<12> layer 1 -240 28240
+
+pad 183 name twpin_baddr<13>
+corners 4
+-340 28000 -340 28160 -140 28160 -140 28000 
+orient 7
+pin name baddr<13> signal baddr<13> layer 1 -240 28080
+
+pad 184 name twpin_baddr<14>
+corners 4
+-340 27840 -340 28000 -140 28000 -140 27840 
+orient 7
+pin name baddr<14> signal baddr<14> layer 1 -240 27920
+
+pad 185 name twpin_baddr<15>
+corners 4
+-340 27680 -340 27840 -140 27840 -140 27680 
+orient 7
+pin name baddr<15> signal baddr<15> layer 1 -240 27760
+
+pad 186 name twpin_baddr<16>
+corners 4
+-340 27520 -340 27680 -140 27680 -140 27520 
+orient 7
+pin name baddr<16> signal baddr<16> layer 1 -240 27600
+
+pad 187 name twpin_baddr<17>
+corners 4
+-340 27360 -340 27520 -140 27520 -140 27360 
+orient 7
+pin name baddr<17> signal baddr<17> layer 1 -240 27440
+
+pad 188 name twpin_baddr<18>
+corners 4
+-340 27200 -340 27360 -140 27360 -140 27200 
+orient 7
+pin name baddr<18> signal baddr<18> layer 1 -240 27280
+
+pad 189 name twpin_baddr<19>
+corners 4
+-340 27040 -340 27200 -140 27200 -140 27040 
+orient 7
+pin name baddr<19> signal baddr<19> layer 1 -240 27120
+
+pad 190 name twpin_baddr<20>
+corners 4
+-340 26880 -340 27040 -140 27040 -140 26880 
+orient 7
+pin name baddr<20> signal baddr<20> layer 1 -240 26960
+
+pad 191 name twpin_baddr<21>
+corners 4
+-340 26720 -340 26880 -140 26880 -140 26720 
+orient 7
+pin name baddr<21> signal baddr<21> layer 1 -240 26800
+
+pad 192 name twpin_baddr<22>
+corners 4
+-340 26560 -340 26720 -140 26720 -140 26560 
+orient 7
+pin name baddr<22> signal baddr<22> layer 1 -240 26640
+
+pad 193 name twpin_baddr<23>
+corners 4
+-340 26400 -340 26560 -140 26560 -140 26400 
+orient 7
+pin name baddr<23> signal baddr<23> layer 1 -240 26480
+
+pad 194 name twpin_baddr<24>
+corners 4
+-340 26240 -340 26400 -140 26400 -140 26240 
+orient 7
+pin name baddr<24> signal baddr<24> layer 1 -240 26320
+
+pad 195 name twpin_baddr<25>
+corners 4
+-340 26080 -340 26240 -140 26240 -140 26080 
+orient 7
+pin name baddr<25> signal baddr<25> layer 1 -240 26160
+
+pad 196 name twpin_baddr<26>
+corners 4
+-340 25920 -340 26080 -140 26080 -140 25920 
+orient 7
+pin name baddr<26> signal baddr<26> layer 1 -240 26000
+
+pad 197 name twpin_baddr<27>
+corners 4
+-340 25760 -340 25920 -140 25920 -140 25760 
+orient 7
+pin name baddr<27> signal baddr<27> layer 1 -240 25840
+
+pad 198 name twpin_baddr<28>
+corners 4
+-340 25600 -340 25760 -140 25760 -140 25600 
+orient 7
+pin name baddr<28> signal baddr<28> layer 1 -240 25680
+
+pad 199 name twpin_baddr<29>
+corners 4
+-340 25440 -340 25600 -140 25600 -140 25440 
+orient 7
+pin name baddr<29> signal baddr<29> layer 1 -240 25520
+
+pad 200 name twpin_baddr<30>
+corners 4
+-340 25280 -340 25440 -140 25440 -140 25280 
+orient 7
+pin name baddr<30> signal baddr<30> layer 1 -240 25360
+
+pad 201 name twpin_baddr<31>
+corners 4
+-340 25120 -340 25280 -140 25280 -140 25120 
+orient 7
+pin name baddr<31> signal baddr<31> layer 1 -240 25200
+
+pad 202 name twpin_bsz<0>
+corners 4
+-340 19840 -340 20000 -140 20000 -140 19840 
+orient 7
+pin name bsz<0> signal bsz<0> layer 1 -240 19920
+
+pad 203 name twpin_bsz<1>
+corners 4
+-340 19680 -340 19840 -140 19840 -140 19680 
+orient 7
+pin name bsz<1> signal bsz<1> layer 1 -240 19760
+
+pad 204 name twpin_bwr
+corners 4
+-340 19520 -340 19680 -140 19680 -140 19520 
+orient 7
+pin name bwr signal bwr layer 1 -240 19600
+
+pad 205 name twpin_rfwr
+corners 4
+-340 960 -340 1120 -140 1120 -140 960 
+orient 7
+pin name rfwr signal rfwr layer 1 -240 1040
+
+pad 206 name twpin_rfrd<0>
+corners 4
+-340 3360 -340 3520 -140 3520 -140 3360 
+orient 7
+pin name rfrd<0> signal rfrd<0> layer 1 -240 3440
+
+pad 207 name twpin_rfrd<1>
+corners 4
+-340 3200 -340 3360 -140 3360 -140 3200 
+orient 7
+pin name rfrd<1> signal rfrd<1> layer 1 -240 3280
+
+pad 208 name twpin_rfrd<2>
+corners 4
+-340 3040 -340 3200 -140 3200 -140 3040 
+orient 7
+pin name rfrd<2> signal rfrd<2> layer 1 -240 3120
+
+pad 209 name twpin_rfrd<3>
+corners 4
+-340 2880 -340 3040 -140 3040 -140 2880 
+orient 7
+pin name rfrd<3> signal rfrd<3> layer 1 -240 2960
+
+pad 210 name twpin_rfrd<4>
+corners 4
+-340 2720 -340 2880 -140 2880 -140 2720 
+orient 7
+pin name rfrd<4> signal rfrd<4> layer 1 -240 2800
+
+pad 211 name twpin_rfrs1<0>
+corners 4
+-340 2560 -340 2720 -140 2720 -140 2560 
+orient 7
+pin name rfrs1<0> signal rfrs1<0> layer 1 -240 2640
+
+pad 212 name twpin_rfrs1<1>
+corners 4
+-340 2400 -340 2560 -140 2560 -140 2400 
+orient 7
+pin name rfrs1<1> signal rfrs1<1> layer 1 -240 2480
+
+pad 213 name twpin_rfrs1<2>
+corners 4
+-340 2240 -340 2400 -140 2400 -140 2240 
+orient 7
+pin name rfrs1<2> signal rfrs1<2> layer 1 -240 2320
+
+pad 214 name twpin_rfrs1<3>
+corners 4
+-340 2080 -340 2240 -140 2240 -140 2080 
+orient 7
+pin name rfrs1<3> signal rfrs1<3> layer 1 -240 2160
+
+pad 215 name twpin_rfrs1<4>
+corners 4
+-340 1920 -340 2080 -140 2080 -140 1920 
+orient 7
+pin name rfrs1<4> signal rfrs1<4> layer 1 -240 2000
+
+pad 216 name twpin_rfrs2<0>
+corners 4
+-340 1760 -340 1920 -140 1920 -140 1760 
+orient 7
+pin name rfrs2<0> signal rfrs2<0> layer 1 -240 1840
+
+pad 217 name twpin_rfrs2<1>
+corners 4
+-340 1600 -340 1760 -140 1760 -140 1600 
+orient 7
+pin name rfrs2<1> signal rfrs2<1> layer 1 -240 1680
+
+pad 218 name twpin_rfrs2<2>
+corners 4
+-340 1440 -340 1600 -140 1600 -140 1440 
+orient 7
+pin name rfrs2<2> signal rfrs2<2> layer 1 -240 1520
+
+pad 219 name twpin_rfrs2<3>
+corners 4
+-340 1280 -340 1440 -140 1440 -140 1280 
+orient 7
+pin name rfrs2<3> signal rfrs2<3> layer 1 -240 1360
+
+pad 220 name twpin_rfrs2<4>
+corners 4
+-340 1120 -340 1280 -140 1280 -140 1120 
+orient 7
+pin name rfrs2<4> signal rfrs2<4> layer 1 -240 1200
+
+pad 221 name twpin_rfD<0>
+corners 4
+-340 8480 -340 8640 -140 8640 -140 8480 
+orient 7
+pin name rfD<0> signal rfD<0> layer 1 -240 8560
+
+pad 222 name twpin_rfD<1>
+corners 4
+-340 8320 -340 8480 -140 8480 -140 8320 
+orient 7
+pin name rfD<1> signal rfD<1> layer 1 -240 8400
+
+pad 223 name twpin_rfD<2>
+corners 4
+-340 8160 -340 8320 -140 8320 -140 8160 
+orient 7
+pin name rfD<2> signal rfD<2> layer 1 -240 8240
+
+pad 224 name twpin_rfD<3>
+corners 4
+-340 8000 -340 8160 -140 8160 -140 8000 
+orient 7
+pin name rfD<3> signal rfD<3> layer 1 -240 8080
+
+pad 225 name twpin_rfD<4>
+corners 4
+-340 7840 -340 8000 -140 8000 -140 7840 
+orient 7
+pin name rfD<4> signal rfD<4> layer 1 -240 7920
+
+pad 226 name twpin_rfD<5>
+corners 4
+-340 7680 -340 7840 -140 7840 -140 7680 
+orient 7
+pin name rfD<5> signal rfD<5> layer 1 -240 7760
+
+pad 227 name twpin_rfD<6>
+corners 4
+-340 7520 -340 7680 -140 7680 -140 7520 
+orient 7
+pin name rfD<6> signal rfD<6> layer 1 -240 7600
+
+pad 228 name twpin_rfD<7>
+corners 4
+-340 7360 -340 7520 -140 7520 -140 7360 
+orient 7
+pin name rfD<7> signal rfD<7> layer 1 -240 7440
+
+pad 229 name twpin_rfD<8>
+corners 4
+-340 7200 -340 7360 -140 7360 -140 7200 
+orient 7
+pin name rfD<8> signal rfD<8> layer 1 -240 7280
+
+pad 230 name twpin_rfD<9>
+corners 4
+-340 7040 -340 7200 -140 7200 -140 7040 
+orient 7
+pin name rfD<9> signal rfD<9> layer 1 -240 7120
+
+pad 231 name twpin_rfD<10>
+corners 4
+-340 6880 -340 7040 -140 7040 -140 6880 
+orient 7
+pin name rfD<10> signal rfD<10> layer 1 -240 6960
+
+pad 232 name twpin_rfD<11>
+corners 4
+-340 6720 -340 6880 -140 6880 -140 6720 
+orient 7
+pin name rfD<11> signal rfD<11> layer 1 -240 6800
+
+pad 233 name twpin_rfD<12>
+corners 4
+-340 6560 -340 6720 -140 6720 -140 6560 
+orient 7
+pin name rfD<12> signal rfD<12> layer 1 -240 6640
+
+pad 234 name twpin_rfD<13>
+corners 4
+-340 6400 -340 6560 -140 6560 -140 6400 
+orient 7
+pin name rfD<13> signal rfD<13> layer 1 -240 6480
+
+pad 235 name twpin_rfD<14>
+corners 4
+-340 6240 -340 6400 -140 6400 -140 6240 
+orient 7
+pin name rfD<14> signal rfD<14> layer 1 -240 6320
+
+pad 236 name twpin_rfD<15>
+corners 4
+-340 6080 -340 6240 -140 6240 -140 6080 
+orient 7
+pin name rfD<15> signal rfD<15> layer 1 -240 6160
+
+pad 237 name twpin_rfD<16>
+corners 4
+-340 5920 -340 6080 -140 6080 -140 5920 
+orient 7
+pin name rfD<16> signal rfD<16> layer 1 -240 6000
+
+pad 238 name twpin_rfD<17>
+corners 4
+-340 5760 -340 5920 -140 5920 -140 5760 
+orient 7
+pin name rfD<17> signal rfD<17> layer 1 -240 5840
+
+pad 239 name twpin_rfD<18>
+corners 4
+-340 5600 -340 5760 -140 5760 -140 5600 
+orient 7
+pin name rfD<18> signal rfD<18> layer 1 -240 5680
+
+pad 240 name twpin_rfD<19>
+corners 4
+-340 5440 -340 5600 -140 5600 -140 5440 
+orient 7
+pin name rfD<19> signal rfD<19> layer 1 -240 5520
+
+pad 241 name twpin_rfD<20>
+corners 4
+-340 5280 -340 5440 -140 5440 -140 5280 
+orient 7
+pin name rfD<20> signal rfD<20> layer 1 -240 5360
+
+pad 242 name twpin_rfD<21>
+corners 4
+-340 5120 -340 5280 -140 5280 -140 5120 
+orient 7
+pin name rfD<21> signal rfD<21> layer 1 -240 5200
+
+pad 243 name twpin_rfD<22>
+corners 4
+-340 4960 -340 5120 -140 5120 -140 4960 
+orient 7
+pin name rfD<22> signal rfD<22> layer 1 -240 5040
+
+pad 244 name twpin_rfD<23>
+corners 4
+-340 4800 -340 4960 -140 4960 -140 4800 
+orient 7
+pin name rfD<23> signal rfD<23> layer 1 -240 4880
+
+pad 245 name twpin_rfD<24>
+corners 4
+-340 4640 -340 4800 -140 4800 -140 4640 
+orient 7
+pin name rfD<24> signal rfD<24> layer 1 -240 4720
+
+pad 246 name twpin_rfD<25>
+corners 4
+-340 4480 -340 4640 -140 4640 -140 4480 
+orient 7
+pin name rfD<25> signal rfD<25> layer 1 -240 4560
+
+pad 247 name twpin_rfD<26>
+corners 4
+-340 4320 -340 4480 -140 4480 -140 4320 
+orient 7
+pin name rfD<26> signal rfD<26> layer 1 -240 4400
+
+pad 248 name twpin_rfD<27>
+corners 4
+-340 4160 -340 4320 -140 4320 -140 4160 
+orient 7
+pin name rfD<27> signal rfD<27> layer 1 -240 4240
+
+pad 249 name twpin_rfD<28>
+corners 4
+-340 4000 -340 4160 -140 4160 -140 4000 
+orient 7
+pin name rfD<28> signal rfD<28> layer 1 -240 4080
+
+pad 250 name twpin_rfD<29>
+corners 4
+-340 3840 -340 4000 -140 4000 -140 3840 
+orient 7
+pin name rfD<29> signal rfD<29> layer 1 -240 3920
+
+pad 251 name twpin_rfD<30>
+corners 4
+-340 3680 -340 3840 -140 3840 -140 3680 
+orient 7
+pin name rfD<30> signal rfD<30> layer 1 -240 3760
+
+pad 252 name twpin_rfD<31>
+corners 4
+-340 3520 -340 3680 -140 3680 -140 3520 
+orient 7
+pin name rfD<31> signal rfD<31> layer 1 -240 3600
+
+pad 253 name twpin_extA<0>
+corners 4
+-340 19360 -340 19520 -140 19520 -140 19360 
+orient 7
+pin name extA<0> signal extA<0> layer 1 -240 19440
+
+pad 254 name twpin_extA<1>
+corners 4
+-340 19200 -340 19360 -140 19360 -140 19200 
+orient 7
+pin name extA<1> signal extA<1> layer 1 -240 19280
+
+pad 255 name twpin_extA<2>
+corners 4
+-340 19040 -340 19200 -140 19200 -140 19040 
+orient 7
+pin name extA<2> signal extA<2> layer 1 -240 19120
+
+pad 256 name twpin_extA<3>
+corners 4
+-340 18880 -340 19040 -140 19040 -140 18880 
+orient 7
+pin name extA<3> signal extA<3> layer 1 -240 18960
+
+pad 257 name twpin_extA<4>
+corners 4
+-340 18720 -340 18880 -140 18880 -140 18720 
+orient 7
+pin name extA<4> signal extA<4> layer 1 -240 18800
+
+pad 258 name twpin_extA<5>
+corners 4
+-340 18560 -340 18720 -140 18720 -140 18560 
+orient 7
+pin name extA<5> signal extA<5> layer 1 -240 18640
+
+pad 259 name twpin_extA<6>
+corners 4
+-340 18400 -340 18560 -140 18560 -140 18400 
+orient 7
+pin name extA<6> signal extA<6> layer 1 -240 18480
+
+pad 260 name twpin_extA<7>
+corners 4
+-340 18240 -340 18400 -140 18400 -140 18240 
+orient 7
+pin name extA<7> signal extA<7> layer 1 -240 18320
+
+pad 261 name twpin_extA<8>
+corners 4
+-340 18080 -340 18240 -140 18240 -140 18080 
+orient 7
+pin name extA<8> signal extA<8> layer 1 -240 18160
+
+pad 262 name twpin_extA<9>
+corners 4
+-340 17920 -340 18080 -140 18080 -140 17920 
+orient 7
+pin name extA<9> signal extA<9> layer 1 -240 18000
+
+pad 263 name twpin_extA<10>
+corners 4
+-340 17760 -340 17920 -140 17920 -140 17760 
+orient 7
+pin name extA<10> signal extA<10> layer 1 -240 17840
+
+pad 264 name twpin_extA<11>
+corners 4
+-340 17600 -340 17760 -140 17760 -140 17600 
+orient 7
+pin name extA<11> signal extA<11> layer 1 -240 17680
+
+pad 265 name twpin_extA<12>
+corners 4
+-340 17440 -340 17600 -140 17600 -140 17440 
+orient 7
+pin name extA<12> signal extA<12> layer 1 -240 17520
+
+pad 266 name twpin_extA<13>
+corners 4
+-340 17280 -340 17440 -140 17440 -140 17280 
+orient 7
+pin name extA<13> signal extA<13> layer 1 -240 17360
+
+pad 267 name twpin_extA<14>
+corners 4
+-340 17120 -340 17280 -140 17280 -140 17120 
+orient 7
+pin name extA<14> signal extA<14> layer 1 -240 17200
+
+pad 268 name twpin_extA<15>
+corners 4
+-340 16960 -340 17120 -140 17120 -140 16960 
+orient 7
+pin name extA<15> signal extA<15> layer 1 -240 17040
+
+pad 269 name twpin_extA<16>
+corners 4
+-340 16800 -340 16960 -140 16960 -140 16800 
+orient 7
+pin name extA<16> signal extA<16> layer 1 -240 16880
+
+pad 270 name twpin_extA<17>
+corners 4
+-340 16640 -340 16800 -140 16800 -140 16640 
+orient 7
+pin name extA<17> signal extA<17> layer 1 -240 16720
+
+pad 271 name twpin_extA<18>
+corners 4
+-340 16480 -340 16640 -140 16640 -140 16480 
+orient 7
+pin name extA<18> signal extA<18> layer 1 -240 16560
+
+pad 272 name twpin_extA<19>
+corners 4
+-340 16320 -340 16480 -140 16480 -140 16320 
+orient 7
+pin name extA<19> signal extA<19> layer 1 -240 16400
+
+pad 273 name twpin_extA<20>
+corners 4
+-340 16160 -340 16320 -140 16320 -140 16160 
+orient 7
+pin name extA<20> signal extA<20> layer 1 -240 16240
+
+pad 274 name twpin_extA<21>
+corners 4
+-340 16000 -340 16160 -140 16160 -140 16000 
+orient 7
+pin name extA<21> signal extA<21> layer 1 -240 16080
+
+pad 275 name twpin_extA<22>
+corners 4
+-340 15840 -340 16000 -140 16000 -140 15840 
+orient 7
+pin name extA<22> signal extA<22> layer 1 -240 15920
+
+pad 276 name twpin_extA<23>
+corners 4
+-340 15680 -340 15840 -140 15840 -140 15680 
+orient 7
+pin name extA<23> signal extA<23> layer 1 -240 15760
+
+pad 277 name twpin_extA<24>
+corners 4
+-340 15520 -340 15680 -140 15680 -140 15520 
+orient 7
+pin name extA<24> signal extA<24> layer 1 -240 15600
+
+pad 278 name twpin_extA<25>
+corners 4
+-340 15360 -340 15520 -140 15520 -140 15360 
+orient 7
+pin name extA<25> signal extA<25> layer 1 -240 15440
+
+pad 279 name twpin_extA<26>
+corners 4
+-340 15200 -340 15360 -140 15360 -140 15200 
+orient 7
+pin name extA<26> signal extA<26> layer 1 -240 15280
+
+pad 280 name twpin_extA<27>
+corners 4
+-340 15040 -340 15200 -140 15200 -140 15040 
+orient 7
+pin name extA<27> signal extA<27> layer 1 -240 15120
+
+pad 281 name twpin_extA<28>
+corners 4
+-340 14880 -340 15040 -140 15040 -140 14880 
+orient 7
+pin name extA<28> signal extA<28> layer 1 -240 14960
+
+pad 282 name twpin_extA<29>
+corners 4
+-340 14720 -340 14880 -140 14880 -140 14720 
+orient 7
+pin name extA<29> signal extA<29> layer 1 -240 14800
+
+pad 283 name twpin_extA<30>
+corners 4
+-340 14560 -340 14720 -140 14720 -140 14560 
+orient 7
+pin name extA<30> signal extA<30> layer 1 -240 14640
+
+pad 284 name twpin_extA<31>
+corners 4
+-340 14400 -340 14560 -140 14560 -140 14400 
+orient 7
+pin name extA<31> signal extA<31> layer 1 -240 14480
+
+pad 285 name twpin_extB<0>
+corners 4
+-340 14240 -340 14400 -140 14400 -140 14240 
+orient 7
+pin name extB<0> signal extB<0> layer 1 -240 14320
+
+pad 286 name twpin_extB<1>
+corners 4
+-340 14080 -340 14240 -140 14240 -140 14080 
+orient 7
+pin name extB<1> signal extB<1> layer 1 -240 14160
+
+pad 287 name twpin_extB<2>
+corners 4
+-340 13920 -340 14080 -140 14080 -140 13920 
+orient 7
+pin name extB<2> signal extB<2> layer 1 -240 14000
+
+pad 288 name twpin_extB<3>
+corners 4
+-340 13760 -340 13920 -140 13920 -140 13760 
+orient 7
+pin name extB<3> signal extB<3> layer 1 -240 13840
+
+pad 289 name twpin_extB<4>
+corners 4
+-340 13600 -340 13760 -140 13760 -140 13600 
+orient 7
+pin name extB<4> signal extB<4> layer 1 -240 13680
+
+pad 290 name twpin_extB<5>
+corners 4
+-340 13440 -340 13600 -140 13600 -140 13440 
+orient 7
+pin name extB<5> signal extB<5> layer 1 -240 13520
+
+pad 291 name twpin_extB<6>
+corners 4
+-340 13280 -340 13440 -140 13440 -140 13280 
+orient 7
+pin name extB<6> signal extB<6> layer 1 -240 13360
+
+pad 292 name twpin_extB<7>
+corners 4
+-340 13120 -340 13280 -140 13280 -140 13120 
+orient 7
+pin name extB<7> signal extB<7> layer 1 -240 13200
+
+pad 293 name twpin_extB<8>
+corners 4
+-340 12960 -340 13120 -140 13120 -140 12960 
+orient 7
+pin name extB<8> signal extB<8> layer 1 -240 13040
+
+pad 294 name twpin_extB<9>
+corners 4
+-340 12800 -340 12960 -140 12960 -140 12800 
+orient 7
+pin name extB<9> signal extB<9> layer 1 -240 12880
+
+pad 295 name twpin_extB<10>
+corners 4
+-340 12640 -340 12800 -140 12800 -140 12640 
+orient 7
+pin name extB<10> signal extB<10> layer 1 -240 12720
+
+pad 296 name twpin_extB<11>
+corners 4
+-340 12480 -340 12640 -140 12640 -140 12480 
+orient 7
+pin name extB<11> signal extB<11> layer 1 -240 12560
+
+pad 297 name twpin_extB<12>
+corners 4
+-340 12320 -340 12480 -140 12480 -140 12320 
+orient 7
+pin name extB<12> signal extB<12> layer 1 -240 12400
+
+pad 298 name twpin_extB<13>
+corners 4
+-340 12160 -340 12320 -140 12320 -140 12160 
+orient 7
+pin name extB<13> signal extB<13> layer 1 -240 12240
+
+pad 299 name twpin_extB<14>
+corners 4
+-340 12000 -340 12160 -140 12160 -140 12000 
+orient 7
+pin name extB<14> signal extB<14> layer 1 -240 12080
+
+pad 300 name twpin_extB<15>
+corners 4
+-340 11840 -340 12000 -140 12000 -140 11840 
+orient 7
+pin name extB<15> signal extB<15> layer 1 -240 11920
+
+pad 301 name twpin_extB<16>
+corners 4
+-340 11680 -340 11840 -140 11840 -140 11680 
+orient 7
+pin name extB<16> signal extB<16> layer 1 -240 11760
+
+pad 302 name twpin_extB<17>
+corners 4
+-340 11520 -340 11680 -140 11680 -140 11520 
+orient 7
+pin name extB<17> signal extB<17> layer 1 -240 11600
+
+pad 303 name twpin_extB<18>
+corners 4
+-340 11360 -340 11520 -140 11520 -140 11360 
+orient 7
+pin name extB<18> signal extB<18> layer 1 -240 11440
+
+pad 304 name twpin_extB<19>
+corners 4
+-340 11200 -340 11360 -140 11360 -140 11200 
+orient 7
+pin name extB<19> signal extB<19> layer 1 -240 11280
+
+pad 305 name twpin_extB<20>
+corners 4
+-340 11040 -340 11200 -140 11200 -140 11040 
+orient 7
+pin name extB<20> signal extB<20> layer 1 -240 11120
+
+pad 306 name twpin_extB<21>
+corners 4
+-340 10880 -340 11040 -140 11040 -140 10880 
+orient 7
+pin name extB<21> signal extB<21> layer 1 -240 10960
+
+pad 307 name twpin_extB<22>
+corners 4
+-340 10720 -340 10880 -140 10880 -140 10720 
+orient 7
+pin name extB<22> signal extB<22> layer 1 -240 10800
+
+pad 308 name twpin_extB<23>
+corners 4
+-340 10560 -340 10720 -140 10720 -140 10560 
+orient 7
+pin name extB<23> signal extB<23> layer 1 -240 10640
+
+pad 309 name twpin_extB<24>
+corners 4
+-340 10400 -340 10560 -140 10560 -140 10400 
+orient 7
+pin name extB<24> signal extB<24> layer 1 -240 10480
+
+pad 310 name twpin_extB<25>
+corners 4
+-340 10240 -340 10400 -140 10400 -140 10240 
+orient 7
+pin name extB<25> signal extB<25> layer 1 -240 10320
+
+pad 311 name twpin_extB<26>
+corners 4
+-340 10080 -340 10240 -140 10240 -140 10080 
+orient 7
+pin name extB<26> signal extB<26> layer 1 -240 10160
+
+pad 312 name twpin_extB<27>
+corners 4
+-340 9920 -340 10080 -140 10080 -140 9920 
+orient 7
+pin name extB<27> signal extB<27> layer 1 -240 10000
+
+pad 313 name twpin_extB<28>
+corners 4
+-340 9760 -340 9920 -140 9920 -140 9760 
+orient 7
+pin name extB<28> signal extB<28> layer 1 -240 9840
+
+pad 314 name twpin_extB<29>
+corners 4
+-340 9600 -340 9760 -140 9760 -140 9600 
+orient 7
+pin name extB<29> signal extB<29> layer 1 -240 9680
+
+pad 315 name twpin_extB<30>
+corners 4
+-340 9440 -340 9600 -140 9600 -140 9440 
+orient 7
+pin name extB<30> signal extB<30> layer 1 -240 9520
+
+pad 316 name twpin_extB<31>
+corners 4
+-340 9280 -340 9440 -140 9440 -140 9280 
+orient 7
+pin name extB<31> signal extB<31> layer 1 -240 9360
+
+pad 317 name twpin_extStart
+corners 4
+-340 8640 -340 8800 -140 8800 -140 8640 
+orient 7
+pin name extStart signal extStart layer 1 -240 8720
+
+pad 318 name twpin_extFunc3<0>
+corners 4
+-340 9120 -340 9280 -140 9280 -140 9120 
+orient 7
+pin name extFunc3<0> signal extFunc3<0> layer 1 -240 9200
+
+pad 319 name twpin_extFunc3<1>
+corners 4
+-340 8960 -340 9120 -140 9120 -140 8960 
+orient 7
+pin name extFunc3<1> signal extFunc3<1> layer 1 -240 9040
+
+pad 320 name twpin_extFunc3<2>
+corners 4
+-340 8800 -340 8960 -140 8960 -140 8800 
+orient 7
+pin name extFunc3<2> signal extFunc3<2> layer 1 -240 8880

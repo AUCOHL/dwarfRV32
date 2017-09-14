@@ -1,0 +1,17 @@
+syntax version:v1.1 date:Mon May 25 21:11:10 EDT 1992
+TIMESTAMP:Thu Sep 14 15:49:51 2017
+Statistics for rv32_CPU_v2:
+num_stdcells:5071
+num_macros:0
+num_instances:0
+num_pads:319
+num_nets:5207
+num_pins:17496
+num_implicit_feeds:22171
+num_equivs:22171
+num_unequivs:0
+num_ports:319
+macro_area:0.000e+00
+tot_length:10649240
+num_soft:1
+cell_height:1300
