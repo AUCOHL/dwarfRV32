@@ -1,0 +1,13 @@
+# git ignore for project files
+*.remove-from-git
+*.raw
+*.ext
+*.deleted
+*.symlock
+*.raw.dp
+*.rawt
+*.swp
+**/.java
+**/.DS_Store
+**/.Trashes/
+
