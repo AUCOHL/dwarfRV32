@@ -1,18 +1,18 @@
-puts stdout "Sourcing design .magicrc for technology EFXH035B ..."
+puts stdout "Sourcing design .magicrc for technology EFXH035C ..."
 
 # drc off
 drc euclidean on
 
-set PDKPATH "/ef/tech/XFAB/EFXH035B"
+set PDKPATH "/ef/tech/XFAB/EFXH035C"
 
 # loading technology
-tech load $PDKPATH/libs.tech/magic/current/EFXH035B.tech
+tech load $PDKPATH/libs.tech/magic/current/EFXH035C.tech
 
 # load device generator
-source $PDKPATH/libs.tech/magic/current/EFXH035B.tcl
+source $PDKPATH/libs.tech/magic/current/EFXH035C.tcl
 
 # load bind keys
-source $PDKPATH/libs.tech/magic/current/EFXH035B-BindKeys
+source $PDKPATH/libs.tech/magic/current/EFXH035C-BindKeys
 
 # set units to user grid
 snap grid

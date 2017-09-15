@@ -1,4 +1,4 @@
-# EFXH035B.par --- Parameter file for GrayWolf
+# EFXH035C.par --- Parameter file for GrayWolf
 # NOTE:  all distance units are in centimicrons unless otherwise stated
 # WARNING: this is NOT tcl syntax! No Comments on end of actual data line.
 # Per TE, vast majority of quantities here are not used (read instead from techLEF, etc.)
@@ -9,19 +9,23 @@ RULES
     layer metal1 0.105 0.000109 horizontal
     layer metal2 0.105 0.000103 vertical
     layer metal3 0.105 0.0000515 horizontal
+    layer metal4 0.04 0.004 vertical
 
     via via12 metal1 metal2
     via via23 metal2 metal3
+    via via34 metal3 metal4
 
               # 0.5 um
     width metal1 50
     width metal2 60
               # 0.6 um
     width metal3 60
+    width metal4 120
 
     # TODO verify these two numbers
     width via12 50
     width via23 50
+    width via34 120
 
     # Set spacing = track pitch - width, so that GrayWolf places pins
     # on the right pitch.
@@ -35,6 +39,7 @@ RULES
     spacing metal1 metal1 80
     spacing metal2 metal2 80
     spacing metal3 metal3 70
+    spacing metal4 metal4 200
 
     # (WAS:) Stacked vias allowed
     # spacing via12 via23 0
@@ -42,6 +47,7 @@ RULES
     # To disable Stacked?: give non-zero spacing (centimicrons = 10 nanometer = 1/100 of micron)
     # TODO need real value here:
     spacing via12 via23 60
+    spacing via23 via34 0
 
                        # .2um .15um
     overhang via12 metal1 20
@@ -50,6 +56,8 @@ RULES
     overhang via23 metal2 20
     overhang via23 metal3 15
 
+    overhang via34 metal3 14
+    overhang via34 metal4 16
 ENDRULES
 
 *vertical_wire_weight : 1.0

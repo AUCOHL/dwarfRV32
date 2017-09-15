@@ -1,4 +1,4 @@
-Qflow synthesis logfile created on Thu Sep 14 13:56:35 PDT 2017
+Qflow synthesis logfile created on Thu Sep 14 16:38:14 PDT 2017
 Running yosys for verilog parsing and synthesis
 
  /----------------------------------------------------------------------------\
@@ -7917,7 +7917,7 @@ Running ABC command: /ef/apps/ocd/qflow/1.1.70/share/qflow/bin/yosys-abc -s -f <
 ABC: ABC command line: "source <abc-temp-dir>/abc.script".
 ABC: 
 ABC: + read_blif <abc-temp-dir>/input.blif 
-ABC: + read_lib -w /ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib 
+ABC: + read_lib -w /ef/tech/XFAB/EFXH035C/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib 
 ABC: Parsing finished successfully.  Parsing time =     0.19 sec
 ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX12".
 ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX16".
@@ -8179,8 +8179,8 @@ ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN2" without logic function
 ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN5" without logic function.
 ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN10" without logic function.
 ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN25" without logic function.
-ABC: Library "D_CELLS_MOS_typ_3_30V_25C" from "/ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib" has 365 cells (260 skipped: 144 seq; 56 tri-state; 60 no func).  Time =     0.29 sec
-ABC: Memory =   20.80 MB. Time =     0.29 sec
+ABC: Library "D_CELLS_MOS_typ_3_30V_25C" from "/ef/tech/XFAB/EFXH035C/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib" has 365 cells (260 skipped: 144 seq; 56 tri-state; 60 no func).  Time =     0.30 sec
+ABC: Memory =   20.80 MB. Time =     0.30 sec
 ABC: Warning: Detected 8 multi-output gates (for example, "FAX1").
 ABC: + strash 
 ABC: + scorr 
@@ -8230,7 +8230,320 @@ Running ABC command: /ef/apps/ocd/qflow/1.1.70/share/qflow/bin/yosys-abc -s -f <
 ABC: ABC command line: "source <abc-temp-dir>/abc.script".
 ABC: 
 ABC: + read_blif <abc-temp-dir>/input.blif 
-ABC: + read_lib -w /ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib 
+ABC: + read_lib -w /ef/tech/XFAB/EFXH035C/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib 
+ABC: Parsing finished successfully.  Parsing time =     0.23 sec
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX12".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX16".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX20".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX3".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX8".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX1".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX12".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX16".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX2".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX20".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX3".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX8".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX12".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX16".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX20".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX3".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX8".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX1".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX12".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX16".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX2".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX20".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX3".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX8".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX12".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX16".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX20".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX3".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX8".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX1".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX12".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX16".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX2".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX20".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX3".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX8".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX12".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX16".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX20".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX3".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX8".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX1".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX12".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX16".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX2".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX20".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX3".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX8".
+ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX1" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX2" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX3" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX4" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX8" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX1" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX2" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX3" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX4" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX8" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX1" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX2" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX3" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX4" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX8" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX1" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX2" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX3" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX4" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX8" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX1" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX2" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX3" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX4" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX8" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX1" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX2" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX3" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX4" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX8" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX4".
+ABC: Scl_LibertyReadGenlib() skipped cell "SIGNALHOLD" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "MPROBE" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "MPROBEBUX8" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "FEED1" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "FEED2" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "FEED3" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "FEED5" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "FEED10" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "FEED25" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP2" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP5" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP10" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP25" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "DECAP2" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "DECAP3" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "DECAP5" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "DECAP10" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "DECAP25" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "R_FEED3" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "R_FEED25" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL1" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL2" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL5" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL10" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL25" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN1" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN2" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN5" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN10" without logic function.
+ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN25" without logic function.
+ABC: Library "D_CELLS_MOS_typ_3_30V_25C" from "/ef/tech/XFAB/EFXH035C/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib" has 365 cells (260 skipped: 144 seq; 56 tri-state; 60 no func).  Time =     0.34 sec
+ABC: Memory =   20.80 MB. Time =     0.34 sec
+ABC: Warning: Detected 8 multi-output gates (for example, "FAX1").
+ABC: + strash 
+ABC: + scorr 
+ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+ABC: + ifraig 
+ABC: + retime 
+ABC: + strash 
+ABC: + dch -f 
+ABC: + map -M 1 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+6.2.2. Re-integrating ABC results.
+ABC RESULTS:            AN21X1 cells:        2
+ABC RESULTS:            AN31X1 cells:       13
+ABC RESULTS:            AND2X2 cells:       28
+ABC RESULTS:            AND3X4 cells:        4
+ABC RESULTS:            AND4X1 cells:       10
+ABC RESULTS:            AND5X1 cells:        8
+ABC RESULTS:            AO22X2 cells:       10
+ABC RESULTS:             EN2X1 cells:        4
+ABC RESULTS:             EO2X1 cells:        1
+ABC RESULTS:              INX1 cells:       33
+ABC RESULTS:            MU2IX1 cells:        2
+ABC RESULTS:             MU2X1 cells:        3
+ABC RESULTS:           NA2I1X1 cells:        6
+ABC RESULTS:             NA2X1 cells:       91
+ABC RESULTS:           NA3I1X1 cells:        4
+ABC RESULTS:             NA3X1 cells:        4
+ABC RESULTS:           NO2I1X1 cells:        5
+ABC RESULTS:             NO2X1 cells:       58
+ABC RESULTS:           NO3I1X1 cells:        1
+ABC RESULTS:             NO3X1 cells:        3
+ABC RESULTS:            ON21X1 cells:       20
+ABC RESULTS:            ON22X1 cells:       12
+ABC RESULTS:            ON31X1 cells:       24
+ABC RESULTS:             OR2X2 cells:        3
+ABC RESULTS:        internal signals:      255
+ABC RESULTS:           input signals:      103
+ABC RESULTS:          output signals:       69
+Removing temp directory.
+
+6.3. Extracting gate netlist of module `\rv32PCUnit' to `<abc-temp-dir>/input.blif'..
+Extracted 565 gates and 738 wires to a netlist network with 173 inputs and 65 outputs.
+
+6.3.1. Executing ABC.
+Running ABC command: /ef/apps/ocd/qflow/1.1.70/share/qflow/bin/yosys-abc -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_lib -w /ef/tech/XFAB/EFXH035C/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib 
 ABC: Parsing finished successfully.  Parsing time =     0.19 sec
 ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX12".
 ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX16".
@@ -8492,321 +8805,8 @@ ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN2" without logic function
 ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN5" without logic function.
 ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN10" without logic function.
 ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN25" without logic function.
-ABC: Library "D_CELLS_MOS_typ_3_30V_25C" from "/ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib" has 365 cells (260 skipped: 144 seq; 56 tri-state; 60 no func).  Time =     0.30 sec
+ABC: Library "D_CELLS_MOS_typ_3_30V_25C" from "/ef/tech/XFAB/EFXH035C/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib" has 365 cells (260 skipped: 144 seq; 56 tri-state; 60 no func).  Time =     0.30 sec
 ABC: Memory =   20.80 MB. Time =     0.30 sec
-ABC: Warning: Detected 8 multi-output gates (for example, "FAX1").
-ABC: + strash 
-ABC: + scorr 
-ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
-ABC: + ifraig 
-ABC: + retime 
-ABC: + strash 
-ABC: + dch -f 
-ABC: + map -M 1 
-ABC: + write_blif <abc-temp-dir>/output.blif 
-
-6.2.2. Re-integrating ABC results.
-ABC RESULTS:            AN21X1 cells:        2
-ABC RESULTS:            AN31X1 cells:       13
-ABC RESULTS:            AND2X2 cells:       28
-ABC RESULTS:            AND3X4 cells:        4
-ABC RESULTS:            AND4X1 cells:       10
-ABC RESULTS:            AND5X1 cells:        8
-ABC RESULTS:            AO22X2 cells:       10
-ABC RESULTS:             EN2X1 cells:        4
-ABC RESULTS:             EO2X1 cells:        1
-ABC RESULTS:              INX1 cells:       33
-ABC RESULTS:            MU2IX1 cells:        2
-ABC RESULTS:             MU2X1 cells:        3
-ABC RESULTS:           NA2I1X1 cells:        6
-ABC RESULTS:             NA2X1 cells:       91
-ABC RESULTS:           NA3I1X1 cells:        4
-ABC RESULTS:             NA3X1 cells:        4
-ABC RESULTS:           NO2I1X1 cells:        5
-ABC RESULTS:             NO2X1 cells:       58
-ABC RESULTS:           NO3I1X1 cells:        1
-ABC RESULTS:             NO3X1 cells:        3
-ABC RESULTS:            ON21X1 cells:       20
-ABC RESULTS:            ON22X1 cells:       12
-ABC RESULTS:            ON31X1 cells:       24
-ABC RESULTS:             OR2X2 cells:        3
-ABC RESULTS:        internal signals:      255
-ABC RESULTS:           input signals:      103
-ABC RESULTS:          output signals:       69
-Removing temp directory.
-
-6.3. Extracting gate netlist of module `\rv32PCUnit' to `<abc-temp-dir>/input.blif'..
-Extracted 565 gates and 738 wires to a netlist network with 173 inputs and 65 outputs.
-
-6.3.1. Executing ABC.
-Running ABC command: /ef/apps/ocd/qflow/1.1.70/share/qflow/bin/yosys-abc -s -f <abc-temp-dir>/abc.script 2>&1
-ABC: ABC command line: "source <abc-temp-dir>/abc.script".
-ABC: 
-ABC: + read_blif <abc-temp-dir>/input.blif 
-ABC: + read_lib -w /ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib 
-ABC: Parsing finished successfully.  Parsing time =     0.21 sec
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX8".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX8".
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX4".
-ABC: Scl_LibertyReadGenlib() skipped cell "SIGNALHOLD" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "MPROBE" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "MPROBEBUX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "R_FEED3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "R_FEED25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN25" without logic function.
-ABC: Library "D_CELLS_MOS_typ_3_30V_25C" from "/ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib" has 365 cells (260 skipped: 144 seq; 56 tri-state; 60 no func).  Time =     0.33 sec
-ABC: Memory =   20.80 MB. Time =     0.33 sec
 ABC: Warning: Detected 8 multi-output gates (for example, "FAX1").
 ABC: + strash 
 ABC: + scorr 
@@ -8866,7 +8866,7 @@ Running ABC command: /ef/apps/ocd/qflow/1.1.70/share/qflow/bin/yosys-abc -s -f <
 ABC: ABC command line: "source <abc-temp-dir>/abc.script".
 ABC: 
 ABC: + read_blif <abc-temp-dir>/input.blif 
-ABC: + read_lib -w /ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib 
+ABC: + read_lib -w /ef/tech/XFAB/EFXH035C/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib 
 ABC: Parsing finished successfully.  Parsing time =     0.19 sec
 ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX12".
 ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX16".
@@ -9128,8 +9128,8 @@ ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN2" without logic function
 ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN5" without logic function.
 ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN10" without logic function.
 ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN25" without logic function.
-ABC: Library "D_CELLS_MOS_typ_3_30V_25C" from "/ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib" has 365 cells (260 skipped: 144 seq; 56 tri-state; 60 no func).  Time =     0.29 sec
-ABC: Memory =   20.80 MB. Time =     0.29 sec
+ABC: Library "D_CELLS_MOS_typ_3_30V_25C" from "/ef/tech/XFAB/EFXH035C/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib" has 365 cells (260 skipped: 144 seq; 56 tri-state; 60 no func).  Time =     0.30 sec
+ABC: Memory =   20.80 MB. Time =     0.30 sec
 ABC: Warning: Detected 8 multi-output gates (for example, "FAX1").
 ABC: + strash 
 ABC: + scorr 
@@ -9168,1681 +9168,3 @@ Removing temp directory.
 Extracted 28 gates and 33 wires to a netlist network with 5 inputs and 11 outputs.
 
 6.5.1. Executing ABC.
-Running ABC command: /ef/apps/ocd/qflow/1.1.70/share/qflow/bin/yosys-abc -s -f <abc-temp-dir>/abc.script 2>&1
-ABC: ABC command line: "source <abc-temp-dir>/abc.script".
-ABC: 
-ABC: + read_blif <abc-temp-dir>/input.blif 
-ABC: + read_lib -w /ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib 
-ABC: Parsing finished successfully.  Parsing time =     0.19 sec
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX8".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX8".
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX4".
-ABC: Scl_LibertyReadGenlib() skipped cell "SIGNALHOLD" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "MPROBE" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "MPROBEBUX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "R_FEED3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "R_FEED25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN25" without logic function.
-ABC: Library "D_CELLS_MOS_typ_3_30V_25C" from "/ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib" has 365 cells (260 skipped: 144 seq; 56 tri-state; 60 no func).  Time =     0.30 sec
-ABC: Memory =   20.80 MB. Time =     0.30 sec
-ABC: Warning: Detected 8 multi-output gates (for example, "FAX1").
-ABC: + strash 
-ABC: + scorr 
-ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
-ABC: + ifraig 
-ABC: + retime 
-ABC: + strash 
-ABC: + dch -f 
-ABC: + map -M 1 
-ABC: + write_blif <abc-temp-dir>/output.blif 
-
-6.5.2. Re-integrating ABC results.
-ABC RESULTS:           NA2I1X1 cells:        3
-ABC RESULTS:             NA2X1 cells:        3
-ABC RESULTS:           NA3I1X1 cells:        2
-ABC RESULTS:           NA3I2X1 cells:        1
-ABC RESULTS:             NO2X1 cells:       12
-ABC RESULTS:             OR2X2 cells:        1
-ABC RESULTS:        internal signals:       17
-ABC RESULTS:           input signals:        5
-ABC RESULTS:          output signals:       11
-Removing temp directory.
-
-6.6. Extracting gate netlist of module `\rv32i_alu' to `<abc-temp-dir>/input.blif'..
-Extracted 1129 gates and 1207 wires to a netlist network with 78 inputs and 36 outputs.
-
-6.6.1. Executing ABC.
-Running ABC command: /ef/apps/ocd/qflow/1.1.70/share/qflow/bin/yosys-abc -s -f <abc-temp-dir>/abc.script 2>&1
-ABC: ABC command line: "source <abc-temp-dir>/abc.script".
-ABC: 
-ABC: + read_blif <abc-temp-dir>/input.blif 
-ABC: + read_lib -w /ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib 
-ABC: Parsing finished successfully.  Parsing time =     0.19 sec
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX8".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX8".
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX4".
-ABC: Scl_LibertyReadGenlib() skipped cell "SIGNALHOLD" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "MPROBE" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "MPROBEBUX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "R_FEED3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "R_FEED25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN25" without logic function.
-ABC: Library "D_CELLS_MOS_typ_3_30V_25C" from "/ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib" has 365 cells (260 skipped: 144 seq; 56 tri-state; 60 no func).  Time =     0.30 sec
-ABC: Memory =   20.80 MB. Time =     0.30 sec
-ABC: Warning: Detected 8 multi-output gates (for example, "FAX1").
-ABC: + strash 
-ABC: + scorr 
-ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
-ABC: + ifraig 
-ABC: + retime 
-ABC: + strash 
-ABC: + dch -f 
-ABC: + map -M 1 
-ABC: + write_blif <abc-temp-dir>/output.blif 
-
-6.6.2. Re-integrating ABC results.
-ABC RESULTS:           AN211X1 cells:       12
-ABC RESULTS:            AN21X1 cells:       71
-ABC RESULTS:           AN221X1 cells:        8
-ABC RESULTS:            AN22X1 cells:       48
-ABC RESULTS:           AN311X1 cells:        3
-ABC RESULTS:            AN31X1 cells:       29
-ABC RESULTS:            AN32X1 cells:        4
-ABC RESULTS:            AND2X2 cells:       38
-ABC RESULTS:            AND3X4 cells:        7
-ABC RESULTS:            AND5X1 cells:        2
-ABC RESULTS:            AO22X2 cells:        6
-ABC RESULTS:           AO311X1 cells:        3
-ABC RESULTS:            AO32X4 cells:        2
-ABC RESULTS:             EN2X1 cells:       10
-ABC RESULTS:             EN3X1 cells:        4
-ABC RESULTS:              INX1 cells:       84
-ABC RESULTS:            MU2IX1 cells:       93
-ABC RESULTS:             MU2X1 cells:       32
-ABC RESULTS:           NA2I1X1 cells:       41
-ABC RESULTS:             NA2X1 cells:      388
-ABC RESULTS:           NA3I1X1 cells:       97
-ABC RESULTS:           NA3I2X1 cells:        1
-ABC RESULTS:             NA3X1 cells:        7
-ABC RESULTS:           NO2I1X1 cells:        4
-ABC RESULTS:             NO2X1 cells:      118
-ABC RESULTS:           NO3I1X1 cells:        1
-ABC RESULTS:             NO3X1 cells:        8
-ABC RESULTS:           OA211X4 cells:        2
-ABC RESULTS:           OA221X1 cells:        1
-ABC RESULTS:            OA22X4 cells:        1
-ABC RESULTS:           ON211X1 cells:       51
-ABC RESULTS:            ON21X1 cells:      102
-ABC RESULTS:           ON221X1 cells:        4
-ABC RESULTS:            ON22X1 cells:       63
-ABC RESULTS:           ON311X1 cells:        8
-ABC RESULTS:            ON31X1 cells:       25
-ABC RESULTS:            ON32X1 cells:        5
-ABC RESULTS:             OR2X2 cells:        1
-ABC RESULTS:        internal signals:     1093
-ABC RESULTS:           input signals:       78
-ABC RESULTS:          output signals:       36
-Removing temp directory.
-
-6.7. Extracting gate netlist of module `\rv32i_branch_unit' to `<abc-temp-dir>/input.blif'..
-Extracted 18 gates and 25 wires to a netlist network with 7 inputs and 1 outputs.
-
-6.7.1. Executing ABC.
-Running ABC command: /ef/apps/ocd/qflow/1.1.70/share/qflow/bin/yosys-abc -s -f <abc-temp-dir>/abc.script 2>&1
-ABC: ABC command line: "source <abc-temp-dir>/abc.script".
-ABC: 
-ABC: + read_blif <abc-temp-dir>/input.blif 
-ABC: + read_lib -w /ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib 
-ABC: Parsing finished successfully.  Parsing time =     0.19 sec
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX8".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX8".
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX4".
-ABC: Scl_LibertyReadGenlib() skipped cell "SIGNALHOLD" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "MPROBE" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "MPROBEBUX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "R_FEED3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "R_FEED25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN25" without logic function.
-ABC: Library "D_CELLS_MOS_typ_3_30V_25C" from "/ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib" has 365 cells (260 skipped: 144 seq; 56 tri-state; 60 no func).  Time =     0.30 sec
-ABC: Memory =   20.80 MB. Time =     0.30 sec
-ABC: Warning: Detected 8 multi-output gates (for example, "FAX1").
-ABC: + strash 
-ABC: + scorr 
-ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
-ABC: + ifraig 
-ABC: + retime 
-ABC: + strash 
-ABC: + dch -f 
-ABC: + map -M 1 
-ABC: + write_blif <abc-temp-dir>/output.blif 
-
-6.7.2. Re-integrating ABC results.
-ABC RESULTS:           AN211X1 cells:        1
-ABC RESULTS:            AN22X1 cells:        1
-ABC RESULTS:            AND2X2 cells:        2
-ABC RESULTS:              INX1 cells:        1
-ABC RESULTS:             NA2X1 cells:        1
-ABC RESULTS:           NO2I1X1 cells:        1
-ABC RESULTS:             NO2X1 cells:        3
-ABC RESULTS:           ON211X1 cells:        3
-ABC RESULTS:            ON21X1 cells:        1
-ABC RESULTS:             OR2X2 cells:        1
-ABC RESULTS:        internal signals:       17
-ABC RESULTS:           input signals:        7
-ABC RESULTS:          output signals:        1
-Removing temp directory.
-
-6.8. Extracting gate netlist of module `\rv32i_extender' to `<abc-temp-dir>/input.blif'..
-Extracted 80 gates and 108 wires to a netlist network with 28 inputs and 24 outputs.
-
-6.8.1. Executing ABC.
-Running ABC command: /ef/apps/ocd/qflow/1.1.70/share/qflow/bin/yosys-abc -s -f <abc-temp-dir>/abc.script 2>&1
-ABC: ABC command line: "source <abc-temp-dir>/abc.script".
-ABC: 
-ABC: + read_blif <abc-temp-dir>/input.blif 
-ABC: + read_lib -w /ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib 
-ABC: Parsing finished successfully.  Parsing time =     0.19 sec
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX8".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX8".
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX4".
-ABC: Scl_LibertyReadGenlib() skipped cell "SIGNALHOLD" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "MPROBE" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "MPROBEBUX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "R_FEED3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "R_FEED25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN25" without logic function.
-ABC: Library "D_CELLS_MOS_typ_3_30V_25C" from "/ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib" has 365 cells (260 skipped: 144 seq; 56 tri-state; 60 no func).  Time =     0.30 sec
-ABC: Memory =   20.80 MB. Time =     0.30 sec
-ABC: Warning: Detected 8 multi-output gates (for example, "FAX1").
-ABC: + strash 
-ABC: + scorr 
-ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
-ABC: + ifraig 
-ABC: + retime 
-ABC: + strash 
-ABC: + dch -f 
-ABC: + map -M 1 
-ABC: + write_blif <abc-temp-dir>/output.blif 
-
-6.8.2. Re-integrating ABC results.
-ABC RESULTS:              INX1 cells:        8
-ABC RESULTS:           NA2I1X1 cells:        3
-ABC RESULTS:             NA2X1 cells:       17
-ABC RESULTS:             NO2X1 cells:        1
-ABC RESULTS:           ON221X1 cells:       16
-ABC RESULTS:            ON22X1 cells:        8
-ABC RESULTS:             OR2X2 cells:        1
-ABC RESULTS:        internal signals:       56
-ABC RESULTS:           input signals:       28
-ABC RESULTS:          output signals:       24
-Removing temp directory.
-
-6.9. Extracting gate netlist of module `\rv32i_imm_gen' to `<abc-temp-dir>/input.blif'..
-Extracted 131 gates and 161 wires to a netlist network with 30 inputs and 31 outputs.
-
-6.9.1. Executing ABC.
-Running ABC command: /ef/apps/ocd/qflow/1.1.70/share/qflow/bin/yosys-abc -s -f <abc-temp-dir>/abc.script 2>&1
-ABC: ABC command line: "source <abc-temp-dir>/abc.script".
-ABC: 
-ABC: + read_blif <abc-temp-dir>/input.blif 
-ABC: + read_lib -w /ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib 
-ABC: Parsing finished successfully.  Parsing time =     0.21 sec
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTHX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "BTLX8".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFFX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLHX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "DLLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITHX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLCX8".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX1".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX12".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX16".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX2".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX20".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX3".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX4".
-ABC: Scl_LibertyReadGenlib() skipped three-state cell "ITLX8".
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCNX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX4" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "LSOGCPX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFFX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRRX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSQX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRSX4".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX1".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX2".
-ABC: Scl_LibertyReadGenlib() skipped sequential cell "SDFRX4".
-ABC: Scl_LibertyReadGenlib() skipped cell "SIGNALHOLD" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "MPROBE" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "MPROBEBUX8" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEED25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "FEEDCAP25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "DECAP25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "R_FEED3" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "R_FEED25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELL25" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN1" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN2" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN5" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN10" without logic function.
-ABC: Scl_LibertyReadGenlib() skipped cell "ANTENNACELLN25" without logic function.
-ABC: Library "D_CELLS_MOS_typ_3_30V_25C" from "/ef/tech/XFAB/EFXH035B/libs.ref/liberty/D_CELLS/PVT_3_30V_range/D_CELLS_MOS_typ_3_30V_25C.lib" has 365 cells (260 skipped: 144 seq; 56 tri-state; 60 no func).  Time =     0.35 sec
-ABC: Memory =   20.80 MB. Time =     0.35 sec
-ABC: Warning: Detected 8 multi-output gates (for example, "FAX1").
-ABC: + strash 
-ABC: + scorr 
-ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
-ABC: + ifraig 
-ABC: + retime 
-ABC: + strash 
-ABC: + dch -f 
-ABC: + map -M 1 
-ABC: + write_blif <abc-temp-dir>/output.blif 
-
-6.9.2. Re-integrating ABC results.
-ABC RESULTS:            AN21X1 cells:        1
-ABC RESULTS:            AND2X2 cells:        6
-ABC RESULTS:              INX1 cells:        6
-ABC RESULTS:             MU2X1 cells:        1
-ABC RESULTS:           NA2I1X1 cells:        3
-ABC RESULTS:             NA2X1 cells:       28
-ABC RESULTS:           NA3I1X1 cells:        2
-ABC RESULTS:             NA3X1 cells:        1
-ABC RESULTS:             NO2X1 cells:        3
-ABC RESULTS:             NO3X1 cells:        2
-ABC RESULTS:            ON21X1 cells:       10
-ABC RESULTS:           ON311X1 cells:        9
-ABC RESULTS:            ON32X1 cells:        2
-ABC RESULTS:        internal signals:      100
-ABC RESULTS:           input signals:       30
-ABC RESULTS:          output signals:       31
-Removing temp directory.
-
-7. Executing FLATTEN pass (flatten design).
-Mapping rv32_CPU_v2.IMMGen using rv32i_imm_gen.
-Mapping rv32_CPU_v2.PCU using rv32PCUnit.
-Mapping rv32_CPU_v2.EXT using rv32i_extender.
-Mapping rv32_CPU_v2.ALU using rv32i_alu.
-Mapping rv32_CPU_v2.CTRL using rv32CU.
-Mapping rv32_CPU_v2.CNTR using rv32Counters.
-Mapping rv32_CPU_v2.CTRL.IDEC1 using rv32dec.
-Mapping rv32_CPU_v2.CTRL.BR using rv32i_branch_unit.
-Mapping rv32_CPU_v2.CTRL.IDEC2 using rv32dec.
-Mapping rv32_CPU_v2.CTRL.IDEC0 using rv32dec.
-No more expansions possible.
-Deleting now unused module rv32CU.
-Deleting now unused module rv32Counters.
-Deleting now unused module rv32PCUnit.
-Deleting now unused module rv32dec.
-Deleting now unused module rv32i_alu.
-Deleting now unused module rv32i_branch_unit.
-Deleting now unused module rv32i_extender.
-Deleting now unused module rv32i_imm_gen.
-Removed 92 unused cells and 4706 unused wires.
-
-8. Executing HILOMAP pass (mapping to constant drivers).
-
-9. Executing HILOMAP pass (mapping to constant drivers).
-
-10. Executing IOPADMAP pass (mapping inputs/outputs to IO-PAD cells).
-Don't map input port rv32_CPU_v2.IRQ: Missing option -inpad.
-Don't map input port rv32_CPU_v2.IRQnum: Missing option -inpad.
-Mapping port rv32_CPU_v2.baddr using BUX2.
-Mapping port rv32_CPU_v2.bdi using BUX2.
-Don't map input port rv32_CPU_v2.bdo: Missing option -inpad.
-Mapping port rv32_CPU_v2.bsz using BUX2.
-Mapping port rv32_CPU_v2.bwr using BUX2.
-Don't map input port rv32_CPU_v2.clk: Missing option -inpad.
-Mapping port rv32_CPU_v2.extA using BUX2.
-Mapping port rv32_CPU_v2.extB using BUX2.
-Don't map input port rv32_CPU_v2.extDone: Missing option -inpad.
-Mapping port rv32_CPU_v2.extFunc3 using BUX2.
-Don't map input port rv32_CPU_v2.extR: Missing option -inpad.
-Mapping port rv32_CPU_v2.extStart using BUX2.
-Mapping port rv32_CPU_v2.rfD using BUX2.
-Don't map input port rv32_CPU_v2.rfRS1: Missing option -inpad.
-Don't map input port rv32_CPU_v2.rfRS2: Missing option -inpad.
-Mapping port rv32_CPU_v2.rfrd using BUX2.
-Mapping port rv32_CPU_v2.rfrs1 using BUX2.
-Mapping port rv32_CPU_v2.rfrs2 using BUX2.
-Mapping port rv32_CPU_v2.rfwr using BUX2.
-Don't map input port rv32_CPU_v2.rst: Missing option -inpad.
-
-11. Executing OPT pass (performing simple optimizations).
-
-11.1. Executing OPT_EXPR pass (perform const folding).
-
-11.2. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `\rv32_CPU_v2'.
-Removed a total of 0 cells.
-
-11.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
-Running muxtree optimizer on module \rv32_CPU_v2..
-  Creating internal representation of mux trees.
-  No muxes found in this module.
-Removed 0 multiplexer ports.
-
-11.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
-  Optimizing cells in module \rv32_CPU_v2.
-Performed a total of 0 changes.
-
-11.5. Executing OPT_MERGE pass (detect identical cells).
-Finding identical cells in module `\rv32_CPU_v2'.
-Removed a total of 0 cells.
-
-11.6. Executing OPT_RMDFF pass (remove dff with constant values).
-Replaced 0 DFF cells.
-
-11.7. Executing OPT_CLEAN pass (remove unused cells and wires).
-Finding unused cells or wires in module \rv32_CPU_v2..
-
-11.8. Executing OPT_EXPR pass (perform const folding).
-
-11.9. Finished OPT passes. (There is nothing left to do.)
-
-12. Executing BLIF backend.
-
-End of script. Logfile hash: 880281729f
-CPU: user 6.42s system 0.47s, MEM: 92.71 MB total, 65.33 MB resident
-Yosys 0.6+138 (git sha1 7cddab0, gcc 4.7.4 -fPIC -Os)
-Time spent: 25% 1x share (1 sec), 10% 23x opt_expr (0 sec), ...
-Cleaning up output syntax
-Cleaning Up blif file syntax
-Running blifFanout (iterative)
-
-Parsing library "D_CELLS_MOS_typ_3_30V_25C"
-End of library at line 297952
-Lib Read:  Processed 297953 lines.
-Top internal fanout is 255 (load 3397.57) from node CTRL.cyc,
-driven by DFRRQX1 with strength 253.986 (fF driven at latency 1000)
-Top fanout load-to-strength ratio is 13.377 (latency = 13377 ps)
-Top input node fanout is 398 (load 1604.73) from node clk.
-Warning 1: load of 3407.57 is 3.42736 times greater than strongest gate DFRRQX4
-This warning will only be repeated for larger overload ratios.  Warning count reflects
-the total number of overloaded nets.
-1 gates exceed specified minimum load.
-479 buffers were added.
-255 gates were changed.
-
-Gate counts by drive strength:
-
-	"X1" gates	In: 4134    	Out: 4245    	+111
-	"X2" gates	In: 359    	Out: 227    	-132
-	"X4" gates	In: 32    	Out: 37    	+5
-
-gates resized: 222
-Parsing library "D_CELLS_MOS_typ_3_30V_25C"
-End of library at line 297952
-Lib Read:  Processed 297953 lines.
-Top internal fanout is 17 (load 758.566) from node CTRL.cyc_bF$buf14,
-driven by BUX2 with strength 548.66 (fF driven at latency 1000)
-Top fanout load-to-strength ratio is 1.00864 (latency = 1008.64 ps)
-Top input node fanout is 54 (load 397.278) from node clk.
-0 gates exceed specified minimum load.
-67 buffers were added.
-1 gates were changed.
-
-Gate counts by drive strength:
-
-	"X1" gates	In: 4245    	Out: 4244    	-1
-	"X2" gates	In: 706    	Out: 707    	+1
-	"X3" gates	In: 16    	Out: 16    	+0
-	"X4" gates	In: 37    	Out: 37    	+0
-
-gates resized: 68
-Parsing library "D_CELLS_MOS_typ_3_30V_25C"
-End of library at line 297952
-Lib Read:  Processed 297953 lines.
-Top internal fanout is 16 (load 758.566) from node _2583_,
-driven by NA2I1X1 with strength 271.333 (fF driven at latency 1000)
-Top fanout load-to-strength ratio is 0.996102 (latency = 996.102 ps)
-Top input node fanout is 7 (load 101.4) from node clk.
-0 gates exceed specified minimum load.
-0 buffers were added.
-0 gates were changed.
-
-Gate counts by drive strength:
-
-	"X1" gates	In: 4244    	Out: 4244    	+0
-	"X2" gates	In: 774    	Out: 774    	+0
-	"X3" gates	In: 16    	Out: 16    	+0
-	"X4" gates	In: 37    	Out: 37    	+0
-
-gates resized: 0
-
-Generating RTL verilog and SPICE netlist file in directory
-	 /ef-design/projects/dwarfRV32/qflow/synthesis
-Files:
-   Verilog: /ef-design/projects/dwarfRV32/qflow/synthesis/rv32_CPU_v2.rtl.v
-   Verilog: /ef-design/projects/dwarfRV32/qflow/synthesis/rv32_CPU_v2.rtlnopwr.v
-   Spice:   /ef-design/projects/dwarfRV32/qflow/synthesis/rv32_CPU_v2.spc
-
-Running blif2Verilog.
-Running blif2BSpice.
-Running spi2xspice.py
-Synthesis script ended on Thu Sep 14 13:56:53 PDT 2017
