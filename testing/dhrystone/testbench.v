@@ -23,8 +23,8 @@
 `define     F3_OR           3'b110
 `define     F3_AND          3'b111
 
-`define     _RDISP_	    0	
-`define     _RDUMP_       0
+//`define     _RDISP_	    0	
+//`define     _RDUMP_       0
 
 
 
@@ -51,6 +51,7 @@ wire[2:0] extFunc3;
 
 reg IRQ;
 
+//port names updated, but signal/wire names are given arbitrary names
  rv32_CPU_v2 CPU(
               .clk(clk),
               .rst(rst),
@@ -61,7 +62,7 @@ reg IRQ;
               .simdone(simdone)
               );
 
-memory #(4096) M (.clk(clk), .bdi(bdi), .baddr(baddr), .bdo(bdo), .bwr(bwr), .bsz(bsz) );
+memory #(16384) M (.clk(clk), .bdi(bdi), .baddr(baddr), .bdo(bdo), .bwr(bwr), .bsz(bsz) );
 
  mul MULEXT (
       .clk(clk),
@@ -72,7 +73,7 @@ memory #(4096) M (.clk(clk), .bdi(bdi), .baddr(baddr), .bdo(bdo), .bwr(bwr), .bs
       .p(extR)
       );
 
-// simulate the RF
+// simulat ethe RF
 reg[31:0] RF[31:0];
 
 assign rfRS1 = RF[rfrs1];

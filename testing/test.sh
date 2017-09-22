@@ -2,17 +2,17 @@
 # change -O0 to -O2 for better compiler optimization
 # O: optimization level fix
 
-. ./env_setup.sh
+. ./setup.sh
 
 name=$(echo $1 | cut -f 1 -d '.')
 ext=$(echo $1 | cut -f 2 -d '.')
 mode=${2:-0}                 #arg2 : 0: normal, 1: interrupts 2: special
 
 if [ $mode = 1 ]; then
-    tests_path="$tests_path/int/"
+    tests_path="${tests_path}int/"
 else
     if [ $mode = 2 ]; then
-        tests_path="$tests_path/special/"
+        tests_path="${tests_path}special/"
     fi
 fi
 
@@ -21,24 +21,23 @@ runSim (){
     ${toolchain_path}riscv32-unknown-elf-objdump -d -M no-aliases "$1.elf" > "$1.lst"
     ${toolchain_path}riscv32-unknown-elf-objcopy -O binary "$1.elf" "$1.bin"
 
-    ../b2h.py "$1.bin" 1024 > "$1.hex" ## 
-    #elf2hex 4 1024 "$1.elf" > "$1.hex"
+    ../b2h.py "$1.bin" "$CAPH" > "$1.hex" ## 
 
     cp "$1.hex" "test.hex"
 
     ../rv32sim "$1.bin" | tail -32 > "$1.sim.txt"
-    vvp "$name.out" | tail -32 > "$1.vvp.txt"
+    vvp -N "$name.out"  | tail -33 > "$1.vvp.txt"
 
+	PERF=$(head -n 1 "$1.vvp.txt")
+	sed -i '1 d' "$1.vvp.txt"
 
-
-
-    diff -i -E  "$1.sim.txt" "$1.vvp.txt" > "$1.diff"
+	diff -i -E  "$1.sim.txt" "$1.vvp.txt" > "$1.diff"
 
     if [ -s "$1.diff" ]
       then
             echo $1 failed!
       else
-            echo $1 passed!
+		  echo $1 passed!\($PERF\)
     fi
 
 }

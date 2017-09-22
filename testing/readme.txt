@@ -7,6 +7,11 @@
 3) To run the random regression: ./stress.sh
     + these are 100 randomly generated tests;
     + temp files are placed under ./tmp/reg and generated sources under ./tests/reg
+---
+To change the memory size: (currently 16KB)
+-LOGCAPH in memory.v should be at least [log2(CAPH)]; CAPH: the size of a memory bank
+-adjust CAPH in setup.sh
+-The memory in the tesbench should be instantiated with the correct CAPH parameter
 
 ====================================================================================
 changelog:
@@ -21,13 +26,16 @@ changelog:
 + time interrupts in an instruction following a taken branch/jump
 +++
 + data dependency of rdtime/rdcycle fixed
++++
++ Dhrystone
++ CPI is displayed after each test case
++ Tested and fixed extensions (ext_mul)
++ Added basic support for extensions in rv32sim and randreg
 
 ====================================================================================
-+ quicksort.c, mergesort.c, 6queens.c overflow the ram section with -O3/-Ofast only
 + random+dijkstra fail; memory gets overwritten? (the produced code overwrites the text segment)
-+ gcc sometimes references memcpy and -mno-memcpy doesn't work (so, cannot initialize arrays larger than 7(?) inside main!) -> arrinmain.c:
-    solution: maybe like ext_mul?
 + IntCtrl
+
 
 ====================================================================================
 notes:

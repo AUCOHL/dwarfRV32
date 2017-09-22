@@ -161,6 +161,7 @@
   `define     SYS_CSRRC       3'b011
   `define     CSR_cycle       12'hc00
   `define     CSR_time        12'hc01
+  `define     CSR_instret     12'hc02
   `define     CSR_uie         12'h004
 
   `define     INST_NOP        32'h13
@@ -187,8 +188,7 @@
 
   `define     _EN_EXT_        0  //for simulation only
   `define     _SIM_           0
-//`define     _MONTR_         0
-//`define     _MONTRT_        0
+//`define     _DBUG_	      0
 
   /*
   module IntCtrl(
@@ -217,14 +217,14 @@
   */
   module rv32Counters(
       input clk, rst,
-      output[31:0] Cycle, Timer,
+      output[31:0] Cycle, Timer, Instret, //+//
       input[31:0] wdata,
-      input ld_cycle, ld_timer, ld_uie,
+      input ld_cycle, ld_timer, ld_uie, ret, //+//
       output gie, tie, eie,
       output tif
   );
 
-      reg[31:0] Cycle, Timer;
+      reg[31:0] Cycle, Timer, Instret; //+//
       reg[2:0] UIE;
 
 
@@ -239,6 +239,10 @@
           else Cycle <= Cycle + 32'b1;
 
       always @ (posedge clk or posedge rst)
+          if(rst) Instret <= 32'd0;
+          else if (ret) Instret <= Instret + 32'b1;
+
+      always @ (posedge clk or posedge rst)
           if(rst) UIE <= 3'd0;
           else if(ld_uie) UIE <= wdata[2:0];
 
@@ -246,9 +250,9 @@
       assign tif = (Timer == 32'b1);
 
 
-`ifdef _MONTRT_
+`ifdef _DBUG_
      always @ (posedge clk)
-       $display( "Timer = %d, Cycle = %d", Timer, Cycle);
+       $display( "Timer = %d, Cycle = %d, InstRet = %d", Timer, Cycle, Instret);
 `endif
 
   endmodule
@@ -446,7 +450,6 @@
     endcase
 
   assign p = (a)*(b);
-
   endmodule
 
 
@@ -549,14 +552,16 @@
                     output cu_pc_s0, cu_pc_s1, cu_pc_s2, cu_pc_s3, cu_pc_s4,
                     output cu_alu_a_src, cu_alu_b_src,
                     output cu_resmux_s0, cu_resmux_s1, cu_resmux_s2,
-                    output cu_csr_rd_s0, cu_csr_rd_s1, cu_csr_rd_s2,
+                    output cu_csr_rd_s0, cu_csr_rd_s2,
+	  	    output [1:0] cu_csr_rd_s1, //+//
                     output cu_int_ecall, cu_int_ebreak,
                     output cu_ld_cycle, cu_ld_time, cu_ld_uie,
                     output cu_ld_epc, cu_sel_epc,
                     output TMRIF,
                     output intf,
                     output cu_mwr,
-                    output cu_r_s
+                    output cu_r_s,
+	  	    output cu_ret //+//
     );
 
       reg cyc;
@@ -738,7 +743,8 @@
       assign cu_pc_s2 = (cu_br_inst_1 & cu_br_taken) | (cu_jal_inst_1) ;
       assign cu_pc_s3 = (cu_br_inst_1 & ~cu_br_taken) ;
       assign cu_pc_s4 = (IR==`INST_URET);
-
+ 
+      assign cu_ret = (IR2 != `INST_NOP & ~cyc); //+//
 
       assign cu_ext_hold = (~ext_done) & (cu_custom_1);
 
@@ -763,8 +769,9 @@
 
 
       assign cu_csr_rd_s0 = cu_system_inst_1;
-      assign cu_csr_rd_s1 = IR1[20];
+      assign cu_csr_rd_s1 = IR1[21:20]; //+//for time,instret,cycle
       assign cu_csr_rd_s2 = IR1[27];
+
       assign cu_int_ecall = (IR==`INST_ECALL);
       assign cu_int_ebreak = (IR==`INST_EBREAK);
 
@@ -822,9 +829,9 @@
 
       wire[31:0] ext_bdo;
 
-      wire cu_csr_rd_s0, cu_csr_rd_s1, cu_csr_rd_s2;
+      wire cu_csr_rd_s0, cu_csr_rd_s2; wire[1:0] cu_csr_rd_s1; //+//
       wire cu_int_ecall, cu_int_ebreak;
-      wire cu_ld_cycle, cu_ld_time, cu_ld_uie;
+      wire cu_ld_cycle, cu_ld_time, cu_ld_uie, cu_ret; //+//
 
       //Registers
       reg[31:0] IR, R1, R2, PC1, I1;
@@ -849,20 +856,21 @@
       wire[31:0] PC;
 
     // counters/Int Logic
-      wire[31:0] Cycle, Timer;
+      wire[31:0] Cycle, Timer, Instret; //+//
       wire tov;
       wire gie, tie, eie;
       wire intf, TMRIF;
       wire[2:0] vec = IRQ ? 4'd4 : TMRIF ? 4'd3 : cu_int_ebreak ? 4'd2 : 4'd1;
-      wire [31:0]  cntr = (cu_csr_rd_s1) ?  Timer : Cycle; 
+      wire [31:0]  cntr = (cu_csr_rd_s1[1]) ? Instret : cu_csr_rd_s1[0]? Timer : Cycle; 
 
       rv32Counters CNTR (
           .clk(clk),
           .rst(rst),
           .Cycle(Cycle),
           .Timer(Timer),
+          .Instret(Instret), //+//
           .wdata(R1),
-          .ld_cycle(cu_ld_cycle), .ld_timer(cu_ld_time), .ld_uie(cu_ld_uie),
+          .ld_cycle(cu_ld_cycle), .ld_timer(cu_ld_time), .ld_uie(cu_ld_uie), .ret(cu_ret), //+//
           .gie(gie), .tie(tie), .eie(eie),
           .tif(tov)
       );
@@ -887,24 +895,26 @@
         if(~cyc) IR <= bdo;
 
       always @ (posedge clk)
-        if(cyc) I1 <= IMM;
+        if(cyc) 
+			if(~ext_hold) I1 <= IMM;
 
       always @ (posedge clk or posedge rst)
         if(rst) PC1 <= 32'b0;
-        else if(cyc) PC1 <= PC;
+        else if(cyc)
+		   if(~ext_hold) PC1 <= PC;
 
       wire cu_r1_ld, cu_r2_ld;
       wire cu_r1_src, cu_r2_src;
 
       always @ (posedge clk)
-        if(cu_r1_ld)
+        if(cu_r1_ld & ~ext_hold)
            if(cu_r1_src)
                R1 <= RESMux;
            else
                R1 <= RS1;
 
      always @ (posedge clk)
-       if(cu_r2_ld)
+       if(cu_r2_ld & ~ext_hold)
            if(cu_r2_src)
                R2 <= RESMux;
            else
@@ -972,17 +982,14 @@
   */
                             (cu_resmux_s0) ? ext_bdo :
                             (cu_resmux_s1) ? I1 :
-                   (cu_resmux_s2) ? PC :
-                   (cu_csr_rd_s0) ? cntr : R; 
+							(cu_resmux_s2) ? PC :
+							(cu_csr_rd_s0) ? cntr : R; 
 
       always @ (posedge clk or posedge rst)
           if(rst)
               RES <= 32'b0;
 	  else begin
 	      if(cyc) RES <= RESMux;
-  `ifdef _MONTR_
-	  $display("csr_rd_s0 = %d, cu_r1_src = %d, RES = %d", cu_csr_rd_s0, cu_r1_src, RES);
-  `endif
 	  end
 
       wire[2:0] func3_1 = IR1[`IR_funct3];
@@ -1043,20 +1050,26 @@
                         .TMRIF(TMRIF),
                         .intf(intf),
                         .cu_mwr(cu_mwr),
-                        .cu_r_s(cu_r_s)
+                        .cu_r_s(cu_r_s),
+	      		.cu_ret(cu_ret) //+//
         );
 
 
-      // just for simulation!
    `ifdef _SIM_
         integer      i;
         always @ (IR2) begin  //doesn't work well with interrupts for now (normal testing)
           if(IR2 == `INST_ECALL) begin
-            $display("Number of cycles: %0d", $time/10);
+            $display("#Cycles = %d, CPI = %2.4f", Cycle, $itor(Cycle)/Instret);
             simdone = 1;
             #2;
             $finish;
           end
         end
    `endif
+
+`ifdef _DBUG_
+	always @(posedge clk)
+		$display ("IR = %h", IR);
+`endif
+
 endmodule

@@ -1,4 +1,4 @@
-#define N 8
+#define N 7
 int row[N], count = 0;
 
 int abs (int a){

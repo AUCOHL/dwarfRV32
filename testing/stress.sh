@@ -2,7 +2,7 @@
 #size = 0
 for i in {1..100}
 do
-  c=$(( $RANDOM % 10 + 40))
+  c=$(( $RANDOM % 10 + 100))
   r=$(( $RANDOM % 26 + 5))
   ./randreg $c $r > "./tests/reg/reg$i.s"
   #echo "reg$i.s"

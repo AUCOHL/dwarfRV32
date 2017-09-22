@@ -1,0 +1,53 @@
+START
+
+Dhrystone Benchmark, Version 2.1 (Language: C)
+Program compiled without 'register' attribute
+Please give the number of runs through the benchmark: 
+Execution starts, 500 runs through Dhrystone
+Execution ends
+Final values of the variables used in the benchmark:
+Int_Glob:            5
+        should be:   5
+Bool_Glob:           1
+        should be:   1
+Ch_1_Glob:           A
+        should be:   A
+Ch_2_Glob:           B
+        should be:   B
+Arr_1_Glob[8]:       7
+        should be:   7
+Arr_2_Glob[8][7]:    510
+        should be:   Number_Of_Runs + 10Ptr_Glob->  Ptr_Comp:          10704
+        should be:   (implementation-dependent)  Discr:             0
+        should be:   0
+  Enum_Comp:         2
+        should be:   2
+  Int_Comp:          17
+        should be:   17
+  Str_Comp:          DHRYSTONE PROGRAM, SOME STRING
+        should be:   DHRYSTONE PROGRAM, SOME STRINGNext_Ptr_Glob->  Ptr_Comp:          10704
+        should be:   (implementation-dependent), same as above  Discr:             0
+        should be:   0
+  Enum_Comp:         1
+        should be:   1
+  Int_Comp:          18
+        should be:   18
+  Str_Comp:          DHRYSTONE PROGRAM, SOME STRING
+        should be:   DHRYSTONE PROGRAM, SOME STRINGInt_1_Loc:           5
+        should be:   5
+Int_2_Loc:           13
+        should be:   13
+Int_3_Loc:           7
+        should be:   7
+Enum_Loc:            1
+        should be:   1
+Str_1_Loc:           DHRYSTONE PROGRAM, 1'ST STRING
+        should be:   DHRYSTONE PROGRAM, 1'ST STRINGStr_2_Loc:           DHRYSTONE PROGRAM, 2'ND STRING
+        should be:   DHRYSTONE PROGRAM, 2'ND STRING
+Number_Of_Runs: 500
+User_Time: 544086 cycles, 221041 insn
+Cycles_Per_Instruction: 2.461
+Dhrystones_Per_Second_Per_MHz: 918
+DMIPS_Per_MHz: 0.522
+DONE
+#Cycles =     602186, #Instret =     243390, CPI = 2.47

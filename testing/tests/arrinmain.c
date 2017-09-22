@@ -1,7 +1,6 @@
 
 
 int main (){
-	int x[] = {101,2,3,4,5,6,7}; 
-//	int x[] = {101,2,3,4,5,6,7,8}; //needs memcpy for some
+	int x[] = {101,2,3,4,5,6,7,8,9, 10};
 	return x[0];
 }

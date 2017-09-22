@@ -5,6 +5,8 @@
 
 using namespace std;
 
+#define MMAP_PRINT 0x80000000
+
 
 const int regCount = 32;
 int regs[regCount] = {0};
@@ -87,7 +89,8 @@ void SRA(unsigned int, unsigned int, unsigned int);
 void OR(unsigned int, unsigned int, unsigned int);
 void AND(unsigned int, unsigned int, unsigned int);
 
-void EXT(unsigned int, unsigned int, unsigned int, unsigned int);
+void Ext_Inst(unsigned int, unsigned int, unsigned int, unsigned int);
+void MUL(unsigned int, unsigned int, unsigned int);
 
 void printInstE();
 void ECALL();
@@ -261,7 +264,7 @@ void instDecExec(unsigned int instWord)
     switch(opcode)
     {
         case 0x47:
-            EXT(rd, rs1, rs2, funct3);
+            Ext_Inst(rd, rs1, rs2, funct3);
             break;
         case 0x37:  // Load Upper Immediate
             LUI(rd, U_imm);
@@ -542,12 +545,15 @@ void SW(unsigned int rs2, unsigned int rs1, unsigned int offset, unsigned int ad
     printInstL_S("SW", rs2, rs1, offset);
 
     if(address%4) cout << "Memory address not divisible by 4 -- " << address << endl;
-    cout << "writing to: " << address << " " << regs[rs2] << endl;
-
-    memory[address] = regs[rs2] & 0xFF;
-    memory[address + 1] = (regs[rs2] >> 8) & 0xFF;
-    memory[address + 2] = (regs[rs2] >> 16) & 0xFF;
-    memory[address + 3] = (regs[rs2] >> 24) & 0xFF;
+    if (address == MMAP_PRINT)
+	    cout << regs[rs2];
+    else{
+	    cout << "writing to: " << address << " " << regs[rs2] << endl;
+	    memory[address] = regs[rs2] & 0xFF;
+	    memory[address + 1] = (regs[rs2] >> 8) & 0xFF;
+	    memory[address + 2] = (regs[rs2] >> 16) & 0xFF;
+	    memory[address + 3] = (regs[rs2] >> 24) & 0xFF;
+    }
 }
 
 void printInstI(string inst, unsigned int rd, unsigned int rs1, unsigned int imm)
@@ -654,6 +660,7 @@ void ANDI(unsigned int rd, unsigned int rs1, unsigned int I_imm)
     regs[rd] = regs[rs1] & int(I_imm);
 }
 
+
 void printInstR(string inst, unsigned int rd, unsigned int rs1, unsigned int rs2)
 {
     cout << dec;
@@ -661,15 +668,6 @@ void printInstR(string inst, unsigned int rd, unsigned int rs1, unsigned int rs2
     //cout <<"RF["<<rd<<"]="<< regs[rd] << endl;
 }
 
-void EXT(unsigned int rd, unsigned int rs1, unsigned int rs2, unsigned int funct3)
-{
-  printInstR("ext_mul", rd, rs1, rs2);
-
-  regs[rd] = regs[rs1] * regs[rs2];
-    //switch(funct3){
-    //    0x000:
-    //}
-}
 void R_Inst(unsigned int rd, unsigned int rs1, unsigned int rs2, unsigned int funct3, unsigned int funct7)
 {
     switch(funct3){
@@ -779,6 +777,24 @@ void AND(unsigned int rd, unsigned int rs1, unsigned int rs2)
     printInstR("AND", rd, rs1, rs2);
 
     regs[rd] = regs[rs1] & regs[rs2];
+}
+
+void Ext_Inst(unsigned int rd, unsigned int rs1, unsigned int rs2, unsigned int funct3)
+{
+  switch(funct3){
+      case 0x0: //mul
+		  MUL(rd, rs1, rs2);
+		  break;
+	  default:
+		  cout << "\tUnsupported Extension Instruction \n";
+   }
+}
+
+void MUL(unsigned int rd, unsigned int rs1, unsigned int rs2)
+{
+    printInstR("EXT_MUL", rd, rs1, rs2);
+
+	regs[rd] = regs[rs1] * regs[rs2];
 }
 
 void printInstE()

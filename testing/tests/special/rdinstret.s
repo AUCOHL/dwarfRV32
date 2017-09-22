@@ -50,13 +50,12 @@ eint_vec:
 
 .org 80
 ___App:
-  li	    x4, 7
+  li	    x4, 5
   wruie	  x4
 
-infloop:
-  rdtime x5
-  rdcycle x15
-  rdinstret x16
-  bne x5, x0, infloop
+  rdinstret x3
+  rdinstret x3
+  rdinstret x3
+
   li a7, 10
   ecall

@@ -4,5 +4,5 @@ int mul(int x, int y){
 
 int main(){
 
-	return mul(5,7);
+	return mul(12,12);
 }

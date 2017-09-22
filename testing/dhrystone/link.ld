@@ -9,10 +9,10 @@ MEMORY
 {
     ram :
         ORIGIN = 0x00000000,
-        LENGTH = 10K
+        LENGTH = 48K
     stack :
-        ORIGIN = 10K
-        LENGTH = 6K
+        ORIGIN = 48K
+        LENGTH = 16K
 }
 
 SECTIONS
