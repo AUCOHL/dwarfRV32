@@ -45,12 +45,26 @@ timer_vec:
 	wrtime	x4
 	uret
 
-	.org	64
+.org	64
 eint_vec:
-	nop
-	uret
+	j IRQ0
+	j IRQ1
+	j IRQ2
+	j IRQ3
+	j IRQ4
+	j IRQ5
+	j IRQ6
+	j IRQ7
+	j IRQ8
+	j IRQ9
+	j IRQ10
+	j IRQ11
+	j IRQ12
+	j IRQ13
+	j IRQ14
+	j IRQ15
 
-	.org 80
+.org 128
 ___App:
 	li	x4, 0x5 #{eie, tie, gie}
 	wruie	x4

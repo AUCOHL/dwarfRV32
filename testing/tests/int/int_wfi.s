@@ -31,7 +31,7 @@ ecall_vec:
 
 .org  32
 ebreak_vec:
-  nop
+  li x6, 111
   uret
 
 
@@ -39,27 +39,22 @@ ebreak_vec:
 timer_vec:
   li x4, 0
   wrtime	x4
-  j exit
+  uret
 
 
 .org	64
 eint_vec:
-  nop
+  li x6, 111
   uret
 
 
 .org 80
 ___App:
-  li	    x4, 3
+  li	    x4, 5
   wruie	  x4
-  li x10, 0
-infloop:
-  addi x10, x10, 1
-  rdtime x5
-  j infloop
-
+  wfi
+  ecall
+ 
 exit:
-  rdtime x5
-  bne x5, x0, infloop
-  li a7, 10
+  li x7, 10
   ecall

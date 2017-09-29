@@ -20,9 +20,9 @@ cd $tmp_path
 
 if [ "$ext" = "s" ]
 then
-  ${toolchain_path}riscv32-unknown-elf-as -o "$name.elf" "$tests_path$1"
+  ${toolchain_path}riscv32-unknown-elf-as "$tests_path$1" ../irq.S -o "$name.elf"  
 else
-  ${toolchain_path}riscv32-unknown-elf-gcc  -Wall -O$run -march=rv32i -nostdlib -lgcc  -T ../link.ld -o "$name.elf" ../crt0_proj.S "$tests_path$1" -lgcc
+  ${toolchain_path}riscv32-unknown-elf-gcc  -Wall -O$run -march=rv32i -nostdlib -lgcc  -T ../link.ld ../crt0_proj.S "$tests_path$1" ../irq.S  -o "$name.elf" -lgcc
 fi
 
 ${toolchain_path}riscv32-unknown-elf-objdump -M no-aliases -d "$name.elf" > "$name.lst"

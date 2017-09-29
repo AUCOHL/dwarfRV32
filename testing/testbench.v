@@ -23,106 +23,118 @@
 `define     F3_OR           3'b110
 `define     F3_AND          3'b111
 
-`define     _RDISP_	    0	
+//`define     _RDISP_	    0	
 `define     _RDUMP_       0
 
 
 
 module cpu_tb;
 
-reg clk, rst;
+	reg clk, rst;
 
 
-wire[31:0] baddr, bdi, bdo;
-wire bwr;
-wire[1:0] bsz;
+	wire[31:0] baddr, bdi, bdo;
+	wire bwr;
+	wire[1:0] bsz;
 
-wire[4:0] rfrd, rfrs1, rfrs2;
-wire rfwr;
-wire[31:0] rfD;
-wire[31:0] rfRS1, rfRS2;
-wire simdone;
+	wire[4:0] rfrd, rfrs1, rfrs2;
+	wire rfwr;
+	wire[31:0] rfD;
+	wire[31:0] rfRS1, rfRS2;
+	wire simdone;
 
-wire[31:0] extA, extB;
-wire[31:0] extR;
-wire extStart;
-wire extDone;
-wire[2:0] extFunc3;
+	wire[31:0] extA, extB;
+	wire[31:0] extR;
+	wire extStart;
+	wire extDone;
+	wire[2:0] extFunc3;
 
-reg IRQ;
+	wire IRQ;
+	wire [3:0] IRQnum;
+	wire [15:0] IRQen;
+	reg [15:0] INT; //reg for sim
 
- rv32_CPU_v2 CPU(
-              .clk(clk),
-              .rst(rst),
-              .bdi(bdi), .bdo(bdo), .baddr(baddr), .bsz(bsz), .bwr(bwr),
-              .rfwr(rfwr), .rfrd(rfrd), .rfrs1(rfrs1), .rfrs2(rfrs2), .rfD(rfD), .rfRS1(rfRS1), .rfRS2(rfRS2),
-              .extA(extA), .extB(extB), .extR(extR), .extStart(extStart), .extDone(extDone), .extFunc3(),
-              .IRQ(IRQ), .IRQnum(4'b0000),
-              .simdone(simdone)
-              );
+	IntCtrl INTCU(
+		.clk(clk), .rst(rst),
+		.INT(INT), .IRQen(IRQen),
+		.IRQ(IRQ), .IRQnum(IRQnum)
+		);
 
-memory #(4096) M (.clk(clk), .bdi(bdi), .baddr(baddr), .bdo(bdo), .bwr(bwr), .bsz(bsz) );
+	rv32_CPU_v2 CPU(
+		.clk(clk),
+		.rst(rst),
+		.bdi(bdi), .bdo(bdo), .baddr(baddr), .bsz(bsz), .bwr(bwr),
+		.rfwr(rfwr), .rfrd(rfrd), .rfrs1(rfrs1), .rfrs2(rfrs2), .rfD(rfD), .rfRS1(rfRS1), .rfRS2(rfRS2),
+		.extA(extA), .extB(extB), .extR(extR), .extStart(extStart), .extDone(extDone), .extFunc3(),
+		.IRQ(IRQ), .IRQnum(IRQnum), .IRQen(IRQen),
+		.simdone(simdone)
+		);
 
- mul MULEXT (
-      .clk(clk),
-      .rst(rst),
-      .done(extDone),
-      .start(extStart),
-      .a(extA), .b(extB),
-      .p(extR)
-      );
+	memory #(4096) M (.clk(clk), .bdi(bdi), .baddr(baddr), .bdo(bdo), .bwr(bwr), .bsz(bsz) );
 
-// simulate the RF
-reg[31:0] RF[31:0];
+	mul MULEXT (
+		.clk(clk),
+		.rst(rst),
+		.done(extDone),
+		.start(extStart),
+		.a(extA), .b(extB),
+		.p(extR)
+		);
 
-assign rfRS1 = RF[rfrs1];
-assign rfRS2 = RF[rfrs2];
+	// simulate the RF
+	reg[31:0] RF[31:0];
 
-always @(posedge clk)
-  if(!rst)
-    if(rfwr) begin
-      RF[rfrd] <= rfD;
-`ifdef _RDISP_
-      $display ("writing %0d to x%0d", rfD, rfrd);
-`endif
-    end
+	assign rfRS1 = RF[rfrs1];
+	assign rfRS2 = RF[rfrs2];
 
-integer i;
+	always @(posedge clk)
+		if(!rst)
+			if(rfwr) begin
+				RF[rfrd] <= rfD;
+				`ifdef _RDISP_
+					$display ("writing %0d to x%0d", rfD, rfrd);
+				`endif
+			end
 
-initial begin
-  for(i=0; i<32; i=i+1)
-    RF[i] = 0;
-end
+	integer i;
 
-//integer i;
-//initial $monitor("SimDone: %d",simdone);
+	initial begin
+		for(i=0; i<32; i=i+1)
+			RF[i] = 0;
+	end
 
-`ifdef  _RDUMP_
-always @ (posedge simdone)
-  //$display ("DONE!!!!");
-    for(i=0; i<32; i=i+1)
-        $display("x%0d: \t0x%h\t%0d",i,RF[i], $signed(RF[i]));
-`endif
+	//integer i;
+	//initial $monitor("SimDone: %d",simdone);
 
-initial begin clk = 0; end
+	`ifdef  _RDUMP_
+		always @ (posedge simdone)
+			//$display ("DONE!!!!");
+			for(i=0; i<32; i=i+1)
+				$display("x%0d: \t0x%h\t%0d",i,RF[i], $signed(RF[i]));
+	`endif
 
-always # 5 clk = ~ clk;
+	initial begin clk = 0; end
 
- initial begin
-    rst = 0;
-    #50;
-    @(negedge clk);
-    rst = 1;
-    #50;
-    @(negedge clk);
-    rst = 0;
-end
+	always # 5 clk = ~ clk;
 
-// This to test external interruppts !
-initial begin
-    IRQ = 0;
-    #300    IRQ = 1;
-    #20     IRQ = 0;
-end
+	initial begin
+		rst = 0;
+		#50;
+		@(negedge clk);
+		rst = 1;
+		#50;
+		@(negedge clk);
+		rst = 0;
+	end
+
+	// This to test external interruppts !
+	initial begin
+		INT = 16'd0;
+		#300    INT[0] = 1'b1;
+		#20     INT[0] = 1'b0;
+
+		#300    INT[1] = 1'b1;
+		#20     INT[1] = 1'b0;
+	end
 
 endmodule

@@ -46,13 +46,13 @@ cd "$tmp_path"
 
 if [ "$ext" = "s" ]
 then
-  ${toolchain_path}riscv32-unknown-elf-as -o "$name.elf" "$tests_path$1"
   iverilog -Wall -Wno-timescale -o "$name.out" ../testbench.v ../../rtl/rv32.v ../../rtl/memory.v
+  ${toolchain_path}riscv32-unknown-elf-as "$tests_path$1" ../irq.S -o "$name.elf"
   runSim $name
 else
     iverilog -Wall -Wno-timescale -o "$name.out" ../testbench.v ../../rtl/rv32.v ../../rtl/memory.v
     for i in 0 1 2 3; do
-        ${toolchain_path}riscv32-unknown-elf-gcc -Wall -O$i -march=rv32i -nostdlib -T ../link.ld -o "${name}_O$i.elf" ../crt0_proj.S "$tests_path$1" -lgcc
+        ${toolchain_path}riscv32-unknown-elf-gcc -Wall -O$i -march=rv32i -nostdlib -T ../link.ld ../crt0_proj.S "$tests_path$1" ../irq.S -o "${name}_O$i.elf" -lgcc
         runSim ${name}_O$i
     done
 fi

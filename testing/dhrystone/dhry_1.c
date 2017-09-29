@@ -17,6 +17,11 @@
 
 #include "dhry.h"
 
+
+#ifndef NRUNS
+#define NRUNS 100
+#endif
+
 extern int printf (const char* format, ...);
 extern int puts(char* s);
 extern int putchar(int c);
@@ -24,6 +29,8 @@ extern char* malloc(int size);
 extern void *memcpy(void *dest, const void *src, long n);
 extern char* strcpy (char* dest, const char* src);
 extern int strcmp(const char* str1, const char* str2);
+
+
 /* Global Variables: */
 
 
@@ -148,9 +155,9 @@ main ()
   Begin_Time = (long) time_info.tms_utime;
 #endif
 #ifdef TIME
-  Begin_Time = time ( (long *) 0);
+  Begin_Time = time ();
 #ifdef RISCV
-  Begin_Insn = insn ( (long *) 0);
+  Begin_Insn = insn ();
 #endif
 #endif
 
@@ -209,9 +216,9 @@ main ()
   End_Time = (long) time_info.tms_utime;
 #endif
 #ifdef TIME
-  End_Time = time ( (long *) 0);
+  End_Time = time ();
 #ifdef RISCV
-  End_Insn = insn ( (long *) 0);
+  End_Insn = insn ();
 #endif
 #endif
 

@@ -31,14 +31,23 @@ changelog:
 + CPI is displayed after each test case
 + Tested and fixed extensions (ext_mul)
 + Added basic support for extensions in rv32sim and randreg
++++
++ Implemented branch prediction //
++ Dhrystone revised (currently 0.73 DMIPS/MHz)
++ Integrated IntCtrl
++ Multivector interrupts (to be doc'ed; user provides IRi's; otherwise, default uret)
++ wfi (no constraints; additional logic for the hold)
++ fixed a bug resulting from a jump being followed by ecall/ebreak
+
 
 ====================================================================================
 + random+dijkstra fail; memory gets overwritten? (the produced code overwrites the text segment)
-+ IntCtrl
 
 
 ====================================================================================
 notes:
 ======
 + b2h assertation error (%4)
-+ $signed($signed(a) << sha) #check again @ synthesis
++ $signed($signed(a) << sha) --> check again @ synthesis
++ optimize sys insts recog?
++ optimize ext/wfi hold ?

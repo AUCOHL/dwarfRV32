@@ -1,9 +1,9 @@
 MEMSIZE = 16384
-NRUNS = 500
+NRUNS = 100
 
 #OBJS = c0.o stdlibtest.o stdlib.o 
 OBJS =  c0.o stdlib.o dhry_1.o dhry_2.o
-CFLAGS = -MD -Wall -O3 -march=rv32i -nostdlib -DTIME -DRISCV -DNRUNS=$(NRUNS)
+CFLAGS = -MD -O3 -march=rv32i -nostdlib -DTIME -DNRUNS=$(NRUNS) -DRISCV 
 TOOLCHAIN_PREFIX = riscv32-unknown-elf-
 
 test: test.out test.hex

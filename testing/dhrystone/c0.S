@@ -1,3 +1,11 @@
+#define		EXT_MUL
+
+#define r_type_insn(_f7, _rs2, _rs1, _f3, _rd, _opc) \
+.word (((_f7) << 25) | ((_rs2) << 20) | ((_rs1) << 15) | ((_f3) << 12) | ((_rd) << 7) | ((_opc) << 0))
+
+#define ext_mul(_rd, _rs1, _rs2) \
+r_type_insn(0b0000000, _rs2, _rs1, 0b000, _rd, 0b1000111)
+
 .macro wrcycle reg
 	csrw	cycle, \reg
 .endm
@@ -61,18 +69,6 @@ ___App:
 	lui sp, %hi(_fstack)
 	addi sp, sp, %lo(_fstack)
 
-
-	/* execute some insns for "make timing" */
-	lui a0,0
-	auipc a0,0
-	slli a0,a0,0
-	slli a0,a0,31
-	addi a1,zero,0
-	sll a0,a0,a1
-	addi a1,zero,31
-	sll a0,a0,a1
-
-	/* jump to main C code */
 	jal main
 
 	lui a0,0x80000
@@ -89,3 +85,10 @@ ___App:
 
 	li	a7, 10
 	ecall
+
+#ifdef EXT_MUL
+.global __mulsi3
+__mulsi3:
+	ext_mul(10, 10, 11)
+	ret
+#endif
