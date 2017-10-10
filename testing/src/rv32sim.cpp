@@ -10,6 +10,9 @@ using namespace std;
 
 const int regCount = 32;
 int regs[regCount] = {0};
+int uie = 0;
+int timer = 0;
+int epc = 0; // register used by uret
 unsigned int pc = 0x0;
 const unsigned int RAM = 64 * 1024; // only 8KB of memory located at address 0
 char memory[RAM];
@@ -94,11 +97,13 @@ void MUL(unsigned int, unsigned int, unsigned int);
 
 void printInstE();
 void ECALL();
+void SYS_Inst(int rd, int rs1, int imm, int func);
+void timerInterrupt();
+void URET();
 void printInteger();
 void printString();
 void readInteger();
 void terminateExecution();
-
 
 
 int main(int argc, char* argv[]) {
@@ -120,11 +125,16 @@ int main(int argc, char* argv[]) {
          }
 
          while(!terminated) {
-             instWord = 	readInstruction();  // read next instruction
-             pc += 4;    // increment pc by 4
-             instDecExec(instWord);
-             regs[0] = 0;
+            instWord = 	readInstruction();  // read next instruction
+            pc += 4;    // increment pc by 4
+            instDecExec(instWord);
+            regs[0] = 0;
 
+            if(timer > 0){
+                timer -= 1;
+                if(timer == 0) 
+                    timerInterrupt();
+            }
          }
 
          // check if terminated correcctly
@@ -294,8 +304,8 @@ void instDecExec(unsigned int instWord)
         case 0x33:  // Register Instructions
             R_Inst(rd, rs1, rs2, funct3, funct7);
             break;
-        case 0x73:  // Enviroment Calls
-            ECALL();
+        case 0x73:  // system calls & privileged instructions
+            SYS_Inst(rd, rs1, I_imm, funct3);
             break;
         default:
             cout << "\tUnknown Instruction Type" << endl;;
@@ -841,4 +851,41 @@ void readInteger()
 void terminateExecution()
 {
     terminated = true;
+}
+
+void SYS_Inst(int rd, int rs1, int imm, int func)
+{
+    if(func == 0x0 && imm == 0){
+        ECALL(); // ecall  
+    }else if(func == 0 && imm == 0x2){ // uret
+        URET();
+    }else if(func == 0x1){ // csrrw rd, uie, rs1
+        if(imm == 0x4){
+            int tmp = regs[rs1];
+            regs[rd] = uie;
+            uie = tmp;
+        }else if(imm == 0xc01){ // csrrw rd, timer, rs1
+            int tmp = regs[rs1];
+            regs[rd] = timer;
+            timer = tmp;
+        }else{
+            throw "Accessing unimplemented control/status register";
+        }
+    }else{
+        throw "Accessing unimplemented control/status register";
+    }
+}
+
+void timerInterrupt()
+{
+    if(uie == 0x3){ // global and timer interrupt enabled
+        uie = uie ^ 0x1; // turn off global interrupts
+        pc = 48;
+    }
+}
+
+void URET()
+{
+    pc = epc; // return pc to proper location
+    uie |= 1; // enable interrupts 
 }
