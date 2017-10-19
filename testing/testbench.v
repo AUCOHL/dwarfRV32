@@ -65,7 +65,7 @@ module cpu_tb;
 		.rst(rst),
 		.bdi(bdi), .bdo(bdo), .baddr(baddr), .bsz(bsz), .bwr(bwr),
 		.rfwr(rfwr), .rfrd(rfrd), .rfrs1(rfrs1), .rfrs2(rfrs2), .rfD(rfD), .rfRS1(rfRS1), .rfRS2(rfRS2),
-		.extA(extA), .extB(extB), .extR(extR), .extStart(extStart), .extDone(extDone), .extFunc3(),
+		.extA(extA), .extB(extB), .extR(extR), .extStart(extStart), .extDone(extDone), .extFunc3(extFunc3),
 		.IRQ(IRQ), .IRQnum(IRQnum), .IRQen(IRQen),
 		.simdone(simdone)
 		);
@@ -82,36 +82,16 @@ module cpu_tb;
 		);
 
 	// simulate the RF
-	reg[31:0] RF[31:0];
+    regFile RF(.clk(clk), .rst(rst),
+               .rfwr(rfwr),	
+               .rfrd(rfrd), .rfrs1(rfrs1), .rfrs2(rfrs2),
+               .rfD(rfD), .rfRS1(rfRS1), .rfRS2(rfRS2)
 
-	assign rfRS1 = RF[rfrs1];
-	assign rfRS2 = RF[rfrs2];
-
-	always @(posedge clk)
-		if(!rst)
-			if(rfwr) begin
-				RF[rfrd] <= rfD;
-				`ifdef _RDISP_
-					$display ("writing %0d to x%0d", rfD, rfrd);
-				`endif
-			end
+			   ,.simdone(simdone)
+               );
 
 	integer i;
 
-	initial begin
-		for(i=0; i<32; i=i+1)
-			RF[i] = 0;
-	end
-
-	//integer i;
-	//initial $monitor("SimDone: %d",simdone);
-
-	`ifdef  _RDUMP_
-		always @ (posedge simdone)
-			//$display ("DONE!!!!");
-			for(i=0; i<32; i=i+1)
-				$display("x%0d: \t0x%h\t%0d",i,RF[i], $signed(RF[i]));
-	`endif
 
 	initial begin clk = 0; end
 
@@ -137,4 +117,41 @@ module cpu_tb;
 		#20     INT[1] = 1'b0;
 	end
 
+endmodule
+
+module regFile( //parameterize
+    input clk, rst,
+    input rfwr,	
+    input [4:0] rfrd, rfrs1, rfrs2,
+    input [31:0] rfD,
+    output [31:0] rfRS1, rfRS2
+
+	,input simdone
+    );
+    reg[31:0] RF[31:0];
+
+    assign rfRS1 = RF[rfrs1];
+	assign rfRS2 = RF[rfrs2];
+
+
+	integer i;
+    initial begin //rst later
+        for(i=0; i<32; i=i+1)
+            RF[i] = 0;
+    end
+    
+    always @(posedge clk)
+        if(!rst) begin
+            if(rfwr) begin
+                RF[rfrd] <= rfD;
+            end
+        end
+
+	`ifdef  _RDUMP_
+		always @ (posedge simdone)
+			//$display ("DONE!!!!");
+			for(i=0; i<32; i=i+1)
+				$display("x%0d: \t0x%h\t%0d",i,RF[i], $signed(RF[i]));
+	`endif
+    
 endmodule

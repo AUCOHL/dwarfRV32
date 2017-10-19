@@ -1,7 +1,6 @@
 MEMSIZE = 16384
 NRUNS = 100
 
-#OBJS = c0.o stdlibtest.o stdlib.o 
 OBJS =  c0.o stdlib.o dhry_1.o dhry_2.o
 CFLAGS = -MD -O3 -march=rv32i -nostdlib -DTIME -DNRUNS=$(NRUNS) -DRISCV 
 TOOLCHAIN_PREFIX = riscv32-unknown-elf-
@@ -23,6 +22,8 @@ test.elf: $(OBJS) link.ld
 
 %.o: %.c 
 		$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) $<
+		
+
 
 c0.o:	c0.S
 		$(TOOLCHAIN_PREFIX)gcc -c $(CFLAGS) $<

@@ -51,3 +51,4 @@ notes:
 + $signed($signed(a) << sha) --> check again @ synthesis
 + optimize sys insts recog?
 + optimize ext/wfi hold ?
++ ChipSelect in rtl/memory.v (write/read)

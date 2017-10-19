@@ -20,6 +20,7 @@ fi
 runSim (){
     ${toolchain_path}riscv32-unknown-elf-objdump -d -M no-aliases "$1.elf" > "$1.lst"
     ${toolchain_path}riscv32-unknown-elf-objcopy -O binary "$1.elf" "$1.bin"
+#	return
 
     ../b2h.py "$1.bin" "$CAPH" > "$1.hex" ## 
 

@@ -95,6 +95,7 @@ static void printf_d(int val)
 		printf_c(*(--p));
 }
 
+/*
 static void printdf(double f){
 	int count = 0;
 	do {
@@ -109,6 +110,7 @@ static void printdf(double f){
 
 	}
 }
+*/
 int printf(const char *format, ...)
 {
 	int i;
@@ -131,10 +133,12 @@ int printf(const char *format, ...)
 					printf_d(va_arg(ap,int));
 					break;
 				}
+				/*
 				if (format[i] == 'f') {
 					printdf(va_arg(ap,double));
 					break;
 				}
+				*/
 			}
 		} else
 			printf_c(format[i]);

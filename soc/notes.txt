@@ -1,0 +1,6 @@
+-No multiplier (disable it when using crt0)
+-The CPU currently holds at ecall (instead of generating interrupt) to avoid infinite execution (the RTOS should solve this natrually later, or?)
+-Distributed RAM
+-io interface: doc
+-gen_constrs.py  PINS -> [BOARD] [DESIGN]
+-b2h_v.py -> in initial block
