@@ -130,10 +130,11 @@ int main(int argc, char* argv[]) {
             instDecExec(instWord);
             regs[0] = 0;
 
-            if(timer > 0){
+            if(timer > 0 && (uie & 0x1) == 0x1){
                 timer -= 1;
-                if(timer == 0) 
-                    timerInterrupt();
+            }
+            if(timer == 0){
+                timerInterrupt();
             }
          }
 
@@ -860,7 +861,7 @@ void SYS_Inst(int rd, int rs1, int imm, int func)
     }else if(func == 0 && imm == 0x2){ // uret
         URET();
     }else if(func == 0x1){ // csrrw rd, uie, rs1
-        if(imm == 0x4){
+        if(imm == 0x4){ //uie
             int tmp = regs[rs1];
             regs[rd] = uie;
             uie = tmp;
@@ -879,7 +880,8 @@ void SYS_Inst(int rd, int rs1, int imm, int func)
 void timerInterrupt()
 {
     if(uie == 0x3){ // global and timer interrupt enabled
-        uie = uie ^ 0x1; // turn off global interrupts
+        uie = uie & 0xfffe; // turn off global interrupts
+        epc = pc;
         pc = 48;
     }
 }
@@ -887,5 +889,5 @@ void timerInterrupt()
 void URET()
 {
     pc = epc; // return pc to proper location
-    uie |= 1; // enable interrupts 
+    uie |= 1; // enable interrupts
 }
