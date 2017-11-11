@@ -311,7 +311,8 @@ void instDecExec(unsigned int instWord)
             SYS_Inst(rd, rs1, I_imm, funct3);
             break;
         default:
-            cout << "\tUnknown Instruction Type" << endl;;
+            cout << "\tUnknown Instruction Type" << endl;
+            exit(-1);
     }
 
     cout << "RF[" << rd << "]=" << regs[rd] << endl;
@@ -867,11 +868,12 @@ void SYS_Inst(int rd, int rs1, int imm, int func)
             int tmp = regs[rs1];
             regs[rd] = uie;
             uie = tmp;
-        }else if(imm == 0xc01){ // csrrw rd, timer, rs1
+        }else if(imm & 0xc01 == 0xc01){ // csrrw rd, timer, rs1
             int tmp = regs[rs1];
             regs[rd] = timer;
             timer = tmp;
         }else{
+            printf("immediate %d\n",imm);
             puts("Accessing unimplemented control/status register");
             throw "Accessing unimplemented control/status register";
         }
