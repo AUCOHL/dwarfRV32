@@ -104,6 +104,7 @@ void printInteger();
 void printString();
 void readInteger();
 void terminateExecution();
+void EBREAK();
 
 
 int main(int argc, char* argv[]) {
@@ -133,8 +134,9 @@ int main(int argc, char* argv[]) {
             if(timer > 0 && (uie & 0x1) == 0x1){
                 timer -= 1;
             }
-            if(timer == 0){
+            if(timer == 1){
                 timerInterrupt();
+		timer = 0;
             }
          }
 
@@ -870,10 +872,14 @@ void SYS_Inst(int rd, int rs1, int imm, int func)
             regs[rd] = timer;
             timer = tmp;
         }else{
+            puts("Accessing unimplemented control/status register");
             throw "Accessing unimplemented control/status register";
         }
+    }else if(imm == 1 && rs1 == 0 && rd == 0 && func == 0){
+        EBREAK();
     }else{
-        throw "Accessing unimplemented control/status register";
+        puts("unimplemented system instruction error");
+        throw "unimplemented system instruction error";
     }
 }
 
@@ -890,4 +896,11 @@ void URET()
 {
     pc = epc; // return pc to proper location
     uie |= 1; // enable interrupts
+}
+
+void EBREAK()
+{
+    epc = pc;
+    pc = 32;
+    uie = uie & 0xfffe; // turn off global interrupts
 }
