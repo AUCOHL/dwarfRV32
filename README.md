@@ -48,3 +48,11 @@ Also, both registers can be written using the the csrrw instruction (the followi
 
 Additionally, a secondary counter of retired instructions is included (Instret) to count non-trivial instructions fully executed by the CPU. It, therefore, gets incremented whenever a non-NOP instruction leaves the last stage of the pipeline. It is usually used for benchmarking and profiling purposes and can be read using the rdinstret pseudo instruction.
 
+## Performance
+- The following dhrystone benchmark results are for a core without any extension
+  - DMIPS/MHz: 0.726
+  - CPI = 2.2630
+- Physical Implementation
+  - OSU 180nm: 100MHz (clocked down to have zero wait-states for the memory) - 250MHZ with memory wait states.
+  - XILNIX Artix 7: TBD
+  - Lattice ICE40: TBD
