@@ -56,3 +56,6 @@ Additionally, a secondary counter of retired instructions is included (Instret) 
   - OSU 180nm: 100MHz (clocked down to have zero wait-states for the memory) - 250MHZ with memory wait states.
   - XILNIX Artix 7: TBD
   - Lattice ICE40: TBD
+
+## Contact
+For any question, please email mshalan (at) aucegypt dot edu
