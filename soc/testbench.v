@@ -23,14 +23,14 @@
 `define     F3_OR           3'b110
 `define     F3_AND          3'b111
 
-//`define     _RDISP_	       0	
+//`define     _RDISP_	       0
 `define       _RDUMP_          0
 `define       _SOCTEST_     0
 
 
 module cpu_tb (
     input clk, rst,
-    input[1:0] mode,    //00: reg read, 01: input, 10: output    
+    input[1:0] mode,    //00: reg read, 01: input, 10: output
     input INTi,         //external interrupt (using switches)
     input[5:0] in,      //user input; {subset_in,rdy}; or rfSel
     output[7:0] Out,
@@ -56,8 +56,8 @@ module cpu_tb (
 	wire IRQ;
 	wire [3:0] IRQnum;
 	wire [15:0] IRQen;
-	wire [15:0] INT = {15'd0,INTi}; 
-	
+	wire [15:0] INT = {15'd0,INTi};
+
 	wire[31:0] disp_w;
 	wire[31:0] output_w;
 
@@ -77,27 +77,27 @@ module cpu_tb (
 		);
 
     regFile RF(.clk(clk), .rst(rst),
-               .rfwr(rfwr),	
+               .rfwr(rfwr),
                .rfrd(rfrd), .rfrs1(rfrs1), .rfrs2(rfrs2),
                .rfD(rfD), .rfRS1(rfRS1), .rfRS2(rfRS2)
         `ifdef _SOCTEST_
                ,.rfSel(in[4:0]),.rfSelD(rfSelD)
          `endif
                );
-    
+
 	memory #(4096) M (.clk(clk), .bdi(bdi), .baddr(baddr), .bdo(bdo), .bwr(bwr), .bsz(bsz) );
-    
-    inputDev ip(.di((mode == 2'b01)?in:6'b0), .baddr(baddr),.bdo(bdo)); 
-    
-    outputReg op (.clk(clk), .rst(rst), .bwr(bwr), .bdi(bdi), .baddr(baddr), .do(output_w)); 
-    
-    
+
+    inputDev ip(.di((mode == 2'b01)?in:6'b0), .baddr(baddr),.bdo(bdo));
+
+    outputReg #(32'h80000000) op (.clk(clk), .rst(rst), .bwr(bwr), .bdi(bdi), .baddr(baddr), .do(output_w));
+
+
     assign disp_w = (mode == 2'b01)? in       :
-                    (mode == 2'b10)? output_w : 
+                    (mode == 2'b10)? output_w :
                `ifdef _SOCTEST_
-                    (mode == 2'b00)? rfSelD   : 
-               `endif  
-                    31'h11dead11;             
+                    (mode == 2'b00)? rfSelD   :
+               `endif
+                    31'h11dead11;
     display disp(.clk(clk), .rst(rst), .Num(disp_w),.Out(Out),.Y(Y));
 
 
@@ -117,17 +117,17 @@ module cpu_tb (
 endmodule
 
 
-module outputReg (
+module outputReg #(parameter targaddr = 32'h80000000)(
     input clk, rst, bwr,
     input[31:0] bdi, baddr,
     output reg[31:0] do //no size
-    ); 
-    wire wr = bwr & (baddr == 32'h80000000); 
+    );
+    wire wr = bwr & (baddr == targaddr);
     always @ (posedge clk) begin
         if (rst)
             do <= 32'd0;
         else if (wr)
-            do <= bdi;    
+            do <= bdi;
     end
 endmodule
 
@@ -135,9 +135,9 @@ module inputDev ( //no regs
     input[5:0] di,
     input[31:0] baddr,
     output [31:0] bdo //no size
-    ); 
+    );
     wire addr_targ = (baddr == 32'h80000001);
-    assign bdo = addr_targ? {26'd0, di} : 32'hZZZZZZZZ;   
+    assign bdo = addr_targ? {26'd0, di} : 32'hZZZZZZZZ;
 endmodule
 
 

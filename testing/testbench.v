@@ -49,6 +49,7 @@ module cpu_tb;
 	wire extDone;
 	wire[2:0] extFunc3;
 
+	wire mrdy;
 	wire IRQ;
 	wire [3:0] IRQnum;
 	wire [15:0] IRQen;
@@ -66,11 +67,12 @@ module cpu_tb;
 		.bdi(bdi), .bdo(bdo), .baddr(baddr), .bsz(bsz), .bwr(bwr),
 		.rfwr(rfwr), .rfrd(rfrd), .rfrs1(rfrs1), .rfrs2(rfrs2), .rfD(rfD), .rfRS1(rfRS1), .rfRS2(rfRS2),
 		.extA(extA), .extB(extB), .extR(extR), .extStart(extStart), .extDone(extDone), .extFunc3(extFunc3),
+		.mrdy(mrdy),
 		.IRQ(IRQ), .IRQnum(IRQnum), .IRQen(IRQen),
 		.simdone(simdone)
 		);
 
-	memory #(4096) M (.clk(clk), .bdi(bdi), .baddr(baddr), .bdo(bdo), .bwr(bwr), .bsz(bsz) );
+	memory #(4096) M (.clk(clk), .bdi(bdi), .baddr(baddr), .bdo(bdo), .bwr(bwr), .bsz(bsz), .mrdy(mrdy) );
 
 	mul MULEXT (
 		.clk(clk),

@@ -213,15 +213,12 @@ endmodule
 
 module rv32Counters(
 	input clk, rst,
-	output[31:0] Cycle, Timer, Instret, 
+	output reg [31:0] Cycle, Timer, Instret, UIE,
 	input[31:0] wdata,
 	input ld_cycle, ld_timer, ld_uie, ret, 
 	output gie, tie, eie,
 	output tif
 	);
-
-	reg[31:0] Cycle, Timer, Instret; 
-	reg[2:0] UIE;
 
 
 	always @ (posedge clk or posedge rst)
@@ -239,10 +236,10 @@ module rv32Counters(
 		else if (ret) Instret <= Instret + 32'b1;
 
 	always @ (posedge clk or posedge rst)
-		if(rst) UIE <= 3'd0;
-		else if(ld_uie) UIE <= wdata[2:0];
+		if(rst) UIE <= 31'd0; //optimize width
+		else if(ld_uie) UIE <= wdata;
 
-	assign {eie, tie, gie} = UIE;
+	assign {eie, tie, gie} = UIE[2:0];
 	assign tif = (Timer == 32'b1);
 
 
@@ -517,6 +514,7 @@ module rv32CU(
 	output cu_ext_hold,
 	output cu_ext_start,
 	output cu_wfi_hold,
+	input cu_mrdy,
 	output cu_hold,
 	output cyc,
 	output cu_rf_wr,
@@ -727,7 +725,7 @@ module rv32CU(
 
 	assign cu_ext_hold = (~ext_done) & (cu_custom_1);
 	assign cu_wfi_hold = (~intf) & (cu_wfi_1);
-	assign cu_hold = cu_ext_hold | cu_wfi_hold;
+	assign cu_hold = cu_ext_hold | cu_wfi_hold | ~cu_mrdy;
 
 	assign cu_rf_wr = (~cyc) &
 				   (cu_rf_rd_2 != 5'b0) &
@@ -778,6 +776,8 @@ module rv32_CPU_v2 (
 
 	extA, extB, extR, extStart, extDone, extFunc3,
 
+	mrdy,
+
 	IRQ, IRQnum, IRQen
 	`ifdef _SIM_
 		, simdone
@@ -800,13 +800,14 @@ module rv32_CPU_v2 (
 	input extDone;
 	output[2:0] extFunc3;
 
+	input mrdy;
+
 	input IRQ;
 	input[3:0] IRQnum;
 	output[15:0] IRQen;
 
 	// only for simulation
 	`ifdef _SIM_
-		assign IRQen = 16'd3;
 		output simdone;
 		reg simdone = 0;
 	`endif
@@ -843,19 +844,21 @@ module rv32_CPU_v2 (
 	wire[31:0] PC;
 
 	// counters/Int Logic
-	wire[31:0] Cycle, Timer, Instret; 
+	wire[31:0] Cycle, Timer, Instret, UIE; 
 	wire tov;
 	wire gie, tie, eie;
 	wire intf, TMRIF;
 	wire[4:0] vec = IRQ ? {1'b1,IRQnum} : TMRIF ? 5'd12 : cu_int_ebreak ? 5'd8 : 5'd4;
 	wire [31:0]  cntr = (cu_csr_rd_s1[1]) ? Instret : cu_csr_rd_s1[0]? Timer : Cycle; 
+	assign IRQen = UIE[18:3];
 
 	rv32Counters CNTR (
 		.clk(clk),
 		.rst(rst),
 		.Cycle(Cycle),
 		.Timer(Timer),
-		.Instret(Instret), 
+		.Instret(Instret),
+		.UIE(UIE),
 		.wdata(R1),
 		.ld_cycle(cu_ld_cycle), .ld_timer(cu_ld_time), .ld_uie(cu_ld_uie), .ret(cu_ret), 
 		.gie(gie), .tie(tie), .eie(eie),
@@ -1027,6 +1030,7 @@ module rv32_CPU_v2 (
 		.cu_ext_hold(ext_hold),
 		.cu_ext_start(ext_start),
 		.cu_wfi_hold(wfi_hold),
+		.cu_mrdy(mrdy),
 		.cu_hold(hold),
 		.cyc(cyc),
 		.cu_rf_wr(rf_wr),

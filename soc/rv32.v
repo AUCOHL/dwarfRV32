@@ -505,6 +505,7 @@ module rv32CU(
 	output cu_ext_hold,
 	output reg cu_ext_start,
 	output cu_wfi_hold,
+	input cu_mrdy,
 	output cu_hold,
 	output reg cyc,
 	output cu_rf_wr,
@@ -588,7 +589,7 @@ module rv32CU(
 
 	always @ (posedge clk)
 		if(rst) TMRIF <= 1'b0;
-	else if(tov) TMRIF <= 1'b1;
+		else if(tov) TMRIF <= 1'b1;
 		else if(cu_ld_time & cyc) TMRIF <= 1'b0;
 
 	always @(posedge clk)
@@ -613,7 +614,7 @@ module rv32CU(
 		.cu_auipc_inst(cu_auipc_inst),
 		.cu_custom_inst(cu_custom),
 		.cu_system_inst(cu_system_inst)
-		);
+	);
 	wire cu_wfi_1;
 	rv32dec IDEC1(
 		.IR(IR1),
@@ -628,7 +629,7 @@ module rv32CU(
 		.cu_auipc_inst(cu_auipc_inst_1),
 		.cu_custom_inst(cu_custom_1),
 		.cu_system_inst(cu_system_inst_1)
-		);
+	);
 
 	rv32dec IDEC2(
 		.IR(IR2),
@@ -713,7 +714,7 @@ module rv32CU(
 
 	assign cu_ext_hold = (~ext_done) & (cu_custom_1);
 	assign cu_wfi_hold = (~intf) & (cu_wfi_1);
-	assign cu_hold = cu_ext_hold | cu_wfi_hold | cu_int_ecall_1; //fpga
+	assign cu_hold = cu_ext_hold | cu_wfi_hold | cu_int_ecall_1 | ~cu_mrdy; //fpga
 
 	assign cu_rf_wr = (~cyc) &
 				   (cu_rf_rd_2 != 5'b0) &
@@ -765,6 +766,8 @@ module rv32_CPU_v2 (
 
 	extA, extB, extR, extStart, extDone, extFunc3,
 
+	mrdy,
+
 	IRQ, IRQnum, IRQen
 	);
 	input clk, rst;
@@ -783,6 +786,8 @@ module rv32_CPU_v2 (
 	output extStart;
 	input extDone;
 	output[2:0] extFunc3;
+
+	input mrdy;
 
 	input IRQ;
 	input[3:0] IRQnum;
@@ -1008,6 +1013,7 @@ module rv32_CPU_v2 (
 		.cu_ext_hold(ext_hold),
 		.cu_ext_start(ext_start),
 		.cu_wfi_hold(wfi_hold),
+		.cu_mrdy(mrdy),
 		.cu_hold(hold),
 		.cyc(cyc),
 		.cu_rf_wr(rf_wr),
