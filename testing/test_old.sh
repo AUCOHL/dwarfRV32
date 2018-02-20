@@ -5,6 +5,7 @@
 name=$(echo $1 | cut -f 1 -d '.')
 ext=$(echo $1 | cut -f 2 -d '.')
 run=${2:-0}                 #arg2 : optimization level
+iver="iverilog -Wall -Wno-timescale -o "$name.out" ../testbench.v ../../rtl/rv32.v ../../rtl/memory.v ../../rtl/qspi/rom_qspi.v ../../rtl/regfile.v"
 
 mode=${3:-0}                 #arg3 : 0: normal, 1: interrupts 2: special
 
@@ -33,7 +34,7 @@ ${toolchain_path}riscv32-unknown-elf-objcopy -O binary "$name.elf" "$name.bin"
 cp "$name.hex" "test.hex"
 
 
-iverilog   -Wall -Wno-timescale -o "$name.out" ../testbench.v ../../rtl/rv32.v ../../rtl/memory.v
+eval $iver
 
 ../rv32sim "$name.bin" | tail -32 > "$name.sim.txt"
 vvp -N "$name.out"  | tail -33 > "$name.vvp.txt"

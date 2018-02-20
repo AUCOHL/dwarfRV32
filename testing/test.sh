@@ -6,15 +6,10 @@
 
 name=$(echo $1 | cut -f 1 -d '.')
 ext=$(echo $1 | cut -f 2 -d '.')
-mode=${2:-0}                 #arg2 : 0: normal, 1: interrupts 2: special
+subdir=$2
+iver="iverilog -Wall -Wno-timescale -o "$name.out" ../testbench.v ../../rtl/rv32.v ../../rtl/memory.v ../../rtl/qspi/rom_qspi.v ../../rtl/regfile.v"
 
-if [ $mode = 1 ]; then
-    tests_path="${tests_path}int/"
-else
-    if [ $mode = 2 ]; then
-        tests_path="${tests_path}special/"
-    fi
-fi
+tests_path="$tests_path$2/"
 
 
 runSim (){
@@ -47,11 +42,11 @@ cd "$tmp_path"
 
 if [ "$ext" = "s" ]
 then
-  iverilog -Wall -Wno-timescale -o "$name.out" ../testbench.v ../../rtl/rv32.v ../../rtl/memory.v
-  ${toolchain_path}riscv32-unknown-elf-as "$tests_path$1" ../irq.S -o "$name.elf"
-  runSim $name
+    eval $iver
+    ${toolchain_path}riscv32-unknown-elf-as "$tests_path$1" ../irq.S -o "$name.elf"
+    runSim $name
 else
-    iverilog -Wall -Wno-timescale -o "$name.out" ../testbench.v ../../rtl/rv32.v ../../rtl/memory.v
+    eval $iver
     for i in 0 1 2 3; do
         ${toolchain_path}riscv32-unknown-elf-gcc -Wall -O$i -march=rv32i -nostdlib -T ../link.ld ../crt0_proj.S "$tests_path$1" ../irq.S -o "${name}_O$i.elf" -lgcc
         runSim ${name}_O$i

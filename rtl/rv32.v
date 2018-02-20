@@ -159,6 +159,7 @@ Aug 19, 2017:   Fixed Interrupts handeling
 `define     SYS_CSRRS       3'b010
 `define     SYS_CSRRW       3'b001
 `define     SYS_CSRRC       3'b011
+`define     SYS_CSRRCI      3'b111
 `define     CSR_cycle       12'hc00
 `define     CSR_time        12'hc01
 `define     CSR_instret     12'hc02
@@ -183,70 +184,91 @@ Aug 19, 2017:   Fixed Interrupts handeling
 `define     EBREAK_VEC      32'd32
 `define     TIMER_VEC       32'd48
 `define     EINT_VEC        32'd64
+//an address that selects none of the io dvcs
+`define     ADDR_SELNONE    32'h40404040
 
 //enablers
 
-`define     _EN_EXT_        0  //for simulation only
-`define     _SIM_           0
-//`define     _DBUG_	      0
-//`define _IR_ 0
+`define     _EN_EXT_ 0  //for simulation only
+`define     _SIM_ 0
+//`define _FPGA_ 0
 
 module IntCtrl( 
 	input clk, rst,
 	input[15:0] INT, IRQen,
 	output IRQ,
 	output reg [3:0] IRQnum
-	);
+);
 
-	assign IRQ = | (INT & IRQen);
+	wire [15:0] IRQenINT = (INT & IRQen);
+	assign IRQ = | IRQenINT;
+
+
+	always @ (posedge rst)
+		IRQnum <= 4'd0;
 
 	integer i;
 	always @(*) begin
-		IRQnum = 0;
 		for(i=0; i<16; i=i+1)
-			if(INT[i] == 1) IRQnum = i;
-		`ifdef _DBUG_
-			$display("INT = %d, IRQnum = %d, IRQen = %d, IRQ = %b", INT, IRQnum, IRQen, IRQ);
-		`endif
+			if(IRQenINT[i] == 1'b1) IRQnum = i;
 	end
+
+`ifdef _DBUG_
+		//always @ (*)
+			//$display( "IRQnum", IRQnum);
+`endif
+
 endmodule
 
 module rv32Counters(
-	input clk, rst,
-	output reg [31:0] Cycle, Timer, Instret, UIE,
+	input clk, cyc, rst,
+	output reg [31:0] Cycle, Timer, Instret, UIE, 
+	output reg [3:0] UCause,
 	input[31:0] wdata,
-	input ld_cycle, ld_timer, ld_uie, ret, 
+	input[4:0] uimm,
+	input[3:0] IRQnum,
+	input ld_cycle, ld_timer, ld_uie, inc_ret, 
+	input c_cycle, c_timer, c_uie,
 	output gie, tie, eie,
 	output tif
-	);
+);
 
 
 	always @ (posedge clk or posedge rst)
 		if(rst) Timer <= 32'd0;
-	else if(ld_timer) Timer <= wdata;
+		//csrrw
+		else if(ld_timer && cyc) Timer <= wdata;
+		//csrrci
+		else if (c_timer && cyc) Timer <= Timer & {27'h7ffffff, ~uimm};
 		else if(Timer!=32'b0) Timer <= Timer - 32'b1;
 
 	always @ (posedge clk or posedge rst)
 		if(rst) Cycle <= 32'd0;
-		else if(ld_cycle) Cycle <= wdata;
+		else if(ld_cycle && cyc) Cycle <= wdata;
+		else if (c_cycle && cyc) Cycle <= Cycle & {27'h7ffffff, ~uimm};
 		else Cycle <= Cycle + 32'b1;
 
 	always @ (posedge clk or posedge rst)
 		if(rst) Instret <= 32'd0;
-		else if (ret) Instret <= Instret + 32'b1;
+		else if (inc_ret) Instret <= Instret + 32'b1;
 
 	always @ (posedge clk or posedge rst)
-		if(rst) UIE <= 31'd0; //optimize width
-		else if(ld_uie) UIE <= wdata;
+		if(rst) UIE <= 32'd0; //optimize width
+		else if(ld_uie && cyc) UIE <= wdata;
+		else if (c_uie && cyc) UIE <= UIE & {27'h7ffffff, ~uimm};
+
+	always @ (posedge clk or posedge rst)
+		if(rst) UCause <= 32'd0;
+		else UCause <= IRQnum;
 
 	assign {eie, tie, gie} = UIE[2:0];
 	assign tif = (Timer == 32'b1);
 
 
-	`ifdef _DBUG_
-		always @ (posedge clk)
-			$display( "\nTimer = %d, Cycle = %d, InstRet = %d", Timer, Cycle, Instret);
-	`endif
+`ifdef _DBUG_
+		always @ (*)
+			$display( "\nCycle = %d, InstRet = %d", Cycle, Instret);
+`endif
 
 endmodule
 
@@ -263,7 +285,7 @@ module rv32dec(
 	cu_auipc_inst,
 	cu_custom_inst,
 	cu_system_inst
-	);
+);
 	assign cu_br_inst = (IR[`IR_opcode]==`OPCODE_Branch);
 	assign cu_jal_inst = (IR[`IR_opcode]==`OPCODE_JAL);
 	assign cu_jalr_inst = (IR[`IR_opcode]==`OPCODE_JALR);
@@ -281,12 +303,14 @@ module rv32PCUnit(
 	input clk, rst,
 	input hold,cyc,
 	input s0, s1, s2, s3, s4, reliable, ld_epc,sel_epc,
-	output[31:0] PC,
+    input cu_rst_state,
+    output [31:0] PC_w,
+	output reg [31:0] PC,
 	input[31:0] PC1, I1, alu_r,
 	input[4:0] vec
-	);
+);
 
-	reg[31:0] PC, ePC;
+	reg[31:0] ePC;
 
 	wire[31:0] pc_adder, nPC;
 
@@ -297,18 +321,26 @@ module rv32PCUnit(
 
 	assign nPC = s1 ? alu_r : pc_adder;
 
+    assign PC_w = cu_rst_state? 32'd0 : s4 & reliable ? ePC : (s0?  int_vec : nPC);
 
 	always@(posedge clk or posedge rst)
-		if(rst) PC <= 32'b0;
-	else
-		if(cyc)
-			if(~hold)
-				PC <= s4 & reliable ? ePC : (s0?  int_vec : nPC);
+		if(rst)
+			PC <= 32'b0;
+		else if(cyc)
+				if(~hold)
+					PC <= PC_w;
 
 	always@(posedge clk or posedge rst)
 		if(rst) ePC <= 32'b0;
 			else if(ld_epc)
 				ePC <= (sel_epc | ~reliable) ? nPC : PC; //if ctrl instruction, fetch nPC; if branch not taken (s3), then keep going
+`ifdef _DBUG_			
+	always@(*)
+		$display("PC : %h,", PC);
+	always@(*)
+		$display("PC_w : %h,", PC_w);
+`endif
+
 endmodule
 
 /*
@@ -324,7 +356,7 @@ module rv32i_alu(
 	input [4:0]     opcode,
 	input [2:0]     func3,
 	input [6:0]     func7
-	);
+);
 
 	// decoded Instr
 	wire I = (opcode == `OPCODE_Arith_I);
@@ -369,9 +401,8 @@ module rv32i_alu(
 
 	// Alu output
 	assign r =  (instr_slt | instr_sltu) ? slt :
-			 (instr_logic) ? and_or_xor :
-			 (instr_shift) ? shift :
-					add_sub;
+				(instr_logic) ?     and_or_xor :
+				(instr_shift) ?          shift : add_sub;
 
 	// Flags
 	assign zf = (add_sub == 32'b0);
@@ -421,6 +452,16 @@ module mul(clk, rst, done, start, a, b, p);
 			endcase
 
 	assign p = (a)*(b);
+
+`ifdef _DBUG_
+		always @ (*)
+			$display( "state = %h", state);
+		always @ (*)
+			$display( "done = %h", done);
+		always @ (*)
+			$display( "p = %d", $signed(p));
+`endif
+
 endmodule
 
 
@@ -433,7 +474,7 @@ module rv32i_branch_unit (
 	input cf, zf, vf, sf,
 	input[2:0] func3,
 	output reg taken
-	);
+);
 	always @ * begin
 		taken = 1'b0;
 		(* full_case *)
@@ -454,23 +495,23 @@ endmodule
 Immediate Generator
 */
 module rv32i_imm_gen (
-	input [31:0] inst,
-	output reg [31:0] imm
-	);
+input [31:0] inst,
+output reg [31:0] imm
+);
 
-	always @(*) begin
+always @(*) begin
 
-		case (inst[`IR_opcode])
-			`OPCODE_Arith_I   : 	imm = { {21{inst[31]}}, inst[30:25], inst[24:21], inst[20] };
-			`OPCODE_Store     :     imm = { {21{inst[31]}}, inst[30:25], inst[11:8], inst[7] };
-			`OPCODE_LUI       :     imm = { inst[31], inst[30:20], inst[19:12], 12'b0 };
-			`OPCODE_AUIPC     :     imm = { inst[31], inst[30:20], inst[19:12], 12'b0 };
-			`OPCODE_JAL       : 	imm = { {12{inst[31]}}, inst[19:12], inst[20], inst[30:25], inst[24:21], 1'b0 };
-			`OPCODE_JALR      : 	imm = { {21{inst[31]}}, inst[30:25], inst[24:21], inst[20] };
-			`OPCODE_Branch    : 	imm = { {20{inst[31]}}, inst[7], inst[30:25], inst[11:8], 1'b0};
-			default         : 	imm = { {21{inst[31]}}, inst[30:25], inst[24:21], inst[20] }; // IMM_I
-		endcase // case (imm_type)
-	end
+	case (inst[`IR_opcode])
+		`OPCODE_Arith_I   : 	imm = { {21{inst[31]}}, inst[30:25], inst[24:21], inst[20] };
+		`OPCODE_Store     :     imm = { {21{inst[31]}}, inst[30:25], inst[11:8], inst[7] };
+		`OPCODE_LUI       :     imm = { inst[31], inst[30:20], inst[19:12], 12'b0 };
+		`OPCODE_AUIPC     :     imm = { inst[31], inst[30:20], inst[19:12], 12'b0 };
+		`OPCODE_JAL       : 	imm = { {12{inst[31]}}, inst[19:12], inst[20], inst[30:25], inst[24:21], 1'b0 };
+		`OPCODE_JALR      : 	imm = { {21{inst[31]}}, inst[30:25], inst[24:21], inst[20] };
+		`OPCODE_Branch    : 	imm = { {20{inst[31]}}, inst[7], inst[30:25], inst[11:8], 1'b0};
+		default           : 	imm = { {21{inst[31]}}, inst[30:25], inst[24:21], inst[20] }; // IMM_I
+	endcase // case (imm_type)
+end
 
 endmodule
 
@@ -478,28 +519,26 @@ endmodule
 Memory data extension
 */
 module rv32i_extender (
-	input [31:0] di,
-	output [31:0] do,
-		input [1:0] sz,
-		input type
-	);
+input [31:0] di,
+output reg [31:0] do,
+input [1:0] sz,
+input type
+);
 
-	reg[31:0] do;
-
-	always @ * begin
-		if(type) // zero
-			case(sz)
-				2'b00: do = {{24{1'b0}},di[7:0]};
-				2'b01: do = {{16{1'b0}},di[15:0]};
-				default: do = di;
-			endcase
-		else
-			case(sz)
-				2'b00: do = {{24{di[7]}},di[7:0]};
-				2'b01: do = {{16{di[15]}},di[15:0]};
-				default: do = di;
-			endcase
-	end
+always @ * begin
+	if(type) // zero
+		case(sz)
+			2'b00: do = {{24{1'b0}},di[7:0]};
+			2'b01: do = {{16{1'b0}},di[15:0]};
+			default: do = di;
+		endcase
+	else
+		case(sz)
+			2'b00: do = {{24{di[7]}},di[7:0]};
+			2'b01: do = {{16{di[15]}},di[15:0]};
+			default: do = di;
+		endcase
+end
 endmodule
 
 
@@ -510,258 +549,308 @@ module rv32CU(
 	input cf, zf, sf, vf,
 	input tov,
 	input gie, tie, eie, IRQ,
-	output[31:0] IR2, IR1,
+	output reg [31:0] IR1, IR2,
 	output cu_ext_hold,
-	output cu_ext_start,
+	output reg cu_ext_start,
 	output cu_wfi_hold,
-	input cu_mrdy,
+	input cu_brdy,
 	output cu_hold,
-	output cyc,
+	output reg cyc,
 	output cu_rf_wr,
 	output cu_r1_ld,
 	output cu_r2_ld,
 	output cu_r1_src,
 	output cu_r2_src,
-	output[4:0] cu_rf_rs1, cu_rf_rs2, cu_rf_rd_1, cu_rf_rd_2,
+    output cu_memrd,
+    output reg cu_rst_state,
+	output[4:0] cu_rf_rs1, cu_rf_rs2, cu_rf_rd_1, cu_rf_rd_2, //why?
 	output cu_pc_s0, cu_pc_s1, cu_pc_s2, cu_pc_s3, cu_pc_s4, cu_pc_reliable,
 	output cu_alu_a_src, cu_alu_b_src,
 	output cu_resmux_s0, cu_resmux_s1, cu_resmux_s2,
-	output cu_csr_rd_s0, cu_csr_rd_s2,
-	output [1:0] cu_csr_rd_s1, 
+	output cu_csr_rd_s0, 
+	output [1:0] cu_csr_rd_s1, cu_csr_rd_s2,
 	output cu_int_ecall, cu_int_ebreak,
 	output cu_ld_cycle, cu_ld_time, cu_ld_uie,
+	output cu_c_cycle, cu_c_time, cu_c_uie,
 	output cu_ld_epc, cu_sel_epc,
-	output TMRIF,
+	output reg TMRIF,
 	output intf,
 	output cu_mwr,
 	output cu_r_s,
 	output cu_ret 
+);
+
+reg VF, ZF, SF, CF;
+
+reg ISRMode;
+
+
+
+wire  cu_br_inst,
+cu_jal_inst,
+cu_jalr_inst,
+cu_alu_i_inst,
+cu_alu_r_inst,
+cu_load_inst,
+cu_store_inst,
+cu_lui_inst,
+cu_auipc_inst,
+cu_custom,
+cu_system_inst;
+
+wire  cu_br_inst_1,
+cu_jal_inst_1,
+cu_jalr_inst_1,
+cu_alu_i_inst_1,
+cu_alu_r_inst_1,
+cu_load_inst_1,
+cu_store_inst_1,
+cu_lui_inst_1,
+cu_auipc_inst_1,
+cu_custom_1,
+cu_system_inst_1;
+
+wire  cu_br_inst_2,
+cu_jal_inst_2,
+cu_jalr_inst_2,
+cu_alu_i_inst_2,
+cu_alu_r_inst_2,
+cu_load_inst_2,
+cu_store_inst_2,
+cu_lui_inst_2,
+cu_auipc_inst_2,
+cu_custom_2,
+cu_system_inst_2;
+
+
+`ifdef _AHBL_
+assign cu_mwr =  (~cyc & (cu_store_inst_1));
+`else
+assign cu_mwr =  (cyc & (cu_store_inst_1));
+`endif
+
+
+assign cu_r_s = cu_custom_1;
+
+wire cu_br_taken;
+
+wire[2:0] func3_1 = IR1[`IR_funct3];
+
+assign intf = ~ISRMode & ( (cu_pc_reliable&(cu_int_ecall|cu_int_ebreak)) | (IRQ & eie) | (TMRIF & tie)) & gie;
+
+assign cu_sel_epc = cu_int_ecall | cu_int_ebreak;
+
+always @ (posedge clk or posedge rst)
+	if(rst) TMRIF <= 1'b0;
+	else if(tov) TMRIF <= 1'b1;
+	else if(cu_ld_time & cyc) TMRIF <= 1'b0;
+
+always @ (posedge clk or posedge rst)
+	if(rst) ISRMode <= 0;
+	else if(intf & cyc) ISRMode <= 1;
+	else if(cu_pc_s4) ISRMode <= 0;
+
+always @ (posedge clk or posedge rst)
+	if(rst) 
+`ifdef _AHBL_
+        //to start with baddr <=  alu_r so that PC_w can have its address phase
+        cyc <= 1'b1;
+`else
+        cyc <= 1'b0;
+`endif
+	else if (~cu_hold) 
+		cyc <= ~ cyc;
+
+rv32dec IDEC0(
+	.IR(IR),
+	.cu_br_inst(cu_br_inst),
+	.cu_jal_inst(cu_jal_inst),
+	.cu_jalr_inst(cu_jalr_inst),
+	.cu_alu_i_inst(cu_alu_i_inst),
+	.cu_alu_r_inst(cu_alu_r_inst),
+	.cu_load_inst(cu_load_inst),
+	.cu_store_inst(cu_store_inst),
+	.cu_lui_inst(cu_lui_inst),
+	.cu_auipc_inst(cu_auipc_inst),
+	.cu_custom_inst(cu_custom),
+	.cu_system_inst(cu_system_inst)
+);
+wire cu_wfi_1;
+rv32dec IDEC1(
+	.IR(IR1),
+	.cu_br_inst(cu_br_inst_1),
+	.cu_jal_inst(cu_jal_inst_1),
+	.cu_jalr_inst(cu_jalr_inst_1),
+	.cu_alu_i_inst(cu_alu_i_inst_1),
+	.cu_alu_r_inst(cu_alu_r_inst_1),
+	.cu_load_inst(cu_load_inst_1),
+	.cu_store_inst(cu_store_inst_1),
+	.cu_lui_inst(cu_lui_inst_1),
+	.cu_auipc_inst(cu_auipc_inst_1),
+	.cu_custom_inst(cu_custom_1),
+	.cu_system_inst(cu_system_inst_1)
+);
+
+rv32dec IDEC2(
+	.IR(IR2),
+	.cu_br_inst(cu_br_inst_2),
+	.cu_jal_inst(cu_jal_inst_2),
+	.cu_jalr_inst(cu_jalr_inst_2),
+	.cu_alu_i_inst(cu_alu_i_inst_2),
+	.cu_alu_r_inst(cu_alu_r_inst_2),
+	.cu_load_inst(cu_load_inst_2),
+	.cu_store_inst(cu_store_inst_2),
+	.cu_lui_inst(cu_lui_inst_2),
+	.cu_auipc_inst(cu_auipc_inst_2),
+	.cu_custom_inst(cu_custom_2),
+	.cu_system_inst(cu_system_inst_2)
+);
+
+rv32i_branch_unit BR(
+	.cf(CF), .zf(ZF), .vf(VF), .sf(SF),
+	.func3(func3_1),
+	.taken(cu_br_taken)
 	);
 
-	reg cyc;
-	reg VF, ZF, SF, CF;
-	reg[31:0] IR1, IR2;
-
-	reg TMRIF;//, BIF, CIF, EIF;
-	reg ISRMode;
+wire cu_j_inst_1 = cu_jal_inst_1 | cu_jalr_inst_1;
+wire cu_ctrl_inst_1 = cu_br_inst_1 | cu_j_inst_1;
 
 
+wire cu_alu_inst = cu_alu_r_inst | cu_alu_i_inst;
+wire cu_alu_inst_1 = cu_alu_r_inst_1 | cu_alu_i_inst_1;
+wire cu_alu_inst_2 = cu_alu_r_inst_2 | cu_alu_i_inst_2;
 
-	wire  cu_br_inst,
-	cu_jal_inst,
-	cu_jalr_inst,
-	cu_alu_i_inst,
-	cu_alu_r_inst,
-	cu_load_inst,
-	cu_store_inst,
-	cu_lui_inst,
-	cu_auipc_inst,
-	cu_custom,
-	cu_system_inst;
-
-	wire  cu_br_inst_1,
-	cu_jal_inst_1,
-	cu_jalr_inst_1,
-	cu_alu_i_inst_1,
-	cu_alu_r_inst_1,
-	cu_load_inst_1,
-	cu_store_inst_1,
-	cu_lui_inst_1,
-	cu_auipc_inst_1,
-	cu_custom_1,
-	cu_system_inst_1;
-
-	wire  cu_br_inst_2,
-	cu_jal_inst_2,
-	cu_jalr_inst_2,
-	cu_alu_i_inst_2,
-	cu_alu_r_inst_2,
-	cu_load_inst_2,
-	cu_store_inst_2,
-	cu_lui_inst_2,
-	cu_auipc_inst_2,
-	cu_custom_2,
-	cu_system_inst_2;
-
-
-	assign cu_mwr =  (cyc & (cu_store_inst_1));
-	assign cu_r_s = cu_custom_1;
-	//cu_store_inst_1 = (IR1[`IR_opcode]==`OPCODE_Store);
-	//wire cu_custom_1 = (IR1[`IR_opcode]==`OPCODE_Custom);
-
-
-	wire cu_br_taken;
-
-	wire[2:0] func3_1 = IR1[`IR_funct3];
-
-	assign intf = ~ISRMode & ( (cu_pc_reliable&(cu_int_ecall|cu_int_ebreak)) | (IRQ & eie) | (TMRIF & tie)) & gie;
-
-	assign cu_sel_epc = cu_int_ecall | cu_int_ebreak;
-
-	always @ (posedge clk)
-		if(rst) TMRIF <= 1'b0;
-	else if(tov) TMRIF <= 1'b1;
-		else if(cu_ld_time & cyc) TMRIF <= 1'b0;
-
-	always @(posedge clk)
-		if(rst) ISRMode <= 0;
-		else if(intf & cyc) ISRMode <= 1;
-		else if(cu_pc_s4) ISRMode <= 0;
-
-	always @ (posedge clk or posedge rst)
-		if(rst) cyc <= 1'b0;
-		else cyc <= ~ cyc;
-
-	rv32dec IDEC0(
-		.IR(IR),
-		.cu_br_inst(cu_br_inst),
-		.cu_jal_inst(cu_jal_inst),
-		.cu_jalr_inst(cu_jalr_inst),
-		.cu_alu_i_inst(cu_alu_i_inst),
-		.cu_alu_r_inst(cu_alu_r_inst),
-		.cu_load_inst(cu_load_inst),
-		.cu_store_inst(cu_store_inst),
-		.cu_lui_inst(cu_lui_inst),
-		.cu_auipc_inst(cu_auipc_inst),
-		.cu_custom_inst(cu_custom),
-		.cu_system_inst(cu_system_inst)
-		);
-	wire cu_wfi_1;
-	rv32dec IDEC1(
-		.IR(IR1),
-		.cu_br_inst(cu_br_inst_1),
-		.cu_jal_inst(cu_jal_inst_1),
-		.cu_jalr_inst(cu_jalr_inst_1),
-		.cu_alu_i_inst(cu_alu_i_inst_1),
-		.cu_alu_r_inst(cu_alu_r_inst_1),
-		.cu_load_inst(cu_load_inst_1),
-		.cu_store_inst(cu_store_inst_1),
-		.cu_lui_inst(cu_lui_inst_1),
-		.cu_auipc_inst(cu_auipc_inst_1),
-		.cu_custom_inst(cu_custom_1),
-		.cu_system_inst(cu_system_inst_1)
-		);
-
-	rv32dec IDEC2(
-		.IR(IR2),
-		.cu_br_inst(cu_br_inst_2),
-		.cu_jal_inst(cu_jal_inst_2),
-		.cu_jalr_inst(cu_jalr_inst_2),
-		.cu_alu_i_inst(cu_alu_i_inst_2),
-		.cu_alu_r_inst(cu_alu_r_inst_2),
-		.cu_load_inst(cu_load_inst_2),
-		.cu_store_inst(cu_store_inst_2),
-		.cu_lui_inst(cu_lui_inst_2),
-		.cu_auipc_inst(cu_auipc_inst_2),
-		.cu_custom_inst(cu_custom_2),
-		.cu_system_inst(cu_system_inst_2)
-		);
-
-	rv32i_branch_unit BR(
-		.cf(CF), .zf(ZF), .vf(VF), .sf(SF),
-		.func3(func3_1),
-		.taken(cu_br_taken)
-		);
-
-	wire cu_j_inst_1 = cu_jal_inst_1 | cu_jalr_inst_1;
-	wire cu_ctrl_inst_1 = cu_br_inst_1 | cu_j_inst_1;
-
-
-	wire cu_alu_inst = cu_alu_r_inst | cu_alu_i_inst;
-	wire cu_alu_inst_1 = cu_alu_r_inst_1 | cu_alu_i_inst_1;
-	wire cu_alu_inst_2 = cu_alu_r_inst_2 | cu_alu_i_inst_2;
-
-	always @ (posedge clk or posedge rst)
-		if(rst)
-			IR1 <= `INST_NOP;
-		else
-			if(cyc) begin
-				//interrupts!
-				`ifdef _SIM_
-					if(~cu_pc_reliable | (intf & ~cu_int_ecall)) IR1 <= `INST_NOP;   //REMOVE LATER
-				`else
-					if(~cu_pc_reliable | intf) IR1 <= `INST_NOP;
-				`endif
-				else if(~cu_hold) IR1 <= IR;
-			end
-
-	always @ (posedge clk or posedge rst)
-		if(rst)
-			IR2 <= `INST_NOP;
-		else
-			if(cyc) IR2 <= IR1;
-
-
-
-	always @ (posedge clk)
-		if(~cyc & (cu_alu_inst_1 | cu_br_inst_1)) begin
-			CF <= cf;
-			ZF <= zf;
-			VF <= vf;
-			SF <= sf;
+always @ (posedge clk or posedge rst)
+	if(rst)
+		IR1 <= `INST_NOP;
+	else
+		if(cyc) begin
+			//interrupts!
+		`ifdef _SIM_
+				//because we're using ecall to terminate
+				//so that we can dump the registers
+				//and compare them with rv32sim
+			if(~cu_pc_reliable | (intf & ~cu_int_ecall)) IR1 <= `INST_NOP;
+		`else
+			if(~cu_pc_reliable | intf) IR1 <= `INST_NOP;
+		`endif
+			else if(~cu_hold) IR1 <= IR;
 		end
 
-	reg cu_ext_start;
-	always @ (posedge clk or posedge rst)
-		if(rst) cu_ext_start <= 0;
-		else if(cu_custom_1)
-			cu_ext_start <= 1;
-		else
-			cu_ext_start <= 0;
-
-	assign cu_rf_rd_1 = IR1[`IR_rd];
-	assign cu_rf_rd_2 = IR2[`IR_rd];
-	assign cu_rf_rs1 = IR[`IR_rs1];
-	assign cu_rf_rs2 = IR[`IR_rs2];
-
-	assign cu_pc_s0 = intf;
-	assign cu_pc_s1 = cu_jalr_inst_1;
-	assign cu_pc_s2 = (cu_br_inst_1 & cu_br_taken) | (cu_jal_inst_1) ;
-	assign cu_pc_s3 = (cu_br_inst_1 & ~cu_br_taken) ;
-	assign cu_pc_s4 = (IR==`INST_URET);
-	assign cu_pc_reliable = ~(cu_pc_s1 | cu_pc_s2);
-
-	assign cu_ret = (IR2 != `INST_NOP & ~cyc); 
-
-	assign cu_ext_hold = (~ext_done) & (cu_custom_1);
-	assign cu_wfi_hold = (~intf) & (cu_wfi_1);
-	assign cu_hold = cu_ext_hold | cu_wfi_hold | ~cu_mrdy;
-
-	assign cu_rf_wr = (~cyc) &
-				   (cu_rf_rd_2 != 5'b0) &
-				   (cu_alu_inst_2 | cu_jal_inst_2 | cu_jalr_inst_2 | cu_lui_inst_2 | cu_load_inst_2 | cu_auipc_inst_2 | (cu_custom_2 & ext_done) | cu_system_inst_2);
-
-	assign cu_r1_ld = cyc & (cu_alu_inst | cu_br_inst | cu_load_inst | cu_store_inst | cu_jalr_inst | cu_custom | cu_system_inst);
-
-	assign cu_r1_src = (cu_rf_rd_1==cu_rf_rs1) & (cu_alu_inst_1 | cu_load_inst_1 | cu_lui_inst_1 | cu_auipc_inst_1 | cu_custom_1 | cu_system_inst_1) & (cu_rf_rs1 != 5'b0); // 1: RESMux, 0: RS1
-	assign cu_r2_ld = cyc & (cu_alu_inst | cu_br_inst | cu_store_inst | cu_custom);
-
-	assign cu_r2_src = (cu_rf_rd_1 == cu_rf_rs2) & (cu_alu_inst_1 | cu_load_inst_1 | cu_lui_inst_1 | cu_auipc_inst_1 | cu_custom_1 | cu_system_inst_1) & (cu_rf_rs2 != 5'b0);
-	assign cu_alu_a_src = cu_auipc_inst_1;
-	assign cu_alu_b_src = (cu_alu_i_inst_1 | cu_load_inst_1 | cu_store_inst_1 | cu_jalr_inst_1 | cu_auipc_inst_1 | cu_lui_inst_1);
+always @ (posedge clk or posedge rst)
+	if(rst)
+		IR2 <= `INST_NOP;
+	else
+		if(cyc) IR2 <= IR1;
 
 
 
-	assign cu_resmux_s0 = cu_load_inst_1;
-	assign cu_resmux_s1 = cu_lui_inst_1;
-	assign cu_resmux_s2 = cu_j_inst_1;
+always @ (posedge clk)
+	if(~cyc & (cu_alu_inst_1 | cu_br_inst_1)) begin
+		CF <= cf;
+		ZF <= zf;
+		VF <= vf;
+		SF <= sf;
+	end
+
+always @ (posedge clk or posedge rst)
+	if(rst)
+	   	cu_ext_start <= 0;
+	else if(cu_custom_1)
+		cu_ext_start <= 1;
+	else
+		cu_ext_start <= 0;
 
 
-	assign cu_csr_rd_s0 = cu_system_inst_1;
-	assign cu_csr_rd_s1 = IR1[21:20]; //for time,instret,cycle
-	assign cu_csr_rd_s2 = IR1[27];
 
-	//optimize
-	assign cu_int_ecall = (IR==`INST_ECALL);
-	assign cu_int_ebreak = (IR==`INST_EBREAK);
+assign cu_rf_rd_1 = IR1[`IR_rd];
+assign cu_rf_rd_2 = IR2[`IR_rd];
+assign cu_rf_rs1 = IR[`IR_rs1];
+assign cu_rf_rs2 = IR[`IR_rs2];
 
-	assign cu_wfi_1 = (IR1==`INST_WFI);
+assign cu_pc_s0 = intf;
+assign cu_pc_s1 = cu_jalr_inst_1;
+assign cu_pc_s2 = (cu_br_inst_1 & cu_br_taken) | (cu_jal_inst_1) ;
+assign cu_pc_s3 = (cu_br_inst_1 & ~cu_br_taken) ;
+assign cu_pc_s4 = (IR==`INST_URET);
+assign cu_pc_reliable = ~(cu_pc_s1 | cu_pc_s2);
 
-	assign cu_ld_cycle = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[`IR_csr]==`CSR_cycle);
-	assign cu_ld_time = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[`IR_csr]==`CSR_time);
-	assign cu_ld_uie = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[`IR_csr]==`CSR_uie);
+assign cu_ret = (IR2 != `INST_NOP & ~cyc); 
 
-	assign cu_ld_epc = (intf & cyc & ~cu_hold);
+//
+assign cu_ext_hold = cyc & ~ext_done & cu_custom_1;
+assign cu_wfi_hold = (~intf) & (cu_wfi_1);
+
+`ifdef _FPGA_
+assign cu_hold = cu_ext_hold | cu_wfi_hold | cu_int_ecall_1 | ~cu_brdy;
+`else
+assign cu_hold = cu_ext_hold | cu_wfi_hold | ~cu_brdy;
+`endif
+
+assign cu_rf_wr = (~cyc) &
+			   (cu_rf_rd_2 != 5'b0) &
+			   (cu_alu_inst_2 | cu_jal_inst_2 | cu_jalr_inst_2 | cu_lui_inst_2 | cu_load_inst_2 | cu_auipc_inst_2 | (cu_custom_2 & ext_done) | cu_system_inst_2);
+
+assign cu_r1_ld = cyc & (cu_alu_inst | cu_br_inst | cu_load_inst | cu_store_inst | cu_jalr_inst | cu_custom | cu_system_inst);
+
+assign cu_r1_src = (cu_rf_rd_1==cu_rf_rs1) & (cu_alu_inst_1 | cu_load_inst_1 | cu_lui_inst_1 | cu_auipc_inst_1 | cu_custom_1 | cu_system_inst_1) & (cu_rf_rs1 != 5'b0); // 1: RESMux, 0: RS1
+assign cu_r2_ld = cyc & (cu_alu_inst | cu_br_inst | cu_store_inst | cu_custom);
+
+assign cu_r2_src = (cu_rf_rd_1 == cu_rf_rs2) & (cu_alu_inst_1 | cu_load_inst_1 | cu_lui_inst_1 | cu_auipc_inst_1 | cu_custom_1 | cu_system_inst_1) & (cu_rf_rs2 != 5'b0);
+assign cu_alu_a_src = cu_auipc_inst_1;
+assign cu_alu_b_src = (cu_alu_i_inst_1 | cu_load_inst_1 | cu_store_inst_1 | cu_jalr_inst_1 | cu_auipc_inst_1 | cu_lui_inst_1);
+
+//to request io (reads) correctly
+//cu_memrd is the "request" signal; request data only when the addr is ready in the reg
+assign cu_memrd = cu_load_inst_1 | cu_store_inst_1;
+
+
+
+always@(posedge clk or posedge rst)
+	if(rst)
+		cu_rst_state <= 1'b1;
+    else
+        cu_rst_state <= 1'b0;
+
+
+assign cu_resmux_s0 = cu_load_inst_1;
+assign cu_resmux_s1 = cu_lui_inst_1;
+assign cu_resmux_s2 = cu_j_inst_1;
+
+
+assign cu_csr_rd_s0 = cu_system_inst_1;
+assign cu_csr_rd_s1 = IR1[21:20]; //for time,instret,cycle
+assign cu_csr_rd_s2 = {IR1[26], IR1[22]};
+
+//optimize
+assign cu_int_ecall = (IR==`INST_ECALL);
+`ifdef _FPGA_
+assign cu_int_ecall_1 = (IR1==`INST_ECALL); //for fpga
+`endif
+assign cu_int_ebreak = (IR==`INST_EBREAK);
+
+assign cu_wfi_1 = (IR1==`INST_WFI);
+
+assign cu_ld_cycle = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[`IR_csr]==`CSR_cycle);
+assign cu_c_cycle = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRCI) & (IR1[`IR_csr]==`CSR_cycle);
+
+assign cu_ld_time = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[`IR_csr]==`CSR_time);
+assign cu_c_time = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRCI) & (IR1[`IR_csr]==`CSR_time);
+
+assign cu_ld_uie = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRW) & (IR1[`IR_csr]==`CSR_uie);
+assign cu_c_uie = cu_system_inst_1 & (IR1[`IR_funct3]==`SYS_CSRRCI) & (IR1[`IR_csr]==`CSR_uie);
+
+assign cu_ld_epc = (intf & cyc & ~cu_hold);
+
+
+
+`ifdef _DBUG_
+	always @ (*) 
+		$display ("cu_memrd = %b", cu_memrd);
+	always @ (*) 
+		$display ("cu_ext_hold = %b", cu_ext_hold);
+	
+`endif
 
 endmodule
 
@@ -776,247 +865,294 @@ module rv32_CPU_v2 (
 
 	extA, extB, extR, extStart, extDone, extFunc3,
 
-	mrdy,
+	brdy,
 
 	IRQ, IRQnum, IRQen
-	`ifdef _SIM_
-		, simdone
-	`endif
+`ifdef _SIM_
+	, simdone
+`endif
+);
+input clk, rst;
+output[31:0] bdi, baddr;
+output bwr;
+output[1:0] bsz;
+input[31:0] bdo;
+
+output[4:0] rfrd, rfrs1, rfrs2;
+output rfwr;
+output[31:0] rfD;
+input[31:0] rfRS1, rfRS2;
+
+output[31:0] extA, extB;
+input[31:0] extR;
+output extStart;
+input extDone;
+output[2:0] extFunc3;
+
+input brdy;
+
+input IRQ;
+input[3:0] IRQnum;
+output[15:0] IRQen;
+
+// only for simulation
+`ifdef _SIM_
+	output simdone;
+	reg simdone = 0;
+`endif
+
+wire cyc;
+
+wire[31:0] ext_bdo;
+
+wire cu_csr_rd_s0;
+wire[1:0] cu_csr_rd_s1, cu_csr_rd_s2;
+wire cu_int_ecall, cu_int_ebreak;
+wire cu_ld_cycle, cu_ld_time, cu_ld_uie, cu_ret; 
+wire cu_c_cycle, cu_c_time, cu_c_uie;
+
+//Registers
+reg[31:0] IR, R1, R2, PC1, I1; 
+reg[31:0] R, RES;
+wire[31:0] IR1, IR2;
+
+// RF
+wire[31:0] RS1, RS2;
+wire rf_wr;
+assign RS1 = (rf_rs1==5'b0) ? 32'b0 : rfRS1;
+assign RS2 = (rf_rs2==5'b0) ? 32'b0 : rfRS2;
+assign rfwr = rf_wr;
+assign rfrs1 = rf_rs1;
+assign rfrs2 = rf_rs2;
+assign rfrd = rf_rd_2;
+assign rfD = RES;
+
+
+// PC
+wire cu_pc_s0, cu_pc_s1, cu_pc_s2, cu_pc_s3, cu_pc_s4, cu_pc_reliable;
+wire cu_ld_epc, cu_sel_epc;
+wire[31:0] PC, PC_w;
+
+// counters/Int Logic
+wire[31:0] Cycle, Timer, Instret, UIE;
+wire [3:0] UCause; 
+wire tov;
+wire gie, tie, eie;
+wire intf, TMRIF;
+wire[4:0] vec = IRQ ? {1'b1,IRQnum} : TMRIF ? 5'd12 : cu_int_ebreak ? 5'd8 : 5'd4;
+wire [31:0]  cntr = cu_csr_rd_s1[1]? (cu_csr_rd_s2[1]? {28'd0, UCause} : Instret ): (cu_csr_rd_s2[0]? UIE : (cu_csr_rd_s1[0]? Timer : Cycle)); 
+assign IRQen = UIE[18:3];
+
+wire[4:0] rf_rs_1;
+rv32Counters CNTR (
+	.clk(clk),
+	.cyc(cyc),
+	.rst(rst),
+	.Cycle(Cycle),
+	.Timer(Timer),
+	.Instret(Instret),
+	.UIE(UIE),
+	.UCause(UCause),
+	.wdata(R1),
+	.uimm(rf_rs_1),
+	.IRQnum(IRQnum),
+	.ld_cycle(cu_ld_cycle), .ld_timer(cu_ld_time), .ld_uie(cu_ld_uie), .inc_ret(cu_ret), 
+	.c_cycle(cu_c_cycle), .c_timer(cu_c_time), .c_uie(cu_c_uie),
+	.gie(gie), .tie(tie), .eie(eie),
+	.tif(tov)
 	);
-	input clk, rst;
-	output[31:0] bdi, baddr;
-	output bwr;
-	output[1:0] bsz;
-	input[31:0] bdo;
-
-	output[4:0] rfrd, rfrs1, rfrs2;
-	output rfwr;
-	output[31:0] rfD;
-	input[31:0] rfRS1, rfRS2;
-
-	output[31:0] extA, extB;
-	input[31:0] extR;
-	output extStart;
-	input extDone;
-	output[2:0] extFunc3;
-
-	input mrdy;
-
-	input IRQ;
-	input[3:0] IRQnum;
-	output[15:0] IRQen;
-
-	// only for simulation
-	`ifdef _SIM_
-		output simdone;
-		reg simdone = 0;
-	`endif
-
-	wire cyc;
-
-	wire[31:0] ext_bdo;
-
-	wire cu_csr_rd_s0, cu_csr_rd_s2;
-	wire[1:0] cu_csr_rd_s1; 
-	wire cu_int_ecall, cu_int_ebreak;
-	wire cu_ld_cycle, cu_ld_time, cu_ld_uie, cu_ret; 
-
-	//Registers
-	reg[31:0] IR, R1, R2, PC1, I1; 
-	reg[31:0] R, RES;
-	wire[31:0] IR1, IR2;
-
-	// RF
-	wire[31:0] RS1, RS2;
-	wire rf_wr;
-	assign RS1 = (rf_rs1==5'b0) ? 32'b0 : rfRS1;
-	assign RS2 = (rf_rs2==5'b0) ? 32'b0 : rfRS2;
-	assign rfwr = rf_wr;
-	assign rfrs1 = rf_rs1;
-	assign rfrs2 = rf_rs2;
-	assign rfrd = rf_rd_2;
-	assign rfD = RES;
 
 
-	// PC
-	wire cu_pc_s0, cu_pc_s1, cu_pc_s2, cu_pc_s3, cu_pc_s4, cu_pc_reliable;
-	wire cu_ld_epc, cu_sel_epc;
-	wire[31:0] PC;
+// +---------+
+// | Stage 0 |
+// +---------+
 
-	// counters/Int Logic
-	wire[31:0] Cycle, Timer, Instret, UIE; 
-	wire tov;
-	wire gie, tie, eie;
-	wire intf, TMRIF;
-	wire[4:0] vec = IRQ ? {1'b1,IRQnum} : TMRIF ? 5'd12 : cu_int_ebreak ? 5'd8 : 5'd4;
-	wire [31:0]  cntr = (cu_csr_rd_s1[1]) ? Instret : cu_csr_rd_s1[0]? Timer : Cycle; 
-	assign IRQen = UIE[18:3];
+wire[4:0] rf_rs1 = IR[`IR_rs1], rf_rs2 = IR[`IR_rs2];
+wire[4:0] rf_rd = IR[`IR_rd];
+wire[31:0] IMM;
 
-	rv32Counters CNTR (
-		.clk(clk),
-		.rst(rst),
-		.Cycle(Cycle),
-		.Timer(Timer),
-		.Instret(Instret),
-		.UIE(UIE),
-		.wdata(R1),
-		.ld_cycle(cu_ld_cycle), .ld_timer(cu_ld_time), .ld_uie(cu_ld_uie), .ret(cu_ret), 
-		.gie(gie), .tie(tie), .eie(eie),
-		.tif(tov)
-		);
+rv32i_imm_gen IMMGen(
+ 	.inst(IR),
+	.imm(IMM)
+	);
 
+always @ (posedge clk or posedge rst)
+	if(rst)
+		IR <= `INST_NOP;
+	else
+		if(~cyc)
+            IR <= hold? `INST_NOP : bdo;
 
-	// +---------+
-	// | Stage 0 |
-	// +---------+
+always @ (posedge clk or posedge rst)
+	if (rst)
+		I1 <= 32'b0;
+	else if(cyc) 
+		if(~hold) I1 <= IMM;
 
-	wire[4:0] rf_rs1 = IR[`IR_rs1], rf_rs2 = IR[`IR_rs2];
-	wire[4:0] rf_rd = IR[`IR_rd];
-	wire[31:0] IMM;
+always @ (posedge clk or posedge rst)
+	if(rst)
+	   	PC1 <= 32'b0;
+	else if(cyc & ~hold)
+            PC1 <= PC;
 
-	rv32i_imm_gen IMMGen(   .inst(IR),
-		.imm(IMM)
-		);
+wire cu_r1_ld, cu_r2_ld;
+wire cu_r1_src, cu_r2_src;
 
-	always @ (posedge clk or posedge rst)
-		if(rst)
-			IR <= `INST_NOP;
+always @ (posedge clk or posedge rst)
+	if (rst)
+		R1 <= 32'b0;
+	else if(cu_r1_ld & ~hold)
+		if(cu_r1_src)
+			R1 <= RESMux;
 		else
-			if(~cyc) begin
-				if (hold)
-					IR <= `INST_NOP;
-				else
-					IR <= bdo;
-			end
+			R1 <= RS1;
 
-	always @ (posedge clk)
-		if(cyc) 
-			if(~hold) I1 <= IMM;
+always @ (posedge clk or posedge rst)
+	if (rst)
+		R2 <= 32'b0;
+	else if(cu_r2_ld & ~hold)
+		if(cu_r2_src)
+			R2 <= RESMux;
+		else
+			R2 <= RS2;
 
-	always @ (posedge clk or posedge rst)
-		if(rst) PC1 <= 32'b0;
-			else if(cyc)
-				if(~hold) PC1 <= PC;
+// +---------+
+// | Stage 1 |
+// +---------+
+wire[31:0] alu_r, alu_a, alu_b;
+wire alu_cf, alu_zf, alu_vf, alu_sf;
+wire[4:0] rf_rd_1 = IR1[`IR_rd];
+assign rf_rs_1 = IR1[`IR_rs1];
 
-	wire cu_r1_ld, cu_r2_ld;
-	wire cu_r1_src, cu_r2_src;
 
-	always @ (posedge clk)
-		if(cu_r1_ld & ~hold)
-			if(cu_r1_src)
-				R1 <= RESMux;
-			else
-				R1 <= RS1;
+wire cu_alu_a_src, cu_alu_b_src;
 
-	always @ (posedge clk)
-		if(cu_r2_ld & ~hold)
-			if(cu_r2_src)
-				R2 <= RESMux;
-			else
-				R2 <= RS2;
+assign alu_a = (cu_alu_a_src) ? PC1 : R1 ; // to support auipc
+assign alu_b = (cu_alu_b_src) ? I1 : R2;
 
-	// +---------+
-	// | Stage 1 |
-	// +---------+
-	wire[31:0] alu_r, alu_a, alu_b;
-	wire alu_cf, alu_zf, alu_vf, alu_sf;
-	wire[4:0] rf_rd_1=IR1[`IR_rd];
+//ALU
+rv32i_alu ALU (
+	.a(alu_a), .b(alu_b),
+	.shamt(IR1[`IR_shamt]),
+	.r(alu_r),
+	.cf(alu_cf), .zf(alu_zf), .vf(alu_vf), .sf(alu_sf),
+	.opcode(IR1[`IR_opcode]),
+	.func3(IR1[`IR_funct3]),
+	.func7(IR1[`IR_funct7])
+	);
 
-	wire cu_alu_a_src, cu_alu_b_src;
+// extensions
+`ifdef _EN_EXT_
+	wire[31:0] ext_out;
+	wire ext_hold;
+	wire ext_start;
+	wire ext_done;
 
-	assign alu_a = (cu_alu_a_src) ? PC1 : R1 ; // to support auipc
-	assign alu_b = (cu_alu_b_src) ? I1 : R2;
+	wire cu_r_s;
 
-	//ALU
-	rv32i_alu ALU (
-		.a(alu_a), .b(alu_b),
-		.shamt(IR1[`IR_shamt]),
-		.r(alu_r),
-		.cf(alu_cf), .zf(alu_zf), .vf(alu_vf), .sf(alu_sf),
-		.opcode(IR1[`IR_opcode]),
-		.func3(IR1[`IR_funct3]),
-		.func7(IR1[`IR_funct7])
-		);
-
-	// extensions
-	`ifdef _EN_EXT_
-		wire[31:0] ext_out;
-		wire ext_hold;
-		wire ext_start;
-		wire ext_done;
-
-		wire cu_r_s;
-
-		assign extA = R1;
-		assign extB = R2;
-		assign extFunc3 = IR1[`IR_funct3];
-		assign ext_out = extR;
-		assign extStart = ext_start;
-		assign ext_done = extDone;
-
-		always @ (posedge clk)
-			if(~cyc)
-				if(cu_r_s)
-					R <= ext_out;
-				else
-					R <= alu_r;   // Is it really needed?
-		// The ALU inputs are stable
-		// till the end of the cycle
-	`else
-		always @ (posedge clk)
-			if(~cyc)
-				R <= alu_r;
-	`endif
-
-	wire cu_resmux_s0, cu_resmux_s1, cu_resmux_s2;
-
-	//wire[1:0] res_sel = cu_resmux_s0 ? 2'd0 : cu_resmux_s1 ? 2'd1 : cu_resmux_s2 ? 2'd2 : 2'd3;
-	wire [31:0] RESMux =  /*(res_sel == 2'd0) ? ext_bdo :
-					   (res_sel == 2'd1) ? I1 :
-					   (res_sel == 2'd2) ? PC : R;
-											 */
-					   (cu_resmux_s0) ? ext_bdo :
-					   (cu_resmux_s1) ? I1 :
-					   (cu_resmux_s2) ? PC :
-					   (cu_csr_rd_s0) ? cntr : R; 
+	assign extA = R1;
+	assign extB = R2;
+	assign extFunc3 = IR1[`IR_funct3];
+	assign ext_out = extR;
+	assign extStart = ext_start;
+	assign ext_done = extDone;
 
 	always @ (posedge clk or posedge rst)
 		if(rst)
-			RES <= 32'b0;
-		else begin
-			if(cyc) RES <= RESMux;
-		end
+			R <= 32'b0;
+		else if(~cyc)
+/*
+			if(cu_r_s)
+				R <= ext_out;
+			else
+*/
+				R <= alu_r;   // Is it really needed?
+	// The ALU inputs are stable
+	// till the end of the cycle
+`else
+	always @ (posedge clk or posedge rst)
+		if(rst)
+			R <= 32'b0;
+		else if(~cyc)
+			R <= alu_r;
+`endif
 
-	wire[2:0] func3_1 = IR1[`IR_funct3];
+wire cu_resmux_s0, cu_resmux_s1, cu_resmux_s2;
+
+//wire[1:0] res_sel = cu_resmux_s0 ? 2'd0 : cu_resmux_s1 ? 2'd1 : cu_resmux_s2 ? 2'd2 : 2'd3;
+wire [31:0] RESMux =  /*(res_sel == 2'd0) ? ext_bdo :
+				   (res_sel == 2'd1) ? I1 :
+				   (res_sel == 2'd2) ? PC : R;
+										 */
+				   (cu_resmux_s0) ? ext_bdo :
+				   (cu_resmux_s1) ? I1 :
+				   (cu_resmux_s2) ? PC :
+				   (cu_csr_rd_s0) ? cntr :
+                   (cu_r_s)       ? ext_out : R; 
 
 
-	// memory
-	wire cu_mwr;
-	assign bwr = cu_mwr;
-	assign baddr = cyc ? R : PC;
-	assign bdi = R2;
-	assign bsz = (cyc) ? func3_1[1:0] : 2'b10;
+always @ (posedge clk or posedge rst)
+	if(rst)
+		RES <= 32'b0;
+	else begin
+		if(cyc) RES <= RESMux;
+	end
 
-	rv32i_extender EXT (.di(bdo), .do(ext_bdo), .sz(func3_1[1:0]), .type(func3_1[2]) );
+wire[2:0] func3_1 = IR1[`IR_funct3];
 
-	// +---------+
-	// | Stage 2 |
-	// +---------+
-	wire[4:0] rf_rd_2 = IR2[`IR_rd];
 
-	// Control Unit
-	wire wfi_hold, hold;
+// memory
+wire cu_mwr, cu_memrd;
+assign bwr = cu_mwr;
+//ADDR_SELNONE: special number that selects none of the devices
 
-	rv32PCUnit PCU(
-		.clk(clk), .rst(rst),
-		.hold(hold),.cyc(cyc),
-		.s0(cu_pc_s0), .s1(cu_pc_s1), .s2(cu_pc_s2), .s3(cu_pc_s3), .s4(cu_pc_s4), .reliable(cu_pc_reliable),
-		.PC(PC),
-		.PC1(PC1), .I1(I1), .alu_r(alu_r),
-		.vec(vec),
-		.ld_epc(cu_ld_epc),
-		.sel_epc(cu_sel_epc)
-		);
+`ifdef _AHBL_
+
+assign baddr =  cyc? PC_w : (cu_memrd? alu_r : `ADDR_SELNONE);
+
+`else
+
+assign baddr =  cyc ? (cu_memrd? R : `ADDR_SELNONE) : PC;
+
+`endif
+
+
+assign bdi = R2;
+
+`ifdef _AHBL_
+
+assign bsz = (cyc) ? 2'b10 : func3_1[1:0];
+
+`else
+
+assign bsz = (cyc) ? func3_1[1:0] : 2'b10;
+
+`endif
+
+
+rv32i_extender EXT (.di(bdo), .do(ext_bdo), .sz(func3_1[1:0]), .type(func3_1[2]) );
+
+// +---------+
+// | Stage 2 |
+// +---------+
+wire[4:0] rf_rd_2 = IR2[`IR_rd];
+
+// Control Unit
+wire wfi_hold, hold;
+wire cu_rst_state;
+
+rv32PCUnit PCU(
+	.clk(clk), .rst(rst),
+	.hold(hold),.cyc(cyc),
+	.s0(cu_pc_s0), .s1(cu_pc_s1), .s2(cu_pc_s2), .s3(cu_pc_s3), .s4(cu_pc_s4), .reliable(cu_pc_reliable),
+	.PC(PC),
+    .PC_w(PC_w),
+    .cu_rst_state(cu_rst_state),
+	.PC1(PC1), .I1(I1), .alu_r(alu_r),
+	.vec(vec),
+	.ld_epc(cu_ld_epc),
+	.sel_epc(cu_sel_epc)
+);
 
 
 	rv32CU CTRL(
@@ -1025,12 +1161,12 @@ module rv32_CPU_v2 (
 		.ext_done(ext_done),
 		.cf(alu_cf), .zf(alu_zf), .sf(alu_sf), .vf(alu_vf),
 		.tov(tov),
-		.gie(gie), .tie(tie), .eie(eie),
-		.IRQ(IRQ),
+		.gie(gie), .tie(tie), .eie(eie), .IRQ(IRQ),
+		.IR1(IR1), .IR2(IR2),
 		.cu_ext_hold(ext_hold),
 		.cu_ext_start(ext_start),
 		.cu_wfi_hold(wfi_hold),
-		.cu_mrdy(mrdy),
+		.cu_brdy(brdy),
 		.cu_hold(hold),
 		.cyc(cyc),
 		.cu_rf_wr(rf_wr),
@@ -1038,36 +1174,50 @@ module rv32_CPU_v2 (
 		.cu_r2_ld(cu_r2_ld),
 		.cu_r1_src(cu_r1_src),
 		.cu_r2_src(cu_r2_src),
+
+		//to externally CS chips correctly
+		.cu_memrd(cu_memrd),
+
+        .cu_rst_state(cu_rst_state),
+		
 		.cu_pc_s0(cu_pc_s0),.cu_pc_s1(cu_pc_s1), .cu_pc_s2(cu_pc_s2), .cu_pc_s3(cu_pc_s3),.cu_pc_s4(cu_pc_s4),.cu_pc_reliable(cu_pc_reliable),
 		.cu_alu_a_src(cu_alu_a_src), .cu_alu_b_src(cu_alu_b_src),
 		.cu_resmux_s0(cu_resmux_s0), .cu_resmux_s1(cu_resmux_s1), .cu_resmux_s2(cu_resmux_s2),
-		.IR1(IR1), .IR2(IR2),
 		.cu_csr_rd_s0(cu_csr_rd_s0), .cu_csr_rd_s1(cu_csr_rd_s1), .cu_csr_rd_s2(cu_csr_rd_s2),
 		.cu_int_ecall(cu_int_ecall), .cu_int_ebreak(cu_int_ebreak),
 		.cu_ld_cycle(cu_ld_cycle), .cu_ld_time(cu_ld_time), .cu_ld_uie(cu_ld_uie),
+		.cu_c_cycle(cu_c_cycle), .cu_c_time(cu_c_time), .cu_c_uie(cu_c_uie),
 		.cu_ld_epc(cu_ld_epc), .cu_sel_epc(cu_sel_epc),
 		.TMRIF(TMRIF),
 		.intf(intf),
 		.cu_mwr(cu_mwr),
 		.cu_r_s(cu_r_s),
 		.cu_ret(cu_ret) 
-		);
+	);
 
-
-	`ifdef _SIM_
-		integer      i;
-		always @ (IR2) begin  //doesn't work well with interrupts for now (normal testing)
-			if(IR2 == `INST_ECALL) begin
-				$display("#Cycles = %d, #Instret = %d, CPI = %2.4f", Cycle, Instret, $itor(Cycle)/Instret);
-				simdone = 1;
-				#2;
-				$finish;
-			end
+`ifdef _SIM_
+	integer      i;
+	always @ (IR2) begin  //doesn't work well with interrupts for now (normal testing)
+		if(IR2 == `INST_ECALL) begin
+			$display("#Cycles = %d, #Instret = %d, CPI = %2.4f", Cycle, Instret, $itor(Cycle)/Instret);
+			simdone = 1;
+			#2;
+			$finish;
 		end
-	`endif
-	`ifdef _IR_
-		always @(posedge clk)
-			$display ("IR = %h", IR);
+	end
+`endif
+`ifdef _DBUG_
+	always @(*)
+		$display ("baddr = %h", baddr);
+    always @(*)
+		$display ("IR = %h", IR);
+    always @(*)
+		$display ("IR1 = %h", IR1);
+    always @(*)
+		$display ("RES = %h", RES);
+    always @(*)
+		$display ("R = %h", RES);
 
-	`endif
+
+`endif
 endmodule

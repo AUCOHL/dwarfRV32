@@ -64,18 +64,22 @@ j IRQ15
 
 .org 128
 
-IRQ0:
- li x6, 1
+IRQ4:
+ csrr	x5, 0x42
+ uret
+
+IRQ14:
+ csrr	x6, 0x42
  uret
 
 ___App:
-li	    x4, 5
+li	    x4, 0xfffff
 wruie	  x4
-li x6, 16
-li x9, 16
+li x6, 111
+li x9, 111
 infloop:
 li x7, 123
-blt x6, x9, exit
+bne x6, x9, exit
 jal infloop
 
 exit:

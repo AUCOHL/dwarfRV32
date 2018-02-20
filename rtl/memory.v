@@ -6,7 +6,7 @@
 
 //MM IO
 `define    MMAP_PRINT	32'h80000000
-`define    LOGCAPH	14
+//`define    LOGCAPH	14
 
 module rv32i_mem_ctrl (baddr, bsz, bdi, mdi, mcs, bdo, mdo);
     input[1:0] baddr;
@@ -55,37 +55,41 @@ module rv32i_mem_ctrl (baddr, bsz, bdi, mdi, mcs, bdo, mdo);
 endmodule
 
 
-module memory #(parameter capH = 1024) (input clk, input[31:0] bdi, baddr, output[31:0] bdo, input bwr, input[1:0] bsz, output mrdy);
+module memory #(parameter logHBank = 10) (input clk, input[31:0] bdi, baddr, output[31:0] bdo, input mwr, input[1:0] bsz, output brdy);
 
-    reg[7:0] bank0[capH-1:0];
-    reg[7:0] bank1[capH-1:0];
-    reg[7:0] bank2[capH-1:0];
-    reg[7:0] bank3[capH-1:0];
+	parameter HBank = 1<<logHBank;	
+
+    reg[7:0] bank0[HBank-1:0];
+    reg[7:0] bank1[HBank-1:0];
+    reg[7:0] bank2[HBank-1:0];
+    reg[7:0] bank3[HBank-1:0];
 
     // a dummy array to load the memory from th efile.
-    reg[31:0] mem[capH-1:0];
+    reg[31:0] mem[HBank-1:0];
 
     wire[31:0] mdo, mdi;
     wire[3:0] mcs;
 
     rv32i_mem_ctrl MCTRL (.baddr(baddr[1:0]), .bsz(bsz), .bdi(bdi), .mdi(mdi), .mcs(mcs), .bdo(bdo), .mdo(mdo));
 
-    assign mdo = {bank3[baddr[`LOGCAPH-1:2]],bank2[baddr[`LOGCAPH-1:2]],bank1[baddr[`LOGCAPH-1:2]],bank0[baddr[`LOGCAPH-1:2]]};
+    assign mdo = {bank3[baddr[2+logHBank-1:2]],bank2[baddr[2+logHBank-1:2]],bank1[baddr[2+logHBank-1:2]],bank0[baddr[2+logHBank-1:2]]};
 
-	assign mrdy = 1'b1;
+	//always ready for sim - guard here
+	assign brdy = 1'b1;
 
     always @(posedge clk) begin
-	    if (bwr) begin
+	    if (mwr) begin
 		    case(baddr)
+				//guard here
 			    `MMAP_PRINT: begin
 			    	$write("%c", mdi[7:0]);
 				$fflush(); 
 			    end
 			    default: begin
-				if(mcs[0]) bank0[baddr[`LOGCAPH-1:2]] <= mdi[7:0];
-				if(mcs[1]) bank1[baddr[`LOGCAPH-1:2]] <= mdi[15:8];
-				if(mcs[2]) bank2[baddr[`LOGCAPH-1:2]] <= mdi[23:16];
-				if(mcs[3]) bank3[baddr[`LOGCAPH-1:2]] <= mdi[31:24];
+				if(mcs[0]) bank0[baddr[2+logHBank-1:2]] <= mdi[7:0];
+				if(mcs[1]) bank1[baddr[2+logHBank-1:2]] <= mdi[15:8];
+				if(mcs[2]) bank2[baddr[2+logHBank-1:2]] <= mdi[23:16];
+				if(mcs[3]) bank3[baddr[2+logHBank-1:2]] <= mdi[31:24];
 			    end
 		    endcase
 	    end
@@ -96,7 +100,7 @@ module memory #(parameter capH = 1024) (input clk, input[31:0] bdi, baddr, outpu
     // sim only
 `ifdef _MEMDISP_
     always @ (posedge clk)
-        if(mcs[0] & bwr)
+        if(mcs[0] & mwr)
           $display("writing %0d(%0h) to (%0d)%h -- Size:%0d", mdi, mdi, baddr, baddr,bsz);
 `endif
 
@@ -106,7 +110,7 @@ module memory #(parameter capH = 1024) (input clk, input[31:0] bdi, baddr, outpu
     initial begin
       $readmemh("./test.hex", mem);
 
-  for(i=0; i<capH; i=i+1) begin
+  for(i=0; i<HBank; i=i+1) begin
         {bank3[i], bank2[i], bank1[i], bank0[i]} = mem[i];
         //$display("bank1[%d]=%h\n", i, bank0[i]);
   end
