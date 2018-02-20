@@ -6,12 +6,6 @@
 `define CMD_RDID 8'hAB		//followed by 3 dummy bytes
 `define DEV_ID	//???
 
-
-`define tPPmax 'd5 //ms
-`define tBEmax 'd250_000 //ms
-`define tSEmax 'd3_000 //ms
-`define input_freq 'd31_250 //kHz
-
 module rom_qspi (
     input clk, rst,
     input [23:0] baddr,
@@ -23,17 +17,15 @@ module rom_qspi (
     
     wire [31:0] bdo;
 
-    wire [1:0] LED; //can remove or reuse at synthesis
-
 
     wire clk_to_mem, CS, DQ3, DQ2, DQ1, DQ0, OE, bbusy;
 
     assign brdy = ~bbusy;
-    hw_fsm ht(.LED(LED), .RESET(rst), .CLK_100M(clk), .CLK_TO_MEM_OUT(clk_to_mem), 
+    hw_fsm ht( .rst(rst), .clk_100m(clk), .clk_to_mem_out(clk_to_mem), 
                 .CS(CS),  .DQio({DQ3, DQ2, DQ1, DQ0}), .OE(OE), .trigger_rd(trigger_rd), .addr(baddr), .readout(bdo), .busy_out(bbusy));
     
 
-    //N25Qxxx m1(.CS(CS), .C_(clk_to_mem), .HOLD_DQ3(DQ3), .DQ0(DQ0), .DQ1(DQ1), .Vcc('d3000), .Vpp_W_DQ2(DQ2));
+    //model here/flash rom here
     reg [31:0] mem[31:0];
     assign {DQ3, DQ2, DQ1, DQ0} = OE? 4'bzzzz : mem[baddr][3:0];
     initial begin
@@ -73,18 +65,10 @@ module rom_qspi (
 endmodule
 
 
-
-// - in a simulation, RESET comes from a testbench and CLK_TO_MEM_OUT has to be connected to the mem model via the testbench
-// - in hardware, when FPGA boot memory is used, memory clock has to be connected via STARTUPE2
-//   and EOS - end of startup signal - can be used as RESET
 module hw_fsm(
-        input CLK_100M,
-        output [1:0] LED,
-
-`ifndef  __SYNTHESIS__
-        output CLK_TO_MEM_OUT,
-        input RESET,
-`endif
+        input clk_100m,
+        output clk_to_mem_out,
+        input rst,
         input trigger_rd,
         input [23:0] addr,
         output [31:0] readout,
@@ -97,11 +81,7 @@ module hw_fsm(
     wire clk_to_mem, clk;
     wire EOS;
 
-`ifndef  __SYNTHESIS__
-    assign CLK_TO_MEM_OUT = clk_to_mem;
-`else 
-    wire RESET = ~EOS;
-`endif
+    assign clk_to_mem_out = clk_to_mem;
 
     wire busy;
     wire error;
@@ -110,31 +90,20 @@ module hw_fsm(
     reg [7:0] cmd;
     reg [31:0] data_send;
     reg [4:0] state;
-    reg [1:0] LEDr;
     reg blink;
     reg cnt;
     
-    assign LED[0] = blink & LEDr[0];  // indicates end of sequence
-    assign LED[1] = ~blink & LEDr[1]; // indicates success
  
- 
-    assign clk = CLK_100M;
-    assign clk_to_mem = CLK_100M;
+    assign clk = clk_100m;
+    assign clk_to_mem = clk_100m;
     //READY STATE
     assign busy_out = (state != 6) || busy; 
-    //clk generator
-    /*
-    clk_for_spi clk_spi_inst
-      (
-       .clk_in1(CLK_100M),      // input clk_in1, 100 MHz
-       .clk_out1(clk),          // output clk_out1, 40 MHz, 0 deg
-       .clk_out2(clk_to_mem),   // output clk_out2, 40 MHz, 180 deg
-       .reset(RESET)
-    );      
-    */
+
+    //clk generator here
+	//
 	qspi_mem_controller mc(
         .clk(clk), 
-        .reset(RESET),
+        .reset(rst),
         .CS(CS), 
         .DQio(DQio),
         .trigger(trigger),
@@ -147,10 +116,9 @@ module hw_fsm(
 
 	//INIT FSM
     always @(posedge clk) begin
-        if(RESET) begin
+        if(rst) begin
             trigger <= 0;
             state <= 0;
-            LEDr <= 0;
             blink <= 0;
             QE <= 0;
             cnt <= 0;
@@ -185,7 +153,6 @@ module hw_fsm(
                         trigger <= 0;
                     else if(!busy) begin
                         if (/*readout == `DEV_ID*/1) begin // verify the memory ID read
-                            LEDr[1] <= 1;
 
                             // enable quad IO
                             cmd <= `CMD_WRSR;
@@ -193,8 +160,7 @@ module hw_fsm(
                             QE <= 1;
                             trigger <= 1;   
                             state <= state+1;  
-                        end else
-                            LEDr[0] <= 1; // memory ID is wrong, error, finish
+                        end 
                     end
                 end
                 
@@ -381,7 +347,7 @@ module spi_cmd(
         output reg busy,
         input [2:0] data_in_count,
         input [2:0] data_out_count,
-        input [55:0] data_in, //max len is: 256B data + 1B cmd + 3B addr
+        input [55:0] data_in, 
         output reg [31:0] data_out,
         input QE,
         output OE, //remove
@@ -403,8 +369,7 @@ module spi_cmd(
     assign DQio[0] = OE?DQ[0]:1'bZ;
     assign DQio[1] = OE?DQ[1]:1'bZ;
     assign DQio[2] = OE?DQ[2]:1'bZ;
-    assign DQio[3] = QE?(OE?DQ[3]:1'bZ):1'b1; // has to be held 1 as 'hold'
-    //during single IO operation, but in quad mode behaves as other IOs
+    assign DQio[3] = QE?(OE?DQ[3]:1'bZ):1'b1; 
 	
 
 	//FSM:  IDLE -> if triggered and -> SEND instruction -> READ data
