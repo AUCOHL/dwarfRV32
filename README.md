@@ -1,7 +1,12 @@
 # dwarfRV32
+dwarfRV32 is a small-footprint pipelined implementation of the RISC-V RV32I ISA. The implementation targets resources-constrained applications; hence, several design decisions were made to achieve such goal.
 
-It is a small footprint pipelined implementation of the RV32i ISA. The implementation targets resources-constrained applications; hence, several design decisions were made to achieve such goal. 
+# ⚖️ Licensing
+dwarfRV32 is open hardware, licensed under the GNU General Public License v3 (and only version 3) as published by the Free Software Foundation. Check 'License'. We may relicense it to later versions of the GPL at our own discretion.
 
+For alternative licensing inquiries, contact mshalan@aucegypt.edu.
+
+# Design specifications
 ## The following hard requirements are considered:
 1. No separation between data memory and instruction memory. Hence, no L1 caches are needed and the CPU complies with Von Neumann memory architecture
 2. The Register File must be implemented using memory dual-port SRAM generated using a memory compiler.
@@ -56,6 +61,3 @@ Additionally, a secondary counter of retired instructions is included (Instret) 
   - OSU 180nm: 100MHz (clocked down to have zero wait-states for the memory) - 250MHZ with memory wait states.
   - XILNIX Artix 7: TBD
   - Lattice ICE40: TBD
-
-## Contact
-For any question, please email mshalan (at) aucegypt dot edu
