@@ -1,6 +1,8 @@
 # dwarfRV32
 dwarfRV32 is a small-footprint pipelined implementation of the RISC-V RV32I ISA. The implementation targets resources-constrained applications; hence, several design decisions were made to achieve such goal.
 
+An instruction set simulator is available under testing/src/rv32sim.cpp.
+
 # ⚖️ Licensing
 dwarfRV32 is open hardware, licensed under the GNU General Public License v3 (and only version 3) as published by the Free Software Foundation. Check 'License'. We may relicense it to later versions of the GPL at our own discretion.
 

@@ -1,15 +1,23 @@
 #include <iostream>
 #include <iomanip>
+#include <string>
 #include <fstream>
+#include <set>
+#include <map>
 #include "stdlib.h"
 
 using namespace std;
 
 #define MMAP_PRINT 0x80000000
 
-
+std::set<int> breakpoints;
+map<int, int> externalInterrupts; // set containing the pc address value needed to trigger an external interrupt and interrupt number
 const int regCount = 32;
 int regs[regCount] = {0};
+int uie = 0;
+int timer = 0;
+int ucause = 0; 
+int epc = 0; // register used by uret
 unsigned int pc = 0x0;
 const unsigned int RAM = 64 * 1024; // only 8KB of memory located at address 0
 char memory[RAM];
@@ -24,6 +32,7 @@ unsigned int readInstruction();
 
 void printPrefix(unsigned int, unsigned int);
 
+unsigned int immediateIUNSIGNED(unsigned int);
 unsigned int immediateI(unsigned int);
 unsigned int immediateS(unsigned int);
 unsigned int immediateB(unsigned int);
@@ -42,6 +51,7 @@ void AUIPC(unsigned int, unsigned int);
 void printInstUJ(string, unsigned int, unsigned int);
 void JAL(unsigned int, unsigned int);
 
+void printInstSys(string inst, unsigned int rd, unsigned int rs1, unsigned int rs2);
 void printInstB(string, unsigned int, unsigned int, unsigned int);
 void JALR(unsigned int, unsigned int, unsigned int);
 void B_Inst(unsigned int, unsigned int, unsigned int, unsigned int);
@@ -94,12 +104,19 @@ void MUL(unsigned int, unsigned int, unsigned int);
 
 void printInstE();
 void ECALL();
+void SYS_Inst(int rd, int rs1, int imm, int func);
+void timerInterrupt();
+void URET();
 void printInteger();
 void printString();
 void readInteger();
 void terminateExecution();
-
-
+void EBREAK();
+void updateTimer(); 
+void loadBreakpoints(char *file);
+void loadExternalInterrupts(char *file);
+void checkForBreakpoints();
+void checkForExternalInterrupts();
 
 int main(int argc, char* argv[]) {
      unsigned int instWord = 0;
@@ -107,6 +124,13 @@ int main(int argc, char* argv[]) {
 
      if(argc < 1){
          emitError("Use: rv32i_sim <machine_code_file_name>");
+     }else if(argc == 3){
+        puts("loading breakpoints");
+     	loadBreakpoints(argv[2]);
+     }else if(argc == 4){
+         puts("loading breakpoints & externalInterrupt locations");
+     	loadBreakpoints(argv[2]);
+        loadExternalInterrupts(argv[3]);
      }
 
      inFile.open(argv[1], ios::in | ios::binary | ios::ate);
@@ -120,11 +144,14 @@ int main(int argc, char* argv[]) {
          }
 
          while(!terminated) {
-             instWord = 	readInstruction();  // read next instruction
-             pc += 4;    // increment pc by 4
-             instDecExec(instWord);
-             regs[0] = 0;
+            checkForExternalInterrupts();
+            checkForBreakpoints();
+            updateTimer();
 
+            instWord = 	readInstruction();  // read next instruction
+            pc += 4;    // increment pc by 4
+            instDecExec(instWord);
+            regs[0] = 0;
          }
 
          // check if terminated correcctly
@@ -143,6 +170,17 @@ int main(int argc, char* argv[]) {
      } else {
          emitError("Cannot access input file");
      }
+}
+
+void updateTimer()
+{
+    if(timer > 1){
+        timer -= 1;
+    }else if(timer > 0 && (uie & 0x1) == 0x1){
+        timerInterrupt();
+        timer = 0;
+        puts("timer went off");
+    }
 }
 
 // dump the registers
@@ -178,6 +216,12 @@ unsigned int immediateI(unsigned int instWord)
 {
     return ( ( (instWord >> 20) & 0x7FF ) | ( (instWord >> 31) ? 0xFFFFF800 : 0x0 ) );
 }
+
+unsigned int immediateIUNSIGNED(unsigned int instWord)
+{
+    return ( ( (instWord >> 20) & 0xFFF ) );
+}
+
 unsigned int immediateB(unsigned int instWord)
 {
     unsigned int imm = 0;
@@ -294,11 +338,15 @@ void instDecExec(unsigned int instWord)
         case 0x33:  // Register Instructions
             R_Inst(rd, rs1, rs2, funct3, funct7);
             break;
-        case 0x73:  // Enviroment Calls
-            ECALL();
+        case 0x73:  // system calls & privileged instructions
+            {
+                int IU_imm = immediateIUNSIGNED(instWord);
+                SYS_Inst(rd, rs1, IU_imm, funct3);
+            }
             break;
         default:
-            cout << "\tUnknown Instruction Type" << endl;;
+            cout << "\tUnknown Instruction Type" << endl;
+            exit(-1);
     }
 
     cout << "RF[" << rd << "]=" << regs[rd] << endl;
@@ -660,6 +708,12 @@ void ANDI(unsigned int rd, unsigned int rs1, unsigned int I_imm)
     regs[rd] = regs[rs1] & int(I_imm);
 }
 
+void printInstSys(string inst, unsigned int rd, unsigned int rs1, unsigned int rs2)
+{
+    cout << dec;
+    cout << '\t' << inst << "\tx" << rd << ", " << rs1 << ", x" << rs2 <<hex<<"( 0x"<< regs[rs2] <<" )"<< endl;
+    //cout <<"RF["<<rd<<"]="<< regs[rd] << endl;
+}
 
 void printInstR(string inst, unsigned int rd, unsigned int rs1, unsigned int rs2)
 {
@@ -841,4 +895,169 @@ void readInteger()
 void terminateExecution()
 {
     terminated = true;
+}
+
+void SYS_Inst(int rd, int rs1, int imm, int func)
+{
+    if(func == 0x0 && imm == 0){
+        puts("\nMAKING ECALL");
+        ECALL(); // ecall  
+    }else if(func == 0 && imm == 0x2){ // uret
+        puts("\nMAKING URET");
+        URET();
+    }else if(func == 0x1){ // csrrw rd, uie, rs1
+        if(imm == 0x4){ //uie
+            puts("\n updating UIE");
+            int tmp = regs[rs1];
+            regs[rd] = uie;
+            uie = tmp;
+            printInstSys("csrrw ", rd, 0x4 ,rs1);
+        }else if(imm  == 0xc01){ // csrrw rd, timer, rs1
+            int tmp = regs[rs1];
+            regs[rd] = timer;
+            timer = tmp;
+            printf("\n updating TIMER\t%d\n", tmp);
+        }else if(imm  == 0x41){ // csrrw rd, epc, rs1
+			int tmp = regs[rs1];
+            regs[rd] = epc;
+            epc = tmp;
+			printf("\nEPC UPDATED with %d\n", epc);
+		}else if(imm == 0x42){
+            int tmp = regs[rs1];
+            regs[rd] = uie;
+            ucause = tmp;
+        }else{
+            printf("\nimmediate %d\n",imm);
+            puts("Accessing unimplemented control/status register");
+            throw "Accessing unimplemented control/status register";
+        }
+        puts("\n doing CSRRW operation");
+    }else if(func == 0x7 && imm == 0x4){
+        int clearBit = 1<<rs1;
+        if(uie & clearBit != 0)
+            uie ^= clearBit;
+        regs[rd] = uie;
+        printInstSys("csrrci", rd, imm, rs1);
+    }else if(imm == 1 && rs1 == 0 && rd == 0 && func == 0){
+        EBREAK();
+    }else{
+        puts("unimplemented system instruction error");
+        throw "unimplemented system instruction error";
+    }
+}
+
+void timerInterrupt()
+{
+   // if(uie == 0x3){ // global and timer interrupt enabled
+    uie = uie & 0xfffe; // turn off global interrupts
+    epc = pc;
+    pc = 48;
+    //}
+}
+
+void URET()
+{
+    printf("SETTING PC TO EPC %d\n",epc);
+    pc = epc; // return pc to proper location
+    uie |= 1; // enable interrupts
+}
+
+void EBREAK()
+{
+    epc = pc;
+    pc = 32;
+    uie = uie & 0xfffe; // turn off global interrupts
+}
+
+void loadBreakpoints(char *file)
+{
+	std::ifstream fs(file);
+	if(!fs.is_open()){
+		puts("failed to load break points");
+		exit(-1);
+	}
+	
+    do{
+        
+	    int address;
+		fs>>address;
+        printf("INPUT: %d\n",address);
+		
+        if(fs.eof()){
+			fs.close();
+		}else{
+			breakpoints.insert(address);
+            printf("breakpoint at  %d\n", address);
+		}
+	}while(fs.is_open());
+}
+
+void loadExternalInterrupts(char *file)
+{
+    std::ifstream fs(file);
+	if(!fs.is_open()){
+		puts("failed to load break points");
+		exit(-1);
+	}
+	
+    do{
+	    int address, interruptNumber;
+		fs>>address>>interruptNumber;
+        printf("INPUT: %d\n",address);
+		
+        if(fs.eof()){
+			fs.close();
+		}else{
+			externalInterrupts[address] = interruptNumber;
+            printf("breakpoint at  %d\n", address);
+		}
+	}while(fs.is_open());
+}
+
+void checkForBreakpoints()
+{
+    if(breakpoints.count(pc)){
+        // printf("---BREAKPOINT-----%08x----------------------------------\n", pc);
+        //     for(int i = 0; i < 32; ++i)
+        //         printf("REG %d \t %08x\n",i, regs[i]);
+            
+        //     printf("REG UIE \t %08x\n", uie);
+        //     printf("REG EPC \t %08x\n", epc);
+        //     printf("REG TIMER \t %08x\n", timer);
+        //     // cout<<"REG UIE"<<"\t"<<uie<<endl;
+        //     // cout<<"REG EPC"<<"\t"<<epc<<endl;
+        //     // cout<<"REG TIMER"<<"\t"<<timer<<endl;
+
+        // printf("---END---BREAKPOINT-----------------------------------\n");
+
+        void *ptr = memory + 13760;
+        int *num = (int *) ptr;
+
+        puts("final test array");
+        for(int i = 0; i < 150; ++i){
+            printf("%d\n", num[i]);
+        }
+
+        exit(0);
+    }
+}
+
+void checkForExternalInterrupts()
+{
+    if((uie & 1) == 0 || externalInterrupts.empty()) 
+        return;
+    
+    int i, uieTmp = uie>>3;
+    for(i = 0; i < 15; ++i, uieTmp >>=1){
+        if(uieTmp & 1 == 1){
+            break;
+        }
+    }
+
+    if(i < 15){ // external interrupt flag on
+        uie = uie & 0xfffe; // turn off global interrupts
+        epc = pc;
+        pc = 64 + i * 4; //jump to address
+        ucause = i;
+    }
 }
